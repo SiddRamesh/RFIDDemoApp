@@ -40,9 +40,18 @@
 @property (nonatomic, assign) NSString *tagIdStr;
 
 //@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (retain, nonatomic) IBOutlet UILabel *Serial;
+@property (retain, nonatomic) IBOutlet UILabel *iec;
+@property (retain, nonatomic) IBOutlet UILabel *eseal;
+@property (retain, nonatomic) IBOutlet UILabel *truck;
+@property (retain, nonatomic) IBOutlet UILabel *date;
+@property (retain, nonatomic) IBOutlet UILabel *port;
+@property (retain, nonatomic) IBOutlet UILabel *time;
+@property (retain, nonatomic) IBOutlet UILabel *code;
+@property (retain, nonatomic) IBOutlet UILabel *bill;
 
 @property(nonatomic, retain) UILabel *tag;
-@property(nonatomic, retain) UILabel *port;
+//@property(nonatomic, retain) UILabel *port;
 
     @property NSString *soapMessage;
     @property NSString *currentElement;
@@ -88,6 +97,15 @@
 
 -(void)dealloc{
     
+    [_Serial release];
+    [_iec release];
+    [_eseal release];
+    [_truck release];
+    [_date release];
+ //   [_port release];
+    [_time release];
+    [_code release];
+    [_bill release];
     [super dealloc];
 }
 
@@ -105,7 +123,7 @@
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification *notification) {
-                                                      [self->_tableView reloadData];
+                                                    //  [self->_tableView reloadData];
                                                   }];
 }
 
@@ -231,24 +249,34 @@
 {
     /* TBD */
     zt_InventoryItem *tag_data = (zt_InventoryItem *)[m_Tags objectAtIndex:row];
-    NSLog(@"%@ This is tag ID",tag_data.getTagId);
+    _tagIdStr = tag_data.getTagId;
+    NSLog(@"%@ Feteched tag ID",tag_data.getTagId);
+    [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
+    NSLog(@"%@ This tagID is to be Scan..",_tagIdStr);
     
-    [tag_cell setTagData:tag_data.getTagId];
-    [tag_cell setTagCount:[NSString stringWithFormat:@"%d", tag_data.getCount]];
+  //  [tag_cell setTagData:tag_data.getTagId];
+ //   [tag_cell setTagCount:[NSString stringWithFormat:@"%d", tag_data.getCount]];
 }
 
 //MARK: - Main
 - (IBAction)btnStartStopPressed:(id)sender
 {
- // [self scanPressed];
-    [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
-    NSLog(@"%@ This is tagss ID",_tagIdStr);
+ 
+ //   if (_tagIdStr != NULL) {
     
+//    } else {
+//        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Server Error" message:@"Unable To Process.. " delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//        [alert show];
+//        return;
+//    }
+ 
     //  [self getTag];
  //   NSString *statusMsg;
     if([[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateGetTagsOperationInProgress])
     {
       //  [self showWarning:@"Getting batched tags: operation not allowed"];
+     //   [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
+     //   NSLog(@"%@ This tagID is to be Scan..",_tagIdStr);
         return;
     }
     BOOL inventory_requested = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateInventoryRequested];
@@ -260,8 +288,12 @@
         if ([[[zt_RfidAppEngine sharedAppEngine] sledConfiguration] isUniqueTagsReport] == [NSNumber numberWithBool:YES])
         {
             rfid_res = [[zt_RfidAppEngine sharedAppEngine] purgeTags:&status];
+          //  [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
+          //  NSLog(@"%@ This tagID is to be Scan..",_tagIdStr);
         }
         rfid_res = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] startInventory:YES aMemoryBank:m_SelectedInventoryOption message:&status];
+    //    [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
+    //    NSLog(@"%@ This tagID is to be Scan..",_tagIdStr);
         if ([status isEqualToString:@"Inventory Started in Batch Mode"]) {
             NSLog(@"%@ btn Tag is",m_Tags);
             [m_Tags removeAllObjects];
@@ -274,14 +306,6 @@
         rfid_res = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] stopInventory:nil];
     }
 }
-
--(void)scanPressed {
-    
-    zt_InventoryItem *tag_data = (zt_InventoryItem *)[m_Tags objectAtIndex:0];
-    NSLog(@"%@ This is tag ID",tag_data.getTagId);
-}
-
-//-(IBAction)scanData:(id)sender {
 
 -(void)scanDataWithTag:(NSString *)tag nPort:(NSString *)port {
     
@@ -318,14 +342,13 @@
     }
     [connection start];
     
-    /*
     //TODO: - Session Management
-    NSURLSession *soapSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
-                                                                      delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-    NSURLSessionDataTask *dataTask = [soapSession dataTaskWithURL: url];
-    self.webResponseData = [NSMutableData new];
-    [dataTask resume];
-    */
+//    NSURLSession *soapSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+//                                                                      delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+//    NSURLSessionDataTask *dataTask = [soapSession dataTaskWithURL: url];
+//    self.webResponseData = [NSMutableData new];
+//    [dataTask resume];
+    
 }
 
 - (void)updateOperationDataUI
@@ -382,7 +405,7 @@
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSLog(@"Received %lu Bytes", (unsigned long)[self.webResponseData length]);
     NSString *theXML = [[NSString alloc] initWithBytes:[self.webResponseData mutableBytes] length:[self.webResponseData length] encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",theXML);
+   // NSLog(@"%@",theXML);
     
     NSData *myData = [theXML dataUsingEncoding:NSUTF8StringEncoding];
     NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
@@ -391,6 +414,7 @@
     xmlParser.delegate = self;
     [xmlParser parse];
     
+    //FIXME: - Handle Parsed Object
 //    // Run the parser
 //    @try{
 //        BOOL parsingResult = [xmlParser parse];
@@ -419,32 +443,32 @@
  //   if ([currentElement isEqualToString:@"ReportData"]) {
       //  self.sshowAlertMessage(messageTitle: "Fetching Data", withMessage: "Failed!")
        //  self.resultLbl.text = string;
-    if ([currentElement isEqualToString:@"S1"]) { _serialLbl = string; }
-    if ([currentElement isEqualToString:@"S2"]) { _iecLbl = string; }
+ //   if ([currentElement isEqualToString:@"S1"]) { self.Serial.text = string; }
+//    if ([currentElement isEqualToString:@"S2"]) { self.iec.text = string; }
       //  if ([currentElement isEqualToString:@"S3"]) { billLbl = string; }
         
 //    } else  {
-        
-    if ([_ele1 isEqualToString:@"S1"]) { _serialLbl = string; }
-     //   if ([_ele1 isEqualToString:@"S2"]) { iecLbl = string; }
-    if ([_ele1 isEqualToString:@"S3"]) { _billLbl = string; }
-        if ([_ele1 isEqualToString:@"S4"]) {  self.truckLbl =  string; }
-        if ([_ele1 isEqualToString:@"S5"]) {  self.codebl =  string; }
-        if ([_ele1 isEqualToString:@"S6"]) {  self.portLbl =  string; }
-        if ([_ele1 isEqualToString:@"S7"]) {  self.dateLbl =  string; }
-        if ([_ele1 isEqualToString:@"S8"]) {  self.timeLbl =  string; }
+    
+        if ([_ele1 isEqualToString:@"S1"]) { self.Serial.text = string;}
+        if ([_ele1 isEqualToString:@"S2"]) { self.iec.text = string; }
+        if ([_ele1 isEqualToString:@"S3"]) { self.bill.text = string; }
+        if ([_ele1 isEqualToString:@"S4"]) {  self.truck.text =  string; }
+        if ([_ele1 isEqualToString:@"S5"]) {  self.code.text =  string; }
+        if ([_ele1 isEqualToString:@"S6"]) {  self.port.text =  string; }
+        if ([_ele1 isEqualToString:@"S7"]) {  self.date.text =  string; }
+        if ([_ele1 isEqualToString:@"S8"]) {  self.time.text =  string; }
         if ([_ele1 isEqualToString:@"S9"]) {  self.enteryByLbl =  string; }
-        if ([_ele1 isEqualToString:@"S10"]){  self.esealLbl =  string; }
+        if ([_ele1 isEqualToString:@"S10"]){  self.eseal.text =  string; }
         
       //  self.sshowAlertMessage(messageTitle: "Fetching Data", withMessage: "Success :)")
  //   }
     NSLog(@"%@ PData ->: ",string);
 }
 
-//- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-//{
-//    NSLog(@"Parsed Element : %@", currentElement);
-//}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+{
+    NSLog(@"Parsed Element : %@", currentElement);
+}
 
 //MARK: - NSURLSessionTask Delegate Methods
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
@@ -476,9 +500,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    
-  //  return (section == 0) ? 3: 3;
-    return [m_Tags count];
+    return [m_Tags count]; //(section == m_Tags.count) ? 3 : 0;
   //  return self.stockDataSource.stockdatas.count;
+   // return (section == 0) ? 3: 3;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -495,53 +519,24 @@
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *RFIDTagCellIdentifier = ZT_CELL_ID_TAG_DATA;
-    
-    zt_RFIDTagCellView *tag_cell = [tableView dequeueReusableCellWithIdentifier:RFIDTagCellIdentifier forIndexPath:indexPath];
-    
-    if (tag_cell == nil)
-    {
-        tag_cell = [[zt_RFIDTagCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RFIDTagCellIdentifier];
-    }
-    
-   // BOOL expanded = ((m_ExpandedCellIdx == [indexPath row]) ? YES : NO);
-    
-    [self configureTagCell:tag_cell forRow:(int)[indexPath row] isExpanded:YES];
-    
-    zt_InventoryItem *tag_data = (zt_InventoryItem *)[m_Tags objectAtIndex:[indexPath row]];
-    _tagIdStr = tag_data.getTagId;
-    NSLog(@"%@ This is tagss ID",_tagIdStr);
-    //   NSLog(@"%@ This is tagss ID",tag_data.getTagId);
-    
-    tag_cell.textLabel.text = tag_data.getTagId;
-    
-    [tag_cell setNeedsUpdateConstraints];
-    [tag_cell updateConstraintsIfNeeded];
-    return tag_cell;
-}
-
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      static NSString *kAttributeCellID = @"AttributeCellID";
-    //   static NSString *kAttributeCellID = ZT_CELL_ID_TAG_DATA;
-    
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kAttributeCellID];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:kAttributeCellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-       StockData *stockdata = self.stockDataSource.stockdatas[indexPath.row];
-    
+ //      StockData *stockdata = self.stockDataSource.stockdatas[indexPath.row];
 //       [cell configureWithStockData:stockdata];
 
     if (indexPath.section == 0) {
         switch (indexPath.row) {
             case 0: {
                 cell.textLabel.text = NSLocalizedString(@"Serial No", @"Serial No :");
-                cell.detailTextLabel.text = _serialLbl;    //  stockdata.serial;
+                cell.detailTextLabel.text =  self.serialLbl;    //  stockdata.serial;
             } break;
             case 1: {
                 cell.textLabel.text = NSLocalizedString(@"IEC", @"IEC :");
@@ -556,41 +551,40 @@
         switch (indexPath.row) {
             case 0: {
                 cell.textLabel.text = NSLocalizedString(@"Truck No", @"Truck No. :");
-                cell.detailTextLabel.text =  stockdata.truck;
+                cell.detailTextLabel.text =  [self truckLbl]; // stockdata.truck;
             } break;
             case 1: {
                 cell.textLabel.text = NSLocalizedString(@"Dest. Port", @"Dest. Port :");
-                cell.detailTextLabel.text =   stockdata.port;
+                cell.detailTextLabel.text =  _portLbl; // stockdata.port;
             }break;
-            case 2: {
-                cell.textLabel.text = NSLocalizedString(@"Code", @"Code :");
-                cell.detailTextLabel.text =   stockdata.code;
-            }break;
+//            case 2: {
+//                cell.textLabel.text = NSLocalizedString(@"Code", @"Code :");
+//                cell.detailTextLabel.text =   stockdata.code;
+//            }break;
             default: {
                 cell.textLabel.text = NSLocalizedString(@"e-Seal", @"e-Seal :");
-                cell.detailTextLabel.text =  stockdata.eseal;
+                cell.detailTextLabel.text =  _esealLbl; // stockdata.eseal;
             } break;
         }
     } else {
         switch (indexPath.row) {
             case 0: {
                 cell.textLabel.text = NSLocalizedString(@"Date", @"Date :");
-                cell.detailTextLabel.text =  stockdata.datee; //[self.dateFormatter stringFromDate:(NSDate *)theGameHighScor.date];
+                cell.detailTextLabel.text = _dateLbl; // stockdata.datee;
             } break;
             case 1: {
                 cell.textLabel.text = NSLocalizedString(@"Time", @"Time :");
-                cell.detailTextLabel.text =  stockdata.time;
+                cell.detailTextLabel.text =  _timeLbl; // stockdata.time;
             }break;
             default: {
                 cell.textLabel.text = NSLocalizedString(@"Entry By", @"Entry By :");
-                cell.detailTextLabel.text =  stockdata.entryby;
+                cell.detailTextLabel.text = _enteryByLbl; // stockdata.entryby;
             } break;
         }
     }
     return cell;
 }
 */
-
 //MARK: - Obsever
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -601,7 +595,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-            [self->_tableView reloadData];
+          //  [self->_tableView reloadData];
         });
     }
     else if ([keyPath isEqualToString:@"error"])
@@ -637,7 +631,6 @@
 }
 
 //MARK: - Radio Operation
-
 - (void)radioStateChangedOperationRequested:(BOOL)requested aType:(int)operation_type
 {
     if (ZT_RADIO_OPERATION_INVENTORY != operation_type)
@@ -652,7 +645,7 @@
             [m_btnStartStop layoutIfNeeded];
         }];
         
-      //  [m_btnOptions setEnabled:NO];
+        [m_btnOptions setEnabled:NO];
         
         /* clear selection information */
      //   m_ExpandedCellIdx = -1;
@@ -661,13 +654,13 @@
         [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearSelectedItem];
         
         /* clear tags only on start of new operation */
-     //   [m_Tags removeAllObjects];
-     //   if(batchModeLabel.hidden)
-     //   {
+        [m_Tags removeAllObjects];
+        if(batchModeLabel.hidden)
+        {
             [m_Tags removeAllObjects];
             [m_tblTags reloadData];
-       //     batchModeLabel.hidden = NO;
-     //   }
+            batchModeLabel.hidden = NO;
+        }
         
         [self updateOperationDataUI];
         
@@ -679,16 +672,16 @@
             [m_btnStartStop layoutIfNeeded];
         }];
         
-    //    [m_btnOptions setEnabled:YES];
+        [m_btnOptions setEnabled:YES];
         
-    //    if(!batchModeLabel.hidden)
-   //     {
+        if(!batchModeLabel.hidden)
+        {
             NSString *statusMsg;
             [[[zt_RfidAppEngine sharedAppEngine] operationEngine] getTags:&statusMsg];
             [self updateOperationDataUI];
-       //     batchModeLabel.hidden=YES;
+            batchModeLabel.hidden=YES;
             m_tblTags.hidden = NO;
-   //     }
+        }
         if([[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateGetTagsOperationInProgress]) //else
         {
             NSString *statusMsg;
@@ -730,6 +723,73 @@
 }
 
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *RFIDTagCellIdentifier = ZT_CELL_ID_TAG_DATA;
+    
+    zt_RFIDTagCellView *cell = [m_tblTags dequeueReusableCellWithIdentifier:RFIDTagCellIdentifier forIndexPath:indexPath];
+    
+    if (cell == nil)
+    {
+        cell = [[zt_RFIDTagCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RFIDTagCellIdentifier];
+    }
+    // BOOL expanded = ((m_ExpandedCellIdx == [indexPath row]) ? YES : NO);
+    [self configureTagCell:cell forRow:(int)[indexPath row] isExpanded:NO];
+ //   tag_cell.textLabel.text = tag_data.getTagId;
+    
+    
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0: {
+                cell.textLabel.text = NSLocalizedString(@"Serial No", @"Serial No :");
+                cell.detailTextLabel.text = self.Serial.text; //@"Serial"; // _serialLbl   //  stockdata.serial;
+            } break;
+            case 1: {
+                cell.textLabel.text = NSLocalizedString(@"IEC", @"IEC :");
+                cell.detailTextLabel.text = self.iec.text ;//@"Serial"; // _iecLbl; //stockdata.iec;
+            } break;
+            default: {
+                cell.textLabel.text = NSLocalizedString(@"Bill No", @"Bill No. :");
+                cell.detailTextLabel.text = self.bill.text ;//@"Serial"; // _billLbl; //stockdata.bill;
+            } break;
+        }
+    } else if (indexPath.section == 1) {
+        switch (indexPath.row) {
+            case 0: {
+                cell.textLabel.text = NSLocalizedString(@"Truck No", @"Truck No. :");
+                cell.detailTextLabel.text = @"Serial"; // [self truckLbl]; // stockdata.truck;
+            } break;
+            case 1: {
+                cell.textLabel.text = NSLocalizedString(@"Dest. Port", @"Dest. Port :");
+                cell.detailTextLabel.text = @"Serial"; // _portLbl; // stockdata.port;
+            }break;
+                //            case 2: {
+                //                cell.textLabel.text = NSLocalizedString(@"Code", @"Code :");
+                //                cell.detailTextLabel.text =   stockdata.code;
+                //            }break;
+            default: {
+                cell.textLabel.text = NSLocalizedString(@"e-Seal", @"e-Seal :");
+                cell.detailTextLabel.text = @"Serial"; // _esealLbl; // stockdata.eseal;
+            } break;
+        }
+    } else {
+        switch (indexPath.row) {
+            case 0: {
+                cell.textLabel.text = NSLocalizedString(@"Date", @"Date :");
+                cell.detailTextLabel.text = @"Serial"; // _dateLbl; // stockdata.datee;
+            } break;
+            case 1: {
+                cell.textLabel.text = NSLocalizedString(@"Time", @"Time :");
+                cell.detailTextLabel.text = @"Serial"; // _timeLbl; // stockdata.time;
+            }break;
+            default: {
+                cell.textLabel.text = NSLocalizedString(@"Entry By", @"Entry By :");
+                cell.detailTextLabel.text = @"Serial"; // _enteryByLbl; // stockdata.entryby;
+            } break;
+        }
+    }
+    return cell;
+}
 
 
 @end

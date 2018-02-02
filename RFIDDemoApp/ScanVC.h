@@ -28,7 +28,7 @@
     
      UITableView *tableView;
     
-     IBOutlet UITableView *m_tblTags;
+     UITableView *m_tblTags;
      IBOutlet UIButton *m_btnStartStop;
      NSTimer *m_ViewUpdateTimer;
     
@@ -37,11 +37,14 @@
     
      SRFID_MEMORYBANK m_SelectedInventoryOption;
      NSMutableArray *m_Tags;
+    
+    UILabel *batchModeLabel;
+    UIBarButtonItem *m_btnOptions;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 
-//@property(nonatomic, strong) UITableView *m_tblTags;
+//@property(nonatomic, retain) IBOutlet UITableView *m_tblTags;
 
 
 @end
