@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		525660C11AB03952004D33B1 /* InventoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 525660C01AB03952004D33B1 /* InventoryData.m */; };
-		525660C41AB07CA4004D33B1 /* RFIDDeviceCellVeiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 525660C31AB07CA4004D33B1 /* RFIDDeviceCellVeiew.m */; };
 		52AB4BA71A93A9C00082C35E /* HomeVCConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AB4BA61A93A9C00082C35E /* HomeVCConstraints.m */; };
 		52AB4BAA1A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AB4BA81A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m */; };
 		52AB54851A9C7AE50087CC70 /* ActiveReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AB54841A9C7AE50087CC70 /* ActiveReader.m */; };
@@ -17,34 +16,30 @@
 		52B6C6F61A8CBF2000D35518 /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B6C6F41A8CBF2000D35518 /* AlertView.m */; };
 		52BA7CE01AE8FA4600C94D33 /* EnumMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BA7CDF1AE8FA4600C94D33 /* EnumMapper.m */; };
 		58240B031EEA666400BAD83C /* libsymbolrfid-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58240B021EEA666400BAD83C /* libsymbolrfid-sdk.a */; };
-		730670B6202094B800855D57 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730670B5202094B800855D57 /* SearchViewController.swift */; };
-		730670B82020982F00855D57 /* Red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 730670B72020982F00855D57 /* Red.jpg */; };
+		730F86422025B03A00C36234 /* SwitchCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F86402025B03A00C36234 /* SwitchCellView.m */; };
+		730F86452025B05E00C36234 /* BatteryIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F86432025B05E00C36234 /* BatteryIndicatorView.m */; };
+		730F86482025B09B00C36234 /* RFIDDeviceCellVeiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F86472025B09B00C36234 /* RFIDDeviceCellVeiew.m */; };
+		730F864B2025B0B900C36234 /* OptionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F86492025B0B800C36234 /* OptionCellView.m */; };
+		730F864E2025B18C00C36234 /* RFIDTagCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F864C2025B18B00C36234 /* RFIDTagCellView.m */; };
+		730F86512025B1AC00C36234 /* ImageLabelCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F86502025B1AC00C36234 /* ImageLabelCellView.m */; };
+		730F86542025B85F00C36234 /* vertify3.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F86522025B85F00C36234 /* vertify3.png */; };
+		730F86552025B85F00C36234 /* logo_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F86532025B85F00C36234 /* logo_new.png */; };
+		730F86572025B86E00C36234 /* title_rdl.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F86562025B86D00C36234 /* title_rdl.png */; };
+		730F86592025B87E00C36234 /* ic_settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F86582025B87E00C36234 /* ic_settings@3x.png */; };
+		730F865B2025B88500C36234 /* bat_lvl_100_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */; };
+		730F865D2025B9A000C36234 /* title_antn.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F865C2025B9A000C36234 /* title_antn.png */; };
+		730F865F2025C21300C36234 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 730F865E2025C21200C36234 /* LaunchScreen.xib */; };
 		733DB3432021B0520073852A /* ScanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 733DB3422021B0520073852A /* ScanVC.m */; };
 		7352CF072022EE6C00C17EE7 /* ParseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CEFF2022EE6B00C17EE7 /* ParseOperation.m */; };
 		7352CF082022EE6C00C17EE7 /* StockDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF002022EE6B00C17EE7 /* StockDataSource.m */; };
 		7352CF092022EE6C00C17EE7 /* StockData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF052022EE6C00C17EE7 /* StockData.m */; };
 		7352CF0A2022EE6C00C17EE7 /* StockCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */; };
-		7803C51C1AD6B1620073ECA7 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 7803C51A1AD6B1620073ECA7 /* iTunesArtwork */; };
-		7803C51D1AD6B1620073ECA7 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 7803C51B1AD6B1620073ECA7 /* iTunesArtwork@2x */; };
 		7835745C1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835745B1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m */; };
-		784B003619C9CEDF0095EE43 /* OptionCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B003519C9CEDF0095EE43 /* OptionCellView.m */; };
 		784B003919CAC4FB0095EE43 /* SledConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B003819CAC4FB0095EE43 /* SledConfiguration.m */; };
 		784B003C19CAC7CF0095EE43 /* RfidAppEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B003B19CAC7CF0095EE43 /* RfidAppEngine.m */; };
 		784B003F19CAEEA50095EE43 /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B003E19CAEEA50095EE43 /* AppConfiguration.m */; };
-		784B004219CB02240095EE43 /* SaveSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B004119CB02240095EE43 /* SaveSettingsVC.m */; };
 		784B004519CB19420095EE43 /* BatteryStatusVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B004419CB19420095EE43 /* BatteryStatusVC.m */; };
-		784B004B19CB197E0095EE43 /* AboutVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B004A19CB197E0095EE43 /* AboutVC.m */; };
-		784B004F19CB21630095EE43 /* BatteryIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B004E19CB21630095EE43 /* BatteryIndicatorView.m */; };
 		7854A4BE1A8389EA006CE34E /* InventoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7854A4BD1A8389EA006CE34E /* InventoryItem.m */; };
-		78757AE219C96B0E000068C2 /* TriggerSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78757AE119C96B0E000068C2 /* TriggerSettingsVC.m */; };
-		78757AE519C96CF5000068C2 /* DatePickerCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78757AE419C96CF5000068C2 /* DatePickerCellView.m */; };
-		78757AE819C9B4CE000068C2 /* BeeperSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78757AE719C9B4CE000068C2 /* BeeperSettingsVC.m */; };
-		78757AEB19C9BF8E000068C2 /* SliderCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78757AEA19C9BF8E000068C2 /* SliderCellView.m */; };
-		7881086A1A2F2E8300A3D2EE /* find.png in Resources */ = {isa = PBXBuildFile; fileRef = 788108651A2F2E8300A3D2EE /* find.png */; };
-		7881086B1A2F2E8300A3D2EE /* tab_access@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 788108661A2F2E8300A3D2EE /* tab_access@2x.png */; };
-		7881086C1A2F2E8300A3D2EE /* tab_inv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 788108671A2F2E8300A3D2EE /* tab_inv@2x.png */; };
-		7881086D1A2F2E8300A3D2EE /* tab_loc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 788108681A2F2E8300A3D2EE /* tab_loc@2x.png */; };
-		7881086E1A2F2E8300A3D2EE /* tab_rr@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 788108691A2F2E8300A3D2EE /* tab_rr@2x.png */; };
 		78BD183F1A80FC1D00DB0657 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78BD182C1A80BA1C00DB0657 /* ExternalAccessory.framework */; };
 		78BD18401A80FC2200DB0657 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78BD182E1A80BA2300DB0657 /* CoreBluetooth.framework */; };
 		78D66C9019BDBCF000722E6C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78D66C8F19BDBCF000722E6C /* Foundation.framework */; };
@@ -55,87 +50,19 @@
 		78D66CA019BDBCF000722E6C /* RFIDDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66C9F19BDBCF000722E6C /* RFIDDemoAppDelegate.m */; };
 		78D66CA319BDBCF000722E6C /* RFIDDemoApp.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CA119BDBCF000722E6C /* RFIDDemoApp.storyboard */; };
 		78D66CA819BDBCF000722E6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CA719BDBCF000722E6C /* Images.xcassets */; };
-		78D66CE719BDD5D900722E6C /* app_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CC519BDD5D900722E6C /* app_icon.png */; };
-		78D66CE819BDD5D900722E6C /* btn_access.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CC619BDD5D900722E6C /* btn_access.png */; };
-		78D66CE919BDD5D900722E6C /* btn_filter.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CC719BDD5D900722E6C /* btn_filter.png */; };
-		78D66CEA19BDD5D900722E6C /* btn_inv.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CC819BDD5D900722E6C /* btn_inv.png */; };
-		78D66CEB19BDD5D900722E6C /* btn_locate.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CC919BDD5D900722E6C /* btn_locate.png */; };
-		78D66CEC19BDD5D900722E6C /* btn_rr.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CCA19BDD5D900722E6C /* btn_rr.png */; };
-		78D66CED19BDD5D900722E6C /* btn_sett.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CCB19BDD5D900722E6C /* btn_sett.png */; };
-		78D66CEE19BDD5D900722E6C /* dl_about.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CCC19BDD5D900722E6C /* dl_about.png */; };
-		78D66CEF19BDD5D900722E6C /* dl_access.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CCD19BDD5D900722E6C /* dl_access.png */; };
-		78D66CF019BDD5D900722E6C /* dl_antn.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CCE19BDD5D900722E6C /* dl_antn.png */; };
-		78D66CF119BDD5D900722E6C /* dl_batt.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CCF19BDD5D900722E6C /* dl_batt.png */; };
-		78D66CF219BDD5D900722E6C /* dl_beep.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD019BDD5D900722E6C /* dl_beep.png */; };
-		78D66CF319BDD5D900722E6C /* dl_filters.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD119BDD5D900722E6C /* dl_filters.png */; };
-		78D66CF419BDD5D900722E6C /* dl_inv.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD219BDD5D900722E6C /* dl_inv.png */; };
-		78D66CF519BDD5D900722E6C /* dl_loc.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD319BDD5D900722E6C /* dl_loc.png */; };
-		78D66CF619BDD5D900722E6C /* dl_rdl.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD419BDD5D900722E6C /* dl_rdl.png */; };
-		78D66CF719BDD5D900722E6C /* dl_reg.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD519BDD5D900722E6C /* dl_reg.png */; };
-		78D66CF819BDD5D900722E6C /* dl_rr.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD619BDD5D900722E6C /* dl_rr.png */; };
-		78D66CF919BDD5D900722E6C /* dl_save.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD719BDD5D900722E6C /* dl_save.png */; };
-		78D66CFA19BDD5D900722E6C /* dl_sett.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD819BDD5D900722E6C /* dl_sett.png */; };
-		78D66CFB19BDD5D900722E6C /* dl_singl.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CD919BDD5D900722E6C /* dl_singl.png */; };
-		78D66CFC19BDD5D900722E6C /* dl_ststp.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CDA19BDD5D900722E6C /* dl_ststp.png */; };
-		78D66CFD19BDD5D900722E6C /* dl_tag.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CDB19BDD5D900722E6C /* dl_tag.png */; };
-		78D66CFE19BDD5D900722E6C /* ic_launcher.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CDC19BDD5D900722E6C /* ic_launcher.png */; };
-		78D66CFF19BDD5D900722E6C /* title_antn.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CDD19BDD5D900722E6C /* title_antn.png */; };
-		78D66D0019BDD5D900722E6C /* title_batt.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CDE19BDD5D900722E6C /* title_batt.png */; };
-		78D66D0119BDD5D900722E6C /* title_beep.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CDF19BDD5D900722E6C /* title_beep.png */; };
-		78D66D0219BDD5D900722E6C /* title_rdl.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CE019BDD5D900722E6C /* title_rdl.png */; };
-		78D66D0319BDD5D900722E6C /* title_reg.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CE119BDD5D900722E6C /* title_reg.png */; };
-		78D66D0419BDD5D900722E6C /* title_save.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CE219BDD5D900722E6C /* title_save.png */; };
-		78D66D0519BDD5D900722E6C /* title_sett.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CE319BDD5D900722E6C /* title_sett.png */; };
-		78D66D0619BDD5D900722E6C /* title_singl.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CE419BDD5D900722E6C /* title_singl.png */; };
-		78D66D0719BDD5D900722E6C /* title_strstp.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CE519BDD5D900722E6C /* title_strstp.png */; };
-		78D66D0819BDD5D900722E6C /* title_tags.png in Resources */ = {isa = PBXBuildFile; fileRef = 78D66CE619BDD5D900722E6C /* title_tags.png */; };
-		78D66D0B19BDDF9000722E6C /* UIVerticalButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D0A19BDDF9000722E6C /* UIVerticalButton.m */; };
-		78D66D1019BDF18400722E6C /* RapidReadVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D0F19BDF18400722E6C /* RapidReadVC.m */; };
 		78D66D1319BF0E0100722E6C /* RFIDTabVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D1219BF0E0100722E6C /* RFIDTabVC.m */; };
-		78D66D1619BF30D000722E6C /* InventoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D1519BF30D000722E6C /* InventoryVC.m */; };
-		78D66D1919BF3B7B00722E6C /* RFIDTagCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D1819BF3B7B00722E6C /* RFIDTagCellView.m */; };
-		78D66D1C19C06E2800722E6C /* LocateTagVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D1B19C06E2800722E6C /* LocateTagVC.m */; };
-		78D66D1F19C08F6200722E6C /* TextFieldCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D1E19C08F6200722E6C /* TextFieldCellView.m */; };
-		78D66D2219C08F9B00722E6C /* TextViewCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D2119C08F9B00722E6C /* TextViewCellView.m */; };
-		78D66D2519C08FE900722E6C /* PickerCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D2419C08FE900722E6C /* PickerCellView.m */; };
-		78D66D2819C0900900722E6C /* LabelInputFieldCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D2719C0900900722E6C /* LabelInputFieldCellView.m */; };
-		78D66D2B19C0A40500722E6C /* InfoCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D2A19C0A40500722E6C /* InfoCellView.m */; };
-		78D66D3119C0A57600722E6C /* AccessOperationsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D3019C0A57600722E6C /* AccessOperationsVC.m */; };
-		78D66D3419C3155300722E6C /* SelectionTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D3319C3155300722E6C /* SelectionTableVC.m */; };
-		78D66D3719C31C6000722E6C /* FilterConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D3619C31C6000722E6C /* FilterConfigVC.m */; };
-		78D66D3A19C31D0800722E6C /* SwitchCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D3919C31D0800722E6C /* SwitchCellView.m */; };
-		78D66D4019C73E2100722E6C /* ImageLabelCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D3F19C73E2100722E6C /* ImageLabelCellView.m */; };
 		78D66D4319C7406500722E6C /* SettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D4219C7406500722E6C /* SettingsVC.m */; };
 		78D66D4619C8368100722E6C /* ReaderListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D4519C8368100722E6C /* ReaderListVC.m */; };
 		78D66D4919C8430A00722E6C /* ConnectionSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D4819C8430A00722E6C /* ConnectionSettingsVC.m */; };
-		78D66D4C19C84F1C00722E6C /* AntennaSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D4B19C84F1C00722E6C /* AntennaSettingsVC.m */; };
-		78D66D4F19C8604B00722E6C /* SingulationSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D4E19C8604B00722E6C /* SingulationSettingsVC.m */; };
-		78D66D5219C86F7E00722E6C /* TagReportSettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D5119C86F7E00722E6C /* TagReportSettingsVC.m */; };
-		78D66D5519C87E0F00722E6C /* RegulatorySettingsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D66D5419C87E0F00722E6C /* RegulatorySettingsVC.m */; };
 		78EDBD5A1B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EDBD591B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m */; };
 		78EDBD611B28506A000997E5 /* FileExportManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EDBD601B28506A000997E5 /* FileExportManager.m */; };
 		78EDBE051B3453E7000997E5 /* RadioOperationEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 78EDBE041B3453E7000997E5 /* RadioOperationEngine.m */; };
-		B46FD5811B431D5100EB191A /* bat_lvl_25_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD5771B431D5100EB191A /* bat_lvl_25_dpo.png */; };
-		B46FD5821B431D5100EB191A /* bat_lvl_25.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD5781B431D5100EB191A /* bat_lvl_25.png */; };
-		B46FD5831B431D5100EB191A /* bat_lvl_50_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD5791B431D5100EB191A /* bat_lvl_50_dpo.png */; };
-		B46FD5841B431D5100EB191A /* bat_lvl_50.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD57A1B431D5100EB191A /* bat_lvl_50.png */; };
-		B46FD5851B431D5100EB191A /* bat_lvl_75_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD57B1B431D5100EB191A /* bat_lvl_75_dpo.png */; };
-		B46FD5861B431D5100EB191A /* bat_lvl_75.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD57C1B431D5100EB191A /* bat_lvl_75.png */; };
-		B46FD5871B431D5100EB191A /* bat_lvl_100_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD57D1B431D5100EB191A /* bat_lvl_100_dpo.png */; };
-		B46FD5881B431D5100EB191A /* bat_lvl_100.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD57E1B431D5100EB191A /* bat_lvl_100.png */; };
-		B46FD5891B431D5100EB191A /* bat_lvl_empty_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD57F1B431D5100EB191A /* bat_lvl_empty_dpo.png */; };
-		B46FD58A1B431D5100EB191A /* bat_lvl_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = B46FD5801B431D5100EB191A /* bat_lvl_empty.png */; };
-		B47B6D081B3F2CF600000BF0 /* PowerManagementVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B47B6D071B3F2CF600000BF0 /* PowerManagementVC.m */; };
-		B498F9761B41A16B007589E0 /* title_pwr_off.png in Resources */ = {isa = PBXBuildFile; fileRef = B498F9741B41A16B007589E0 /* title_pwr_off.png */; };
-		B498F9771B41A16B007589E0 /* title_pwr_on.png in Resources */ = {isa = PBXBuildFile; fileRef = B498F9751B41A16B007589E0 /* title_pwr_on.png */; };
 		B4F3FE381B41D23400325361 /* BaseDpoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B4F3FE371B41D23400325361 /* BaseDpoVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		525660BF1AB03952004D33B1 /* InventoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryData.h; sourceTree = "<group>"; };
 		525660C01AB03952004D33B1 /* InventoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryData.m; sourceTree = "<group>"; };
-		525660C21AB07CA4004D33B1 /* RFIDDeviceCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFIDDeviceCellView.h; sourceTree = "<group>"; };
-		525660C31AB07CA4004D33B1 /* RFIDDeviceCellVeiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFIDDeviceCellVeiew.m; sourceTree = "<group>"; };
 		52AB4BA51A93A9C00082C35E /* HomeVCConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVCConstraints.h; sourceTree = "<group>"; };
 		52AB4BA61A93A9C00082C35E /* HomeVCConstraints.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVCConstraints.m; sourceTree = "<group>"; };
 		52AB4BA81A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+VerticalButtonFactory.m"; sourceTree = "<group>"; };
@@ -153,8 +80,25 @@
 		52BA7CDF1AE8FA4600C94D33 /* EnumMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnumMapper.m; sourceTree = "<group>"; };
 		58240B021EEA666400BAD83C /* libsymbolrfid-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsymbolrfid-sdk.a"; path = "symbolrfid-sdk/libsymbolrfid-sdk.a"; sourceTree = "<group>"; };
 		730670B4202094B700855D57 /* RFIDDemoApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RFIDDemoApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		730670B5202094B800855D57 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		730670B72020982F00855D57 /* Red.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Red.jpg; sourceTree = "<group>"; };
+		730F86402025B03A00C36234 /* SwitchCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchCellView.m; sourceTree = "<group>"; };
+		730F86412025B03A00C36234 /* SwitchCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchCellView.h; sourceTree = "<group>"; };
+		730F86432025B05E00C36234 /* BatteryIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatteryIndicatorView.m; sourceTree = "<group>"; };
+		730F86442025B05E00C36234 /* BatteryIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatteryIndicatorView.h; sourceTree = "<group>"; };
+		730F86462025B09A00C36234 /* RFIDDeviceCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFIDDeviceCellView.h; sourceTree = "<group>"; };
+		730F86472025B09B00C36234 /* RFIDDeviceCellVeiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFIDDeviceCellVeiew.m; sourceTree = "<group>"; };
+		730F86492025B0B800C36234 /* OptionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionCellView.m; sourceTree = "<group>"; };
+		730F864A2025B0B900C36234 /* OptionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionCellView.h; sourceTree = "<group>"; };
+		730F864C2025B18B00C36234 /* RFIDTagCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFIDTagCellView.m; sourceTree = "<group>"; };
+		730F864D2025B18C00C36234 /* RFIDTagCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFIDTagCellView.h; sourceTree = "<group>"; };
+		730F864F2025B1AC00C36234 /* ImageLabelCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageLabelCellView.h; sourceTree = "<group>"; };
+		730F86502025B1AC00C36234 /* ImageLabelCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLabelCellView.m; sourceTree = "<group>"; };
+		730F86522025B85F00C36234 /* vertify3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vertify3.png; sourceTree = "<group>"; };
+		730F86532025B85F00C36234 /* logo_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_new.png; sourceTree = "<group>"; };
+		730F86562025B86D00C36234 /* title_rdl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_rdl.png; sourceTree = "<group>"; };
+		730F86582025B87E00C36234 /* ic_settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_settings@3x.png"; sourceTree = "<group>"; };
+		730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_100_dpo.png; sourceTree = "<group>"; };
+		730F865C2025B9A000C36234 /* title_antn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_antn.png; sourceTree = "<group>"; };
+		730F865E2025C21200C36234 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		733DB3412021B0520073852A /* ScanVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScanVC.h; sourceTree = "<group>"; };
 		733DB3422021B0520073852A /* ScanVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanVC.m; sourceTree = "<group>"; };
 		7352CEFF2022EE6B00C17EE7 /* ParseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseOperation.m; sourceTree = "<group>"; };
@@ -165,42 +109,19 @@
 		7352CF042022EE6B00C17EE7 /* StockData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockData.h; sourceTree = "<group>"; };
 		7352CF052022EE6C00C17EE7 /* StockData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockData.m; sourceTree = "<group>"; };
 		7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockCellTableViewCell.m; sourceTree = "<group>"; };
-		7803C51A1AD6B1620073ECA7 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
-		7803C51B1AD6B1620073ECA7 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = "<group>"; };
 		7835745A1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZT_FieldCheck.h"; sourceTree = "<group>"; };
 		7835745B1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZT_FieldCheck.m"; sourceTree = "<group>"; };
-		784B003419C9CEDF0095EE43 /* OptionCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionCellView.h; sourceTree = "<group>"; };
-		784B003519C9CEDF0095EE43 /* OptionCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionCellView.m; sourceTree = "<group>"; };
 		784B003719CAC4FB0095EE43 /* SledConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SledConfiguration.h; sourceTree = "<group>"; };
 		784B003819CAC4FB0095EE43 /* SledConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SledConfiguration.m; sourceTree = "<group>"; };
 		784B003A19CAC7CF0095EE43 /* RfidAppEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RfidAppEngine.h; sourceTree = "<group>"; };
 		784B003B19CAC7CF0095EE43 /* RfidAppEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RfidAppEngine.m; sourceTree = "<group>"; };
 		784B003D19CAEEA50095EE43 /* AppConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfiguration.h; sourceTree = "<group>"; };
 		784B003E19CAEEA50095EE43 /* AppConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConfiguration.m; sourceTree = "<group>"; };
-		784B004019CB02240095EE43 /* SaveSettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveSettingsVC.h; sourceTree = "<group>"; };
-		784B004119CB02240095EE43 /* SaveSettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveSettingsVC.m; sourceTree = "<group>"; };
 		784B004319CB19420095EE43 /* BatteryStatusVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatteryStatusVC.h; sourceTree = "<group>"; };
 		784B004419CB19420095EE43 /* BatteryStatusVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatteryStatusVC.m; sourceTree = "<group>"; };
-		784B004919CB197E0095EE43 /* AboutVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutVC.h; sourceTree = "<group>"; };
-		784B004A19CB197E0095EE43 /* AboutVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutVC.m; sourceTree = "<group>"; };
 		784B004C19CB1A2A0095EE43 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		784B004D19CB21630095EE43 /* BatteryIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BatteryIndicatorView.h; sourceTree = "<group>"; };
-		784B004E19CB21630095EE43 /* BatteryIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BatteryIndicatorView.m; sourceTree = "<group>"; };
 		7854A4BC1A8389EA006CE34E /* InventoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryItem.h; sourceTree = "<group>"; };
 		7854A4BD1A8389EA006CE34E /* InventoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryItem.m; sourceTree = "<group>"; };
-		78757AE019C96B0E000068C2 /* TriggerSettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerSettingsVC.h; sourceTree = "<group>"; };
-		78757AE119C96B0E000068C2 /* TriggerSettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TriggerSettingsVC.m; sourceTree = "<group>"; };
-		78757AE319C96CF5000068C2 /* DatePickerCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerCellView.h; sourceTree = "<group>"; };
-		78757AE419C96CF5000068C2 /* DatePickerCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerCellView.m; sourceTree = "<group>"; };
-		78757AE619C9B4CE000068C2 /* BeeperSettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeperSettingsVC.h; sourceTree = "<group>"; };
-		78757AE719C9B4CE000068C2 /* BeeperSettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeperSettingsVC.m; sourceTree = "<group>"; };
-		78757AE919C9BF8E000068C2 /* SliderCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderCellView.h; sourceTree = "<group>"; };
-		78757AEA19C9BF8E000068C2 /* SliderCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderCellView.m; sourceTree = "<group>"; };
-		788108651A2F2E8300A3D2EE /* find.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = find.png; sourceTree = "<group>"; };
-		788108661A2F2E8300A3D2EE /* tab_access@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_access@2x.png"; sourceTree = "<group>"; };
-		788108671A2F2E8300A3D2EE /* tab_inv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_inv@2x.png"; sourceTree = "<group>"; };
-		788108681A2F2E8300A3D2EE /* tab_loc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_loc@2x.png"; sourceTree = "<group>"; };
-		788108691A2F2E8300A3D2EE /* tab_rr@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_rr@2x.png"; sourceTree = "<group>"; };
 		78BD182C1A80BA1C00DB0657 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		78BD182E1A80BA2300DB0657 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		78BD183B1A80DC5600DB0657 /* RfidAppKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RfidAppKeys.h; sourceTree = "<group>"; };
@@ -216,107 +137,21 @@
 		78D66C9F19BDBCF000722E6C /* RFIDDemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RFIDDemoAppDelegate.m; sourceTree = "<group>"; };
 		78D66CA219BDBCF000722E6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/RFIDDemoApp.storyboard; sourceTree = "<group>"; };
 		78D66CA719BDBCF000722E6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		78D66CC519BDD5D900722E6C /* app_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon.png; sourceTree = "<group>"; };
-		78D66CC619BDD5D900722E6C /* btn_access.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_access.png; sourceTree = "<group>"; };
-		78D66CC719BDD5D900722E6C /* btn_filter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_filter.png; sourceTree = "<group>"; };
-		78D66CC819BDD5D900722E6C /* btn_inv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_inv.png; sourceTree = "<group>"; };
-		78D66CC919BDD5D900722E6C /* btn_locate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_locate.png; sourceTree = "<group>"; };
-		78D66CCA19BDD5D900722E6C /* btn_rr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_rr.png; sourceTree = "<group>"; };
-		78D66CCB19BDD5D900722E6C /* btn_sett.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_sett.png; sourceTree = "<group>"; };
-		78D66CCC19BDD5D900722E6C /* dl_about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_about.png; sourceTree = "<group>"; };
-		78D66CCD19BDD5D900722E6C /* dl_access.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_access.png; sourceTree = "<group>"; };
-		78D66CCE19BDD5D900722E6C /* dl_antn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_antn.png; sourceTree = "<group>"; };
-		78D66CCF19BDD5D900722E6C /* dl_batt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_batt.png; sourceTree = "<group>"; };
-		78D66CD019BDD5D900722E6C /* dl_beep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_beep.png; sourceTree = "<group>"; };
-		78D66CD119BDD5D900722E6C /* dl_filters.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_filters.png; sourceTree = "<group>"; };
-		78D66CD219BDD5D900722E6C /* dl_inv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_inv.png; sourceTree = "<group>"; };
-		78D66CD319BDD5D900722E6C /* dl_loc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_loc.png; sourceTree = "<group>"; };
-		78D66CD419BDD5D900722E6C /* dl_rdl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_rdl.png; sourceTree = "<group>"; };
-		78D66CD519BDD5D900722E6C /* dl_reg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_reg.png; sourceTree = "<group>"; };
-		78D66CD619BDD5D900722E6C /* dl_rr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_rr.png; sourceTree = "<group>"; };
-		78D66CD719BDD5D900722E6C /* dl_save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_save.png; sourceTree = "<group>"; };
-		78D66CD819BDD5D900722E6C /* dl_sett.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_sett.png; sourceTree = "<group>"; };
-		78D66CD919BDD5D900722E6C /* dl_singl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_singl.png; sourceTree = "<group>"; };
-		78D66CDA19BDD5D900722E6C /* dl_ststp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_ststp.png; sourceTree = "<group>"; };
-		78D66CDB19BDD5D900722E6C /* dl_tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dl_tag.png; sourceTree = "<group>"; };
-		78D66CDC19BDD5D900722E6C /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
-		78D66CDD19BDD5D900722E6C /* title_antn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_antn.png; sourceTree = "<group>"; };
-		78D66CDE19BDD5D900722E6C /* title_batt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_batt.png; sourceTree = "<group>"; };
-		78D66CDF19BDD5D900722E6C /* title_beep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_beep.png; sourceTree = "<group>"; };
-		78D66CE019BDD5D900722E6C /* title_rdl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_rdl.png; sourceTree = "<group>"; };
-		78D66CE119BDD5D900722E6C /* title_reg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_reg.png; sourceTree = "<group>"; };
-		78D66CE219BDD5D900722E6C /* title_save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_save.png; sourceTree = "<group>"; };
-		78D66CE319BDD5D900722E6C /* title_sett.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_sett.png; sourceTree = "<group>"; };
-		78D66CE419BDD5D900722E6C /* title_singl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_singl.png; sourceTree = "<group>"; };
-		78D66CE519BDD5D900722E6C /* title_strstp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_strstp.png; sourceTree = "<group>"; };
-		78D66CE619BDD5D900722E6C /* title_tags.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_tags.png; sourceTree = "<group>"; };
-		78D66D0919BDDF9000722E6C /* UIVerticalButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVerticalButton.h; sourceTree = "<group>"; };
-		78D66D0A19BDDF9000722E6C /* UIVerticalButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIVerticalButton.m; sourceTree = "<group>"; };
 		78D66D0D19BDEC2400722E6C /* ui_config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ui_config.h; sourceTree = "<group>"; };
-		78D66D0E19BDF18400722E6C /* RapidReadVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RapidReadVC.h; sourceTree = "<group>"; };
-		78D66D0F19BDF18400722E6C /* RapidReadVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RapidReadVC.m; sourceTree = "<group>"; };
 		78D66D1119BF0E0100722E6C /* RFIDTabVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFIDTabVC.h; sourceTree = "<group>"; };
 		78D66D1219BF0E0100722E6C /* RFIDTabVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFIDTabVC.m; sourceTree = "<group>"; };
-		78D66D1419BF30D000722E6C /* InventoryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryVC.h; sourceTree = "<group>"; };
-		78D66D1519BF30D000722E6C /* InventoryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryVC.m; sourceTree = "<group>"; };
-		78D66D1719BF3B7B00722E6C /* RFIDTagCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFIDTagCellView.h; sourceTree = "<group>"; };
-		78D66D1819BF3B7B00722E6C /* RFIDTagCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFIDTagCellView.m; sourceTree = "<group>"; };
-		78D66D1A19C06E2800722E6C /* LocateTagVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocateTagVC.h; sourceTree = "<group>"; };
-		78D66D1B19C06E2800722E6C /* LocateTagVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocateTagVC.m; sourceTree = "<group>"; };
-		78D66D1D19C08F6200722E6C /* TextFieldCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldCellView.h; sourceTree = "<group>"; };
-		78D66D1E19C08F6200722E6C /* TextFieldCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldCellView.m; sourceTree = "<group>"; };
-		78D66D2019C08F9B00722E6C /* TextViewCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewCellView.h; sourceTree = "<group>"; };
-		78D66D2119C08F9B00722E6C /* TextViewCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewCellView.m; sourceTree = "<group>"; };
-		78D66D2319C08FE900722E6C /* PickerCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerCellView.h; sourceTree = "<group>"; };
-		78D66D2419C08FE900722E6C /* PickerCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerCellView.m; sourceTree = "<group>"; };
-		78D66D2619C0900900722E6C /* LabelInputFieldCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelInputFieldCellView.h; sourceTree = "<group>"; };
-		78D66D2719C0900900722E6C /* LabelInputFieldCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelInputFieldCellView.m; sourceTree = "<group>"; };
-		78D66D2919C0A40500722E6C /* InfoCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoCellView.h; sourceTree = "<group>"; };
-		78D66D2A19C0A40500722E6C /* InfoCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoCellView.m; sourceTree = "<group>"; };
-		78D66D2F19C0A57600722E6C /* AccessOperationsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessOperationsVC.h; sourceTree = "<group>"; };
-		78D66D3019C0A57600722E6C /* AccessOperationsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessOperationsVC.m; sourceTree = "<group>"; };
-		78D66D3219C3155300722E6C /* SelectionTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionTableVC.h; sourceTree = "<group>"; };
-		78D66D3319C3155300722E6C /* SelectionTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionTableVC.m; sourceTree = "<group>"; };
-		78D66D3519C31C6000722E6C /* FilterConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterConfigVC.h; sourceTree = "<group>"; };
-		78D66D3619C31C6000722E6C /* FilterConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterConfigVC.m; sourceTree = "<group>"; };
-		78D66D3819C31D0800722E6C /* SwitchCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchCellView.h; sourceTree = "<group>"; };
-		78D66D3919C31D0800722E6C /* SwitchCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchCellView.m; sourceTree = "<group>"; };
-		78D66D3E19C73E2100722E6C /* ImageLabelCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageLabelCellView.h; sourceTree = "<group>"; };
-		78D66D3F19C73E2100722E6C /* ImageLabelCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLabelCellView.m; sourceTree = "<group>"; };
 		78D66D4119C7406500722E6C /* SettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsVC.h; sourceTree = "<group>"; };
 		78D66D4219C7406500722E6C /* SettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsVC.m; sourceTree = "<group>"; };
 		78D66D4419C8368100722E6C /* ReaderListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderListVC.h; sourceTree = "<group>"; };
 		78D66D4519C8368100722E6C /* ReaderListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderListVC.m; sourceTree = "<group>"; };
 		78D66D4719C8430A00722E6C /* ConnectionSettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionSettingsVC.h; sourceTree = "<group>"; };
 		78D66D4819C8430A00722E6C /* ConnectionSettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionSettingsVC.m; sourceTree = "<group>"; };
-		78D66D4A19C84F1C00722E6C /* AntennaSettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AntennaSettingsVC.h; sourceTree = "<group>"; };
-		78D66D4B19C84F1C00722E6C /* AntennaSettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AntennaSettingsVC.m; sourceTree = "<group>"; };
-		78D66D4D19C8604B00722E6C /* SingulationSettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingulationSettingsVC.h; sourceTree = "<group>"; };
-		78D66D4E19C8604B00722E6C /* SingulationSettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingulationSettingsVC.m; sourceTree = "<group>"; };
-		78D66D5019C86F7E00722E6C /* TagReportSettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagReportSettingsVC.h; sourceTree = "<group>"; };
-		78D66D5119C86F7E00722E6C /* TagReportSettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagReportSettingsVC.m; sourceTree = "<group>"; };
-		78D66D5319C87E0F00722E6C /* RegulatorySettingsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegulatorySettingsVC.h; sourceTree = "<group>"; };
-		78D66D5419C87E0F00722E6C /* RegulatorySettingsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegulatorySettingsVC.m; sourceTree = "<group>"; };
 		78EDBD581B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZT_ResponseHandler.h"; sourceTree = "<group>"; };
 		78EDBD591B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZT_ResponseHandler.m"; sourceTree = "<group>"; };
 		78EDBD5F1B28506A000997E5 /* FileExportManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileExportManager.h; sourceTree = "<group>"; };
 		78EDBD601B28506A000997E5 /* FileExportManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileExportManager.m; sourceTree = "<group>"; };
 		78EDBE031B3453E7000997E5 /* RadioOperationEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadioOperationEngine.h; sourceTree = "<group>"; };
 		78EDBE041B3453E7000997E5 /* RadioOperationEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadioOperationEngine.m; sourceTree = "<group>"; };
-		B46FD5771B431D5100EB191A /* bat_lvl_25_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_25_dpo.png; sourceTree = "<group>"; };
-		B46FD5781B431D5100EB191A /* bat_lvl_25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_25.png; sourceTree = "<group>"; };
-		B46FD5791B431D5100EB191A /* bat_lvl_50_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_50_dpo.png; sourceTree = "<group>"; };
-		B46FD57A1B431D5100EB191A /* bat_lvl_50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_50.png; sourceTree = "<group>"; };
-		B46FD57B1B431D5100EB191A /* bat_lvl_75_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_75_dpo.png; sourceTree = "<group>"; };
-		B46FD57C1B431D5100EB191A /* bat_lvl_75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_75.png; sourceTree = "<group>"; };
-		B46FD57D1B431D5100EB191A /* bat_lvl_100_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_100_dpo.png; sourceTree = "<group>"; };
-		B46FD57E1B431D5100EB191A /* bat_lvl_100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_100.png; sourceTree = "<group>"; };
-		B46FD57F1B431D5100EB191A /* bat_lvl_empty_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_empty_dpo.png; sourceTree = "<group>"; };
-		B46FD5801B431D5100EB191A /* bat_lvl_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_empty.png; sourceTree = "<group>"; };
-		B47B6D061B3F2CF600000BF0 /* PowerManagementVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerManagementVC.h; sourceTree = "<group>"; };
-		B47B6D071B3F2CF600000BF0 /* PowerManagementVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerManagementVC.m; sourceTree = "<group>"; };
-		B498F9741B41A16B007589E0 /* title_pwr_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_pwr_off.png; sourceTree = "<group>"; };
-		B498F9751B41A16B007589E0 /* title_pwr_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_pwr_on.png; sourceTree = "<group>"; };
 		B4F3FE361B41D23400325361 /* BaseDpoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDpoVC.h; sourceTree = "<group>"; };
 		B4F3FE371B41D23400325361 /* BaseDpoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseDpoVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -372,7 +207,16 @@
 				7835745B1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m */,
 				78EDBD581B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.h */,
 				78EDBD591B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m */,
-				7353A081201F453400963DC7 /* UI Element */,
+				730F86412025B03A00C36234 /* SwitchCellView.h */,
+				730F86402025B03A00C36234 /* SwitchCellView.m */,
+				730F86462025B09A00C36234 /* RFIDDeviceCellView.h */,
+				730F86472025B09B00C36234 /* RFIDDeviceCellVeiew.m */,
+				730F864A2025B0B900C36234 /* OptionCellView.h */,
+				730F86492025B0B800C36234 /* OptionCellView.m */,
+				730F864D2025B18C00C36234 /* RFIDTagCellView.h */,
+				730F864C2025B18B00C36234 /* RFIDTagCellView.m */,
+				730F864F2025B1AC00C36234 /* ImageLabelCellView.h */,
+				730F86502025B1AC00C36234 /* ImageLabelCellView.m */,
 				7353A080201F363100963DC7 /* Menu */,
 				7353A07F201F332200963DC7 /* Setting */,
 				52AB4BA91A93AA7B0082C35E /* UIButton+VerticalButtonFactory.h */,
@@ -402,8 +246,6 @@
 		7352CF0B2022EE7F00C17EE7 /* Stock Model */ = {
 			isa = PBXGroup;
 			children = (
-				733DB3412021B0520073852A /* ScanVC.h */,
-				733DB3422021B0520073852A /* ScanVC.m */,
 				7352CF0C2022FCE600C17EE7 /* DataSource */,
 			);
 			name = "Stock Model";
@@ -427,26 +269,10 @@
 		7353A07F201F332200963DC7 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				784B004919CB197E0095EE43 /* AboutVC.h */,
-				784B004A19CB197E0095EE43 /* AboutVC.m */,
-				78D66D4A19C84F1C00722E6C /* AntennaSettingsVC.h */,
-				78D66D4B19C84F1C00722E6C /* AntennaSettingsVC.m */,
-				B47B6D061B3F2CF600000BF0 /* PowerManagementVC.h */,
-				B47B6D071B3F2CF600000BF0 /* PowerManagementVC.m */,
-				78D66D4D19C8604B00722E6C /* SingulationSettingsVC.h */,
-				78D66D4E19C8604B00722E6C /* SingulationSettingsVC.m */,
-				78D66D5019C86F7E00722E6C /* TagReportSettingsVC.h */,
-				78D66D5119C86F7E00722E6C /* TagReportSettingsVC.m */,
-				78D66D5319C87E0F00722E6C /* RegulatorySettingsVC.h */,
-				78D66D5419C87E0F00722E6C /* RegulatorySettingsVC.m */,
-				78757AE619C9B4CE000068C2 /* BeeperSettingsVC.h */,
-				78757AE719C9B4CE000068C2 /* BeeperSettingsVC.m */,
-				784B004019CB02240095EE43 /* SaveSettingsVC.h */,
-				784B004119CB02240095EE43 /* SaveSettingsVC.m */,
 				784B004319CB19420095EE43 /* BatteryStatusVC.h */,
 				784B004419CB19420095EE43 /* BatteryStatusVC.m */,
-				78757AE019C96B0E000068C2 /* TriggerSettingsVC.h */,
-				78757AE119C96B0E000068C2 /* TriggerSettingsVC.m */,
+				730F86442025B05E00C36234 /* BatteryIndicatorView.h */,
+				730F86432025B05E00C36234 /* BatteryIndicatorView.m */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -456,61 +282,16 @@
 			children = (
 				B4F3FE361B41D23400325361 /* BaseDpoVC.h */,
 				B4F3FE371B41D23400325361 /* BaseDpoVC.m */,
-				78D66D0E19BDF18400722E6C /* RapidReadVC.h */,
-				78D66D0F19BDF18400722E6C /* RapidReadVC.m */,
-				78D66D1419BF30D000722E6C /* InventoryVC.h */,
-				78D66D1519BF30D000722E6C /* InventoryVC.m */,
-				78D66D1A19C06E2800722E6C /* LocateTagVC.h */,
-				78D66D1B19C06E2800722E6C /* LocateTagVC.m */,
 				78D66D4119C7406500722E6C /* SettingsVC.h */,
+				733DB3412021B0520073852A /* ScanVC.h */,
+				733DB3422021B0520073852A /* ScanVC.m */,
 				78D66D4219C7406500722E6C /* SettingsVC.m */,
 				78D66D4419C8368100722E6C /* ReaderListVC.h */,
 				78D66D4519C8368100722E6C /* ReaderListVC.m */,
 				78D66D4719C8430A00722E6C /* ConnectionSettingsVC.h */,
 				78D66D4819C8430A00722E6C /* ConnectionSettingsVC.m */,
-				78D66D2F19C0A57600722E6C /* AccessOperationsVC.h */,
-				78D66D3019C0A57600722E6C /* AccessOperationsVC.m */,
-				78D66D3519C31C6000722E6C /* FilterConfigVC.h */,
-				78D66D3619C31C6000722E6C /* FilterConfigVC.m */,
 			);
 			name = Menu;
-			sourceTree = "<group>";
-		};
-		7353A081201F453400963DC7 /* UI Element */ = {
-			isa = PBXGroup;
-			children = (
-				78D66D0919BDDF9000722E6C /* UIVerticalButton.h */,
-				78D66D0A19BDDF9000722E6C /* UIVerticalButton.m */,
-				784B003419C9CEDF0095EE43 /* OptionCellView.h */,
-				784B003519C9CEDF0095EE43 /* OptionCellView.m */,
-				78D66D1719BF3B7B00722E6C /* RFIDTagCellView.h */,
-				78D66D1819BF3B7B00722E6C /* RFIDTagCellView.m */,
-				525660C21AB07CA4004D33B1 /* RFIDDeviceCellView.h */,
-				525660C31AB07CA4004D33B1 /* RFIDDeviceCellVeiew.m */,
-				78D66D1D19C08F6200722E6C /* TextFieldCellView.h */,
-				78D66D1E19C08F6200722E6C /* TextFieldCellView.m */,
-				78D66D2019C08F9B00722E6C /* TextViewCellView.h */,
-				78D66D2119C08F9B00722E6C /* TextViewCellView.m */,
-				78D66D2319C08FE900722E6C /* PickerCellView.h */,
-				78D66D2419C08FE900722E6C /* PickerCellView.m */,
-				78757AE319C96CF5000068C2 /* DatePickerCellView.h */,
-				78757AE419C96CF5000068C2 /* DatePickerCellView.m */,
-				78D66D2619C0900900722E6C /* LabelInputFieldCellView.h */,
-				78D66D2719C0900900722E6C /* LabelInputFieldCellView.m */,
-				78D66D3E19C73E2100722E6C /* ImageLabelCellView.h */,
-				78D66D3F19C73E2100722E6C /* ImageLabelCellView.m */,
-				78D66D2919C0A40500722E6C /* InfoCellView.h */,
-				78D66D2A19C0A40500722E6C /* InfoCellView.m */,
-				78D66D3819C31D0800722E6C /* SwitchCellView.h */,
-				78D66D3919C31D0800722E6C /* SwitchCellView.m */,
-				78757AE919C9BF8E000068C2 /* SliderCellView.h */,
-				78757AEA19C9BF8E000068C2 /* SliderCellView.m */,
-				78D66D3219C3155300722E6C /* SelectionTableVC.h */,
-				78D66D3319C3155300722E6C /* SelectionTableVC.m */,
-				784B004D19CB21630095EE43 /* BatteryIndicatorView.h */,
-				784B004E19CB21630095EE43 /* BatteryIndicatorView.m */,
-			);
-			name = "UI Element";
 			sourceTree = "<group>";
 		};
 		78D66C8319BDBCEF00722E6C = {
@@ -546,9 +327,6 @@
 		78D66C9519BDBCF000722E6C /* RFIDDemoApp */ = {
 			isa = PBXGroup;
 			children = (
-				7803C51A1AD6B1620073ECA7 /* iTunesArtwork */,
-				7803C51B1AD6B1620073ECA7 /* iTunesArtwork@2x */,
-				730670B5202094B800855D57 /* SearchViewController.swift */,
 				78D66CA119BDBCF000722E6C /* RFIDDemoApp.storyboard */,
 				78D66CA719BDBCF000722E6C /* Images.xcassets */,
 				78D66D0D19BDEC2400722E6C /* ui_config.h */,
@@ -558,7 +336,6 @@
 				52AB54821A9C79BE0087CC70 /* ViewControllers */,
 				52AB54801A9C791B0087CC70 /* model */,
 				52B6C6EF1A8CBEE700D35518 /* AlertProgressDialog */,
-				78D66CC419BDD5D900722E6C /* res */,
 				78D66C9619BDBCF000722E6C /* Supporting Files */,
 				730670B4202094B700855D57 /* RFIDDemoApp-Bridging-Header.h */,
 			);
@@ -568,71 +345,19 @@
 		78D66C9619BDBCF000722E6C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				730F865C2025B9A000C36234 /* title_antn.png */,
+				730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */,
+				730F86582025B87E00C36234 /* ic_settings@3x.png */,
+				730F86562025B86D00C36234 /* title_rdl.png */,
+				730F86532025B85F00C36234 /* logo_new.png */,
+				730F86522025B85F00C36234 /* vertify3.png */,
+				730F865E2025C21200C36234 /* LaunchScreen.xib */,
 				78D66C9719BDBCF000722E6C /* RFIDDemoApp-Info.plist */,
 				78D66C9819BDBCF000722E6C /* InfoPlist.strings */,
 				78D66C9B19BDBCF000722E6C /* main.m */,
 				78D66C9D19BDBCF000722E6C /* RFIDDemoApp-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		78D66CC419BDD5D900722E6C /* res */ = {
-			isa = PBXGroup;
-			children = (
-				730670B72020982F00855D57 /* Red.jpg */,
-				B46FD5771B431D5100EB191A /* bat_lvl_25_dpo.png */,
-				B46FD5781B431D5100EB191A /* bat_lvl_25.png */,
-				B46FD5791B431D5100EB191A /* bat_lvl_50_dpo.png */,
-				B46FD57A1B431D5100EB191A /* bat_lvl_50.png */,
-				B46FD57B1B431D5100EB191A /* bat_lvl_75_dpo.png */,
-				B46FD57C1B431D5100EB191A /* bat_lvl_75.png */,
-				B46FD57D1B431D5100EB191A /* bat_lvl_100_dpo.png */,
-				B46FD57E1B431D5100EB191A /* bat_lvl_100.png */,
-				B46FD57F1B431D5100EB191A /* bat_lvl_empty_dpo.png */,
-				B46FD5801B431D5100EB191A /* bat_lvl_empty.png */,
-				788108651A2F2E8300A3D2EE /* find.png */,
-				788108661A2F2E8300A3D2EE /* tab_access@2x.png */,
-				788108671A2F2E8300A3D2EE /* tab_inv@2x.png */,
-				788108681A2F2E8300A3D2EE /* tab_loc@2x.png */,
-				788108691A2F2E8300A3D2EE /* tab_rr@2x.png */,
-				78D66CC519BDD5D900722E6C /* app_icon.png */,
-				78D66CC619BDD5D900722E6C /* btn_access.png */,
-				78D66CC719BDD5D900722E6C /* btn_filter.png */,
-				78D66CC819BDD5D900722E6C /* btn_inv.png */,
-				78D66CC919BDD5D900722E6C /* btn_locate.png */,
-				78D66CCA19BDD5D900722E6C /* btn_rr.png */,
-				78D66CCB19BDD5D900722E6C /* btn_sett.png */,
-				78D66CCC19BDD5D900722E6C /* dl_about.png */,
-				78D66CCD19BDD5D900722E6C /* dl_access.png */,
-				78D66CCE19BDD5D900722E6C /* dl_antn.png */,
-				78D66CCF19BDD5D900722E6C /* dl_batt.png */,
-				78D66CD019BDD5D900722E6C /* dl_beep.png */,
-				78D66CD119BDD5D900722E6C /* dl_filters.png */,
-				78D66CD219BDD5D900722E6C /* dl_inv.png */,
-				78D66CD319BDD5D900722E6C /* dl_loc.png */,
-				78D66CD419BDD5D900722E6C /* dl_rdl.png */,
-				78D66CD519BDD5D900722E6C /* dl_reg.png */,
-				78D66CD619BDD5D900722E6C /* dl_rr.png */,
-				78D66CD719BDD5D900722E6C /* dl_save.png */,
-				78D66CD819BDD5D900722E6C /* dl_sett.png */,
-				78D66CD919BDD5D900722E6C /* dl_singl.png */,
-				78D66CDA19BDD5D900722E6C /* dl_ststp.png */,
-				78D66CDB19BDD5D900722E6C /* dl_tag.png */,
-				78D66CDC19BDD5D900722E6C /* ic_launcher.png */,
-				78D66CDD19BDD5D900722E6C /* title_antn.png */,
-				78D66CDE19BDD5D900722E6C /* title_batt.png */,
-				78D66CDF19BDD5D900722E6C /* title_beep.png */,
-				78D66CE019BDD5D900722E6C /* title_rdl.png */,
-				78D66CE119BDD5D900722E6C /* title_reg.png */,
-				78D66CE219BDD5D900722E6C /* title_save.png */,
-				78D66CE319BDD5D900722E6C /* title_sett.png */,
-				78D66CE419BDD5D900722E6C /* title_singl.png */,
-				78D66CE519BDD5D900722E6C /* title_strstp.png */,
-				78D66CE619BDD5D900722E6C /* title_tags.png */,
-				B498F9741B41A16B007589E0 /* title_pwr_off.png */,
-				B498F9751B41A16B007589E0 /* title_pwr_on.png */,
-			);
-			path = res;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -694,63 +419,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78D66D0519BDD5D900722E6C /* title_sett.png in Resources */,
-				7881086B1A2F2E8300A3D2EE /* tab_access@2x.png in Resources */,
-				78D66CF219BDD5D900722E6C /* dl_beep.png in Resources */,
-				78D66CE919BDD5D900722E6C /* btn_filter.png in Resources */,
-				B46FD5861B431D5100EB191A /* bat_lvl_75.png in Resources */,
-				78D66CEF19BDD5D900722E6C /* dl_access.png in Resources */,
-				B46FD58A1B431D5100EB191A /* bat_lvl_empty.png in Resources */,
-				78D66CFF19BDD5D900722E6C /* title_antn.png in Resources */,
-				78D66CF619BDD5D900722E6C /* dl_rdl.png in Resources */,
-				B46FD5841B431D5100EB191A /* bat_lvl_50.png in Resources */,
-				78D66CE719BDD5D900722E6C /* app_icon.png in Resources */,
-				7803C51D1AD6B1620073ECA7 /* iTunesArtwork@2x in Resources */,
-				78D66D0119BDD5D900722E6C /* title_beep.png in Resources */,
-				78D66D0719BDD5D900722E6C /* title_strstp.png in Resources */,
-				78D66CE819BDD5D900722E6C /* btn_access.png in Resources */,
-				78D66CF019BDD5D900722E6C /* dl_antn.png in Resources */,
-				78D66CFC19BDD5D900722E6C /* dl_ststp.png in Resources */,
-				B46FD5811B431D5100EB191A /* bat_lvl_25_dpo.png in Resources */,
-				7881086A1A2F2E8300A3D2EE /* find.png in Resources */,
-				B46FD5881B431D5100EB191A /* bat_lvl_100.png in Resources */,
-				78D66CF819BDD5D900722E6C /* dl_rr.png in Resources */,
-				78D66CF519BDD5D900722E6C /* dl_loc.png in Resources */,
-				B498F9761B41A16B007589E0 /* title_pwr_off.png in Resources */,
-				B46FD5891B431D5100EB191A /* bat_lvl_empty_dpo.png in Resources */,
+				730F865F2025C21300C36234 /* LaunchScreen.xib in Resources */,
 				78D66CA819BDBCF000722E6C /* Images.xcassets in Resources */,
-				7803C51C1AD6B1620073ECA7 /* iTunesArtwork in Resources */,
-				78D66CF419BDD5D900722E6C /* dl_inv.png in Resources */,
-				78D66CFD19BDD5D900722E6C /* dl_tag.png in Resources */,
-				B46FD5831B431D5100EB191A /* bat_lvl_50_dpo.png in Resources */,
-				78D66CED19BDD5D900722E6C /* btn_sett.png in Resources */,
-				78D66CF919BDD5D900722E6C /* dl_save.png in Resources */,
-				78D66CEB19BDD5D900722E6C /* btn_locate.png in Resources */,
-				78D66CF319BDD5D900722E6C /* dl_filters.png in Resources */,
-				730670B82020982F00855D57 /* Red.jpg in Resources */,
-				B46FD5821B431D5100EB191A /* bat_lvl_25.png in Resources */,
-				78D66D0019BDD5D900722E6C /* title_batt.png in Resources */,
-				7881086E1A2F2E8300A3D2EE /* tab_rr@2x.png in Resources */,
-				78D66CF119BDD5D900722E6C /* dl_batt.png in Resources */,
-				B498F9771B41A16B007589E0 /* title_pwr_on.png in Resources */,
-				78D66CF719BDD5D900722E6C /* dl_reg.png in Resources */,
-				78D66D0219BDD5D900722E6C /* title_rdl.png in Resources */,
-				B46FD5871B431D5100EB191A /* bat_lvl_100_dpo.png in Resources */,
-				78D66CFE19BDD5D900722E6C /* ic_launcher.png in Resources */,
-				78D66CEC19BDD5D900722E6C /* btn_rr.png in Resources */,
-				78D66CFA19BDD5D900722E6C /* dl_sett.png in Resources */,
-				78D66CFB19BDD5D900722E6C /* dl_singl.png in Resources */,
-				78D66D0819BDD5D900722E6C /* title_tags.png in Resources */,
 				78D66C9A19BDBCF000722E6C /* InfoPlist.strings in Resources */,
-				78D66CEE19BDD5D900722E6C /* dl_about.png in Resources */,
-				B46FD5851B431D5100EB191A /* bat_lvl_75_dpo.png in Resources */,
-				78D66CEA19BDD5D900722E6C /* btn_inv.png in Resources */,
 				78D66CA319BDBCF000722E6C /* RFIDDemoApp.storyboard in Resources */,
-				78D66D0619BDD5D900722E6C /* title_singl.png in Resources */,
-				78D66D0419BDD5D900722E6C /* title_save.png in Resources */,
-				7881086D1A2F2E8300A3D2EE /* tab_loc@2x.png in Resources */,
-				7881086C1A2F2E8300A3D2EE /* tab_inv@2x.png in Resources */,
-				78D66D0319BDD5D900722E6C /* title_reg.png in Resources */,
+				730F86552025B85F00C36234 /* logo_new.png in Resources */,
+				730F865B2025B88500C36234 /* bat_lvl_100_dpo.png in Resources */,
+				730F86542025B85F00C36234 /* vertify3.png in Resources */,
+				730F86572025B86E00C36234 /* title_rdl.png in Resources */,
+				730F86592025B87E00C36234 /* ic_settings@3x.png in Resources */,
+				730F865D2025B9A000C36234 /* title_antn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -762,62 +440,38 @@
 			buildActionMask = 2147483647;
 			files = (
 				784B003F19CAEEA50095EE43 /* AppConfiguration.m in Sources */,
-				784B004F19CB21630095EE43 /* BatteryIndicatorView.m in Sources */,
 				7352CF082022EE6C00C17EE7 /* StockDataSource.m in Sources */,
-				78757AE219C96B0E000068C2 /* TriggerSettingsVC.m in Sources */,
 				52B6C6F61A8CBF2000D35518 /* AlertView.m in Sources */,
-				78D66D5519C87E0F00722E6C /* RegulatorySettingsVC.m in Sources */,
-				525660C41AB07CA4004D33B1 /* RFIDDeviceCellVeiew.m in Sources */,
-				78757AE519C96CF5000068C2 /* DatePickerCellView.m in Sources */,
-				78D66D1F19C08F6200722E6C /* TextFieldCellView.m in Sources */,
 				78D66D4619C8368100722E6C /* ReaderListVC.m in Sources */,
+				730F86452025B05E00C36234 /* BatteryIndicatorView.m in Sources */,
+				730F86482025B09B00C36234 /* RFIDDeviceCellVeiew.m in Sources */,
 				52AB4BAA1A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m in Sources */,
-				78D66D2819C0900900722E6C /* LabelInputFieldCellView.m in Sources */,
 				78D66D4919C8430A00722E6C /* ConnectionSettingsVC.m in Sources */,
-				78D66D5219C86F7E00722E6C /* TagReportSettingsVC.m in Sources */,
-				78D66D3A19C31D0800722E6C /* SwitchCellView.m in Sources */,
-				78D66D3119C0A57600722E6C /* AccessOperationsVC.m in Sources */,
 				784B003C19CAC7CF0095EE43 /* RfidAppEngine.m in Sources */,
-				78757AE819C9B4CE000068C2 /* BeeperSettingsVC.m in Sources */,
 				78EDBD5A1B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m in Sources */,
 				784B004519CB19420095EE43 /* BatteryStatusVC.m in Sources */,
 				78EDBD611B28506A000997E5 /* FileExportManager.m in Sources */,
-				78D66D1919BF3B7B00722E6C /* RFIDTagCellView.m in Sources */,
-				78D66D4019C73E2100722E6C /* ImageLabelCellView.m in Sources */,
-				78D66D3419C3155300722E6C /* SelectionTableVC.m in Sources */,
+				730F864E2025B18C00C36234 /* RFIDTagCellView.m in Sources */,
 				52AB54851A9C7AE50087CC70 /* ActiveReader.m in Sources */,
 				525660C11AB03952004D33B1 /* InventoryData.m in Sources */,
-				78D66D1C19C06E2800722E6C /* LocateTagVC.m in Sources */,
-				78D66D1619BF30D000722E6C /* InventoryVC.m in Sources */,
-				78D66D1019BDF18400722E6C /* RapidReadVC.m in Sources */,
+				730F86512025B1AC00C36234 /* ImageLabelCellView.m in Sources */,
 				733DB3432021B0520073852A /* ScanVC.m in Sources */,
-				784B004219CB02240095EE43 /* SaveSettingsVC.m in Sources */,
-				784B004B19CB197E0095EE43 /* AboutVC.m in Sources */,
-				730670B6202094B800855D57 /* SearchViewController.swift in Sources */,
-				78757AEB19C9BF8E000068C2 /* SliderCellView.m in Sources */,
 				7352CF092022EE6C00C17EE7 /* StockData.m in Sources */,
-				78D66D4F19C8604B00722E6C /* SingulationSettingsVC.m in Sources */,
-				78D66D4C19C84F1C00722E6C /* AntennaSettingsVC.m in Sources */,
-				78D66D0B19BDDF9000722E6C /* UIVerticalButton.m in Sources */,
-				78D66D2B19C0A40500722E6C /* InfoCellView.m in Sources */,
-				B47B6D081B3F2CF600000BF0 /* PowerManagementVC.m in Sources */,
 				784B003919CAC4FB0095EE43 /* SledConfiguration.m in Sources */,
+				730F864B2025B0B900C36234 /* OptionCellView.m in Sources */,
 				7352CF072022EE6C00C17EE7 /* ParseOperation.m in Sources */,
 				78D66D1319BF0E0100722E6C /* RFIDTabVC.m in Sources */,
-				78D66D2519C08FE900722E6C /* PickerCellView.m in Sources */,
 				B4F3FE381B41D23400325361 /* BaseDpoVC.m in Sources */,
 				7835745C1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m in Sources */,
-				78D66D2219C08F9B00722E6C /* TextViewCellView.m in Sources */,
 				7352CF0A2022EE6C00C17EE7 /* StockCellTableViewCell.m in Sources */,
-				78D66D3719C31C6000722E6C /* FilterConfigVC.m in Sources */,
 				78D66D4319C7406500722E6C /* SettingsVC.m in Sources */,
 				78D66CA019BDBCF000722E6C /* RFIDDemoAppDelegate.m in Sources */,
 				52B6C6F51A8CBF2000D35518 /* MBProgressHUD.m in Sources */,
 				78EDBE051B3453E7000997E5 /* RadioOperationEngine.m in Sources */,
+				730F86422025B03A00C36234 /* SwitchCellView.m in Sources */,
 				52AB4BA71A93A9C00082C35E /* HomeVCConstraints.m in Sources */,
 				78D66C9C19BDBCF000722E6C /* main.m in Sources */,
 				52BA7CE01AE8FA4600C94D33 /* EnumMapper.m in Sources */,
-				784B003619C9CEDF0095EE43 /* OptionCellView.m in Sources */,
 				7854A4BE1A8389EA006CE34E /* InventoryItem.m in Sources */,
 				52B296961ACBF5270034CC2F /* RegionData.m in Sources */,
 			);
@@ -921,8 +575,6 @@
 		78D66CBF19BDBCF000722E6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -939,7 +591,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/symbolrfid-sdk",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ATM.RFIDDemoApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ATM.RFIDApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -954,8 +606,6 @@
 		78D66CC019BDBCF000722E6C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Zebra Technologies Corporation (DNSTESXL8W)";
@@ -972,7 +622,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/symbolrfid-sdk",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ATM.RFIDDemoApp;
+				PRODUCT_BUNDLE_IDENTIFIER = ATM.RFIDApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

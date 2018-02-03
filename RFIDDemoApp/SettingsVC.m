@@ -17,15 +17,8 @@
 #import "SettingsVC.h"
 #import "ReaderListVC.h"
 #import "ConnectionSettingsVC.h"
-#import "AntennaSettingsVC.h"
-#import "SingulationSettingsVC.h"
-#import "TagReportSettingsVC.h"
-#import "RegulatorySettingsVC.h"
-#import "TriggerSettingsVC.h"
-#import "BeeperSettingsVC.h"
-#import "SaveSettingsVC.h"
 #import "BatteryStatusVC.h"
-#import "PowerManagementVC.h"
+//#import "PowerManagementVC.h"
 #import "ui_config.h"
 #import "AlertView.h"
 
@@ -88,29 +81,14 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         }
         
         
-        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_ANTENNA withObject:ZT_STR_SETTINGS_ANTENNA];
+       
         [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_BATTERY withObject:ZT_STR_SETTINGS_BATTERY];
-        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_BEEPER withObject:ZT_STR_SETTINGS_BEEPER];
         [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_CONNECTION withObject:ZT_STR_SETTINGS_CONNECTION];
         [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_READER_LIST withObject:ZT_STR_SETTINGS_READER_LIST];
-        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_REGULATORY withObject:ZT_STR_SETTINGS_REGULATORY];
-        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_SAVE withObject:ZT_STR_SETTINGS_SAVE];
-        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_SINGULATION_CONTROL withObject:ZT_STR_SETTINGS_SINGULATION_CONTROL];
-        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_START_STOP_TRIGGER withObject:ZT_STR_SETTINGS_START_STOP_TRIGGER];
-        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_TAG_REPORT withObject:ZT_STR_SETTINGS_TAG_REPORT];
-        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_PWR_MANAGEMENT withObject:ZT_STR_SETTINGS_PWR_MANAGEMENT];
-        
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_ANTENNA withObject:ZT_VC_SETTINGS_CELL_IMAGE_ANTENNA];
         [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_BATTERY withObject:ZT_VC_SETTINGS_CELL_IMAGE_BATTERY];
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_BEEPER withObject:ZT_VC_SETTINGS_CELL_IMAGE_BEEPER];
+       
         [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_CONNECTION withObject:ZT_VC_SETTINGS_CELL_IMAGE_CONNECTION];
         [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_READER_LIST withObject:ZT_VC_SETTINGS_CELL_IMAGE_READER_LIST];
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_REGULATORY withObject:ZT_VC_SETTINGS_CELL_IMAGE_REGULATORY];
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_SAVE withObject:ZT_VC_SETTINGS_CELL_IMAGE_SAVE];
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_SINGULATION_CONTROL withObject:ZT_VC_SETTINGS_CELL_IMAGE_SINGULATION_CONTROL];
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_START_STOP_TRIGGER withObject:ZT_VC_SETTINGS_CELL_IMAGE_START_STOP_TRIGGER];
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_TAG_REPORT withObject:ZT_VC_SETTINGS_CELL_IMAGE_TAG_REPORT];
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_PWR_MANAGEMENT withObject:[self getImageNameForPowerManagementIcon]];
 
         m_OffscreenImageLabelCell = [[zt_ImageLabelCellView alloc] init];
         
@@ -199,56 +177,13 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
                     [self applyNewSetting:@"Saving antenna settings"];
                 break;
                 
-            case ZT_VC_SETTINGS_CELL_IDX_SINGULATION_CONTROL:
-                if (NO == [local isSingulationConfigValid]) {
-                    [self showInvalidParamsWarning];
-                    
-                    // set last actual config to local sled
-                    [local setSingulationOptionsWithConfig:[sled getSingulationConfig]];
-                    break;
-                }
                 
-                if (![sled isSingulationConfigEqual:local])
-                    [self applyNewSetting:@"Saving singulation settings"];
-                break;
-                
-            case ZT_VC_SETTINGS_CELL_IDX_TAG_REPORT:
-                if (![sled isTagReporConfigEqual:local] || ![sled isBatchModeConfigEqual:local] ||![sled isUniqueTagsReportEqual:local])
-                    [self applyNewSetting:@"Saving tag report settings"];
-                break;
-                
-            case ZT_VC_SETTINGS_CELL_IDX_START_STOP_TRIGGER:
-                if (NO == [local isStartTriggerConfigValid] || NO == [local isStopTriggerConfigValid]) {
-                    [self showInvalidParamsWarning];
-                    // set last actual config to local sled
-                    [local setStartTriggerOptionWithConfig:[sled getStartTriggerConfig]];
-                    [local setStopTriggerOptionWithConfig:[sled getStopTriggerConfig]];
-                    break;
-                } 
-            
                 if (![sled isStartTriggerConfigEqual:local] || ![sled isStopTriggerConfigEqual:local])
                 {
                     [self applyNewSetting:@"Saving start\\stop trigger settings"];
                 }
                 break;
                 
-            case ZT_VC_SETTINGS_CELL_IDX_REGULATORY:
-                if(![sled isRegulatoryConfigEqual:local])
-                {
-                    [self applyNewSetting:@"Saving regulatory settings"];
-                }
-                break;
-                
-            case ZT_VC_SETTINGS_CELL_IDX_BEEPER:
-                if (![sled isBeeperConfigEqual:local]) {
-                    [self applyNewSetting:@"Saving beeper settings"];
-                }
-                else
-                {
-                    /* equal -> overwrite volume level in case of disabled beeper */
-                    [sled setCurrentBeeperLevel:[local currentBeeperLevel]];
-                }
-            case ZT_VC_SETTINGS_CELL_IDX_PWR_MANAGEMENT:
                 
                 if (![sled isDpoConfigEqual:local])
                 {
@@ -296,54 +231,6 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         case ZT_VC_SETTINGS_CELL_IDX_CONNECTION:
             
             break;
-        case ZT_VC_SETTINGS_CELL_IDX_ANTENNA:
-            result = [[zt_RfidAppEngine sharedAppEngine] setAntennaConfigurationFromLocal:&response];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_START_STOP_TRIGGER:
-            result = [[zt_RfidAppEngine sharedAppEngine] setStartTriggerConfiguration:&response];
-            if (result != SRFID_RESULT_SUCCESS) {
-                zt_SledConfiguration *sled = [[zt_RfidAppEngine sharedAppEngine] sledConfiguration];
-                zt_SledConfiguration *local = [[zt_RfidAppEngine sharedAppEngine] temporarySledConfigurationCopy];
-                [local setStopTriggerOptionWithConfig:[sled getStopTriggerConfig]];
-                break;
-            }
-            else
-            {
-                result = [[zt_RfidAppEngine sharedAppEngine] setStopTriggerConfiguration:&response];
-            }
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_SINGULATION_CONTROL:
-            result = [[zt_RfidAppEngine sharedAppEngine] setSingulationConfigurationFromLocal:&response];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_REGULATORY:
-            result = [[zt_RfidAppEngine sharedAppEngine] setRegulatoryConfig:&response];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_BEEPER:
-            result = [[zt_RfidAppEngine sharedAppEngine] setBeeperConfig:&response];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_SAVE:
-            
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_BATTERY:
-            
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_TAG_REPORT:
-//            result = [[zt_RfidAppEngine sharedAppEngine] setTagReportConfigurationFromLocal:&response];
-//            break;
-            {
-                zt_SledConfiguration *sled = [[zt_RfidAppEngine sharedAppEngine] sledConfiguration];
-                zt_SledConfiguration *local = [[zt_RfidAppEngine sharedAppEngine] temporarySledConfigurationCopy];
-                if(![sled isTagReporConfigEqual:local])
-                    result = [[zt_RfidAppEngine sharedAppEngine] setTagReportConfigurationFromLocal:&response];
-                if ( ![sled isBatchModeConfigEqual:local])
-                    result = [[zt_RfidAppEngine sharedAppEngine] setBatchModeConfig:&response];
-                if ( ![sled isUniqueTagsReportEqual:local])
-                    result = [[zt_RfidAppEngine sharedAppEngine] setUniqueTagsReportConfigurationFromLocal:&response];
-            }
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_PWR_MANAGEMENT:
-            result = [[zt_RfidAppEngine sharedAppEngine] setDpoConfigurationFromLocal:&response];
-        break;
     }
     sleep(1);
     
@@ -460,33 +347,34 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         case ZT_VC_SETTINGS_CELL_IDX_CONNECTION:
             // do nothing
             break;
-        case ZT_VC_SETTINGS_CELL_IDX_ANTENNA:
-            [self.navigationController popToViewController:self animated:YES];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_START_STOP_TRIGGER:
-            [self.navigationController popToViewController:self animated:YES];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_SINGULATION_CONTROL:
-            [self.navigationController popToViewController:self animated:YES];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_REGULATORY:
-            [self.navigationController popToViewController:self animated:YES];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_BEEPER:
-            [self.navigationController popToViewController:self animated:YES];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_SAVE:
-            [self.navigationController popToViewController:self animated:YES];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_BATTERY:
-            [self.navigationController popToViewController:self animated:YES];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_TAG_REPORT:
-            [self.navigationController popToViewController:self animated:YES];
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_PWR_MANAGEMENT:
-            [self.navigationController popToViewController:self animated:YES];
-            break;
+//        case ZT_VC_SETTINGS_CELL_IDX_BATTERY:
+//            [self.navigationController popToViewController:self animated:YES];
+//            break;
+//        case ZT_VC_SETTINGS_CELL_IDX_ANTENNA:
+//            [self.navigationController popToViewController:self animated:YES];
+//            break;
+//        case ZT_VC_SETTINGS_CELL_IDX_START_STOP_TRIGGER:
+//            [self.navigationController popToViewController:self animated:YES];
+//            break;
+//        case ZT_VC_SETTINGS_CELL_IDX_SINGULATION_CONTROL:
+//            [self.navigationController popToViewController:self animated:YES];
+//            break;
+//        case ZT_VC_SETTINGS_CELL_IDX_REGULATORY:
+//            [self.navigationController popToViewController:self animated:YES];
+//            break;
+//        case ZT_VC_SETTINGS_CELL_IDX_BEEPER:
+//            [self.navigationController popToViewController:self animated:YES];
+//            break;
+//        case ZT_VC_SETTINGS_CELL_IDX_SAVE:
+//            [self.navigationController popToViewController:self animated:YES];
+//            break;
+//
+//        case ZT_VC_SETTINGS_CELL_IDX_TAG_REPORT:
+//            [self.navigationController popToViewController:self animated:YES];
+//            break;
+//        case ZT_VC_SETTINGS_CELL_IDX_PWR_MANAGEMENT:
+//            [self.navigationController popToViewController:self animated:YES];
+//            break;
     }
 
     
@@ -627,15 +515,7 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
     UIViewController *vc = nil;
     zt_ReaderListVC *reader_list_vc = nil;
     zt_ConnectionSettingsVC *connection_vc = nil;
-    zt_AntennaSettingsVC *antenna_vc = nil;
-    zt_SingulationSettingsVC *singulation_vc = nil;
-    zt_TagReportSettingsVC *tag_report_vc = nil;
-    zt_RegulatorySettingsVC *regulatory_vc = nil;
-    zt_TriggerSettingsVC *trigger_vc = nil;
-    zt_BeeperSettingsVC *beeper_vc = nil;
-    zt_SaveSettingsVC *save_vc = nil;
     zt_BatteryStatusVC *battery_vc = nil;
-    zt_PowerManagementVC *power_management_vc = nil;
     
     switch (idx)
     {
@@ -646,44 +526,6 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         case ZT_VC_SETTINGS_CELL_IDX_CONNECTION:
             connection_vc = (zt_ConnectionSettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_CONNECTION_SETTINGS_VC"];
             vc = connection_vc;
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_ANTENNA:
-            antenna_vc = (zt_AntennaSettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_ANTENNA_SETTINGS_VC"];
-            vc = antenna_vc;
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_START_STOP_TRIGGER:
-            trigger_vc = (zt_TriggerSettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_TRIGGER_SETTINGS_VC"];
-            vc = trigger_vc;
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_SINGULATION_CONTROL:
-            singulation_vc = (zt_SingulationSettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_SINGULATION_SETTINGS_VC"];
-            vc = singulation_vc;
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_REGULATORY:
-            regulatory_vc = (zt_RegulatorySettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_REGULATORY_SETTINGS_VC"];
-            vc = regulatory_vc;
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_BEEPER:
-            beeper_vc = (zt_BeeperSettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_BEEPER_SETTINGS_VC"];
-            vc = beeper_vc;
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_SAVE:
-            save_vc = (zt_SaveSettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_SAVE_SETTINGS_VC"];
-            vc = save_vc;
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_BATTERY:
-            battery_vc = (zt_BatteryStatusVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_BATTERY_STATUS_VC"];
-            vc = battery_vc;
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_TAG_REPORT:
-            tag_report_vc = (zt_TagReportSettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_TAG_REPORT_SETTINGS_VC"];
-            vc = tag_report_vc;
-            break;
-        case ZT_VC_SETTINGS_CELL_IDX_PWR_MANAGEMENT:
-            
-            power_management_vc = (zt_PowerManagementVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_POWER_MANAGEMENT_SETTINGS_VC"];
-            vc = power_management_vc;
-            
             break;
     }
     

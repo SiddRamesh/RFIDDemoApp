@@ -18,9 +18,6 @@
 
 #define ZT_VC_RFIDTAB_SCAN_VC_IDX             0
 #define ZT_VC_RFIDTAB_RAPID_READ_VC_IDX       1
-#define ZT_VC_RFIDTAB_INVENTORY_VC_IDX        2
-#define ZT_VC_RFIDTAB_LOCATE_TAG_VC_IDX       3
-#define ZT_VC_RFIDTAB_ACCESS_VC_IDX           4
 
 @interface zt_RFIDTabVC : UITabBarController <UITabBarControllerDelegate>
 {

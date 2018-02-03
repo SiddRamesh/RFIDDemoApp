@@ -16,10 +16,10 @@
 
 #import <UIKit/UIKit.h>
 #import "RFIDTabVC.h"
-#import "FilterConfigVC.h"
+//#import "FilterConfigVC.h"
 #import "SettingsVC.h"
 #import "ScanVC.h"
-#import "AboutVC.h"
+//#import "AboutVC.h"
 #import "UIButton+VerticalButtonFactory.h"
 #import "ui_config.h"
 #import "AlertView.h"
@@ -32,11 +32,8 @@ IB_DESIGNABLE
 }
 - (IBAction)btnScanPressed:(id)sender;
 - (IBAction)btnRapidReadPressed:(id)sender;
-- (IBAction)btnInventoryPressed:(id)sender;
 - (IBAction)btnSettingsPressed:(id)sender;
-- (IBAction)btnLocateTagPressed:(id)sender;
-- (IBAction)btnFilterPressed:(id)sender;
-- (IBAction)btnAccessPressed:(id)sender;
+
 - (IBAction)btnAboutPressed:(id)sender;
 
 - (void)showTabInterfaceActiveView:(int)identifier;

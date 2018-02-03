@@ -23,7 +23,7 @@
 #import "RfidSingulationConfig.h"
 #import "RfidReportConfig.h"
 #import "AlertView.h"
-#import "RegulatorySettingsVC.h"
+//#import "RegulatorySettingsVC.h"
 #import "BatteryStatusVC.h"
 #import "FileExportManager.h"
 #import "RfidReaderInfo.h"
@@ -545,48 +545,6 @@ zt_RfidAppEngine *_g_sharedAppEngine;
     
     SRFID_RESULT res = [self getRegulatoryConfig:nil];
     
-    if (SRFID_RESULT_SUCCESS == res)
-    {
-        if (NSOrderedSame == [[[m_SledConfiguration getRegulatoryConfig] getRegionCode] caseInsensitiveCompare:@"NA"])
-        {
-            NSLog(@"Reader is not configured with a region - 'Command Not Allowed- Region Not Set' error");
-            
-            
-            /*
-             nrv364: "Command Not Allowed- Region Not Set" error:
-             - user shall select one of supported regions:
-             - get supported regions
-             - going to UI thread:
-             - present regulatory VC in modal mode (save button + disabled back button)
-             - on save buttong of regulatory VC perform set regulatory config action
-             - disconnect on success with reconnection option
-             
-             */
-            
-            res = [self getSupportedRegions:nil];
-            
-            if (SRFID_RESULT_SUCCESS == res)
-            {
-                res = SRFID_RESULT_FAILURE;
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    zt_RegulatorySettingsVC *vc = (zt_RegulatorySettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_REGULATORY_SETTINGS_VC"];
-                    [vc setModalMode:YES];
-                    
-                    UINavigationController *nav_vc = [[UINavigationController alloc] initWithRootViewController:vc];
-                    [nav_vc setModalPresentationStyle:UIModalPresentationFormSheet];
-                    [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:nav_vc animated:YES completion:nil];
-                    [nav_vc release];
-                });
-                return;
-            }
-            else
-            {
-                /* if we have failed to get supported regions -> error message has been presented
-                 and reader has been disconnected (refer ::onConfigRequestError) */
-            }
-        }
-    }
     
     if (SRFID_RESULT_SUCCESS == res)
     {

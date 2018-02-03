@@ -142,9 +142,9 @@
  //    [self loadStockData];                                                    //Load This for Server
     
     // Setup the About button
-    UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
+//    UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
     
-    self.navigationItem.rightBarButtonItem = barButtonScan;
+ //   self.navigationItem.rightBarButtonItem = barButtonScan;
     
     [m_tblTags setDelegate:self];
     [m_tblTags setDataSource:self];
@@ -449,7 +449,7 @@
         
 //    } else  {
     
-        if ([_ele1 isEqualToString:@"S1"]) { self.Serial.text = string;}
+        if ([_ele1 isEqualToString:@"S1"]) { self.Serial.text = string; }
         if ([_ele1 isEqualToString:@"S2"]) { self.iec.text = string; }
         if ([_ele1 isEqualToString:@"S3"]) { self.bill.text = string; }
         if ([_ele1 isEqualToString:@"S4"]) {  self.truck.text =  string; }
@@ -459,8 +459,11 @@
         if ([_ele1 isEqualToString:@"S8"]) {  self.time.text =  string; }
         if ([_ele1 isEqualToString:@"S9"]) {  self.enteryByLbl =  string; }
         if ([_ele1 isEqualToString:@"S10"]){  self.eseal.text =  string; }
-        
-      //  self.sshowAlertMessage(messageTitle: "Fetching Data", withMessage: "Success :)")
+    
+ //   zt_AlertView *alertView = [[zt_AlertView alloc]init];
+    
+  //  [alertView showSuccessFailureWithText:nil isSuccess:YES aSuccessMessage:@"Verified" aFailureMessage:nil];
+    
  //   }
     NSLog(@"%@ PData ->: ",string);
 }
@@ -500,6 +503,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    
+//    switch (section) {
+//        case 0: {
+//            return 1;
+//        } break;
+//        case 1: {
+//            return 1;
+//        } break;
+//        default: {
+//            return  [m_Tags count];;
+//        } break;
+//    }
     return [m_Tags count]; //(section == m_Tags.count) ? 3 : 0;
   //  return self.stockDataSource.stockdatas.count;
    // return (section == 0) ? 3: 3;
@@ -742,7 +756,7 @@
         switch (indexPath.row) {
             case 0: {
                 cell.textLabel.text = NSLocalizedString(@"Serial No", @"Serial No :");
-                cell.detailTextLabel.text = self.Serial.text; //@"Serial"; // _serialLbl   //  stockdata.serial;
+                cell.detailTextLabel.text =  self.serialLbl; //@"Serial"; // _serialLbl   //  stockdata.serial;
             } break;
             case 1: {
                 cell.textLabel.text = NSLocalizedString(@"IEC", @"IEC :");

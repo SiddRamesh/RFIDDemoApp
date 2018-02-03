@@ -13,7 +13,7 @@
 #import "UIViewController+ZT_FieldCheck.h"
 #import "BaseDpoVC.h"
 
-@interface ScanVC : BaseDpoVC <UITableViewDataSource, UITextFieldDelegate,NSURLSessionTaskDelegate, NSURLConnectionDelegate,NSURLConnectionDataDelegate, NSXMLParserDelegate, zt_IRfidAppEngineTriggerEventDelegate, zt_IRadioOperationEngineListener> {
+@interface ScanVC : BaseDpoVC <UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate,NSURLSessionTaskDelegate, NSURLConnectionDelegate,NSURLConnectionDataDelegate, NSXMLParserDelegate, zt_IRfidAppEngineTriggerEventDelegate, zt_IRadioOperationEngineListener> {
     
 //    NSString *serialLbl;
 //    NSString *iecLbl;

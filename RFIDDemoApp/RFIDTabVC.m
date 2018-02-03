@@ -15,8 +15,6 @@
  ******************************************************************************/
 
 #import "RFIDTabVC.h"
-#import "InventoryVC.h"
-#import "AccessOperationsVC.h"
 
 @interface zt_RFIDTabVC ()
 
