@@ -19,8 +19,8 @@
 @interface zt_HomeVCConstraints ()
 
 @property (nonatomic, strong) UIButton *m_btnScan;
-@property (nonatomic, strong) UIButton *m_btnRapidRead;
 @property (nonatomic, strong) UIButton *m_btnSettings;
+@property (nonatomic, strong) UIButton *m_btnGenerate;
 
 
 @property (nonatomic, strong) NSNumber *m_padding;
@@ -184,78 +184,8 @@
 
 }
 
-- (void) addConstraintsSizePosition
-{
-//    // 1. Create a dictionary of buttons
-//    NSDictionary *buttonsDictionary = @{@"rapidRead":self.m_btnRapidRead,  @"settings":self.m_btnSettings};
-//    NSDictionary *metrics = @{@"space": self.m_padding}; //@"scan":self.m_btnScan,
-//    // 3.2 Define the views Positions in container using options
-//    
-//    NSArray *constraint_SIZE_H1 = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[scan(==setting)]" options:0 metrics:nil views:buttonsDictionary];
-//    NSArray *constraint_SIZE_V1 = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[scan(==setting)]" options:0 metrics:nil views:buttonsDictionary];
-//    [self.view addConstraints:constraint_SIZE_H1];
-//    [self.view addConstraints:constraint_SIZE_V1];
-//    
-//    NSArray *constraint_POS_H1 = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-space-[scan]-space-[setting]-space-|"
-//                                                                         options:0
-//                                                                         metrics:metrics
-//                                                                           views:buttonsDictionary];
-//    
-//    NSArray *constraint_POS_V1 = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-space-[scan]-space-[setting]-space-|"
-//                                                                         options:NSLayoutFormatAlignAllLeft
-//                                                                         metrics:metrics
-//                                                                           views:buttonsDictionary];
-//    
-//    [self.view addConstraints:constraint_POS_H1];
-//    [self.view addConstraints:constraint_POS_V1];
-//    
-//  //  [UIButton alignHomeButtonContent:self.m_btnScan];
-//    [UIButton alignHomeButtonContent:self.m_btnRapidRead];
-//  
-//    [UIButton alignHomeButtonContent:self.m_btnSettings];
-//   
-    
-}
 
-- (void) addConstraintsPosition
-{
-    // 1. Create a dictionary of buttons
-//    NSDictionary *buttonsDictionary = @{@"scan":self.m_btnRapidRead, @"settings":self.m_btnSettings};
-//    NSDictionary *metrics = @{@"space": self.m_padding}; //{@"scan":self.m_btnScan,
-    // 3.2 Define the views Positions in container using options
-    
-//    NSArray *constraint_POS_H0 = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-space-[scan]-space-[inventory]"
-//                                                                         options:0
-//                                                                         metrics:metrics
-//                                                                           views:buttonsDictionary];
-//    
-//    NSArray *constraint_POS_V0 = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-space-[scan]-space-[locateTag]-space-[access]"
-//                                                                         options:NSLayoutFormatAlignAllLeft
-//                                                                         metrics:metrics
-//                                                                           views:buttonsDictionary];
-//    
-//    [self.view addConstraints:constraint_POS_H0];
-//    [self.view addConstraints:constraint_POS_V0];
-    
-//    NSArray *constraint_POS_H1 = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-space-[scan]-space-[setting]"
-//                                                                         options:0
-//                                                                         metrics:metrics
-//                                                                           views:buttonsDictionary];
-//
-//    NSArray *constraint_POS_V1 = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-space-[scan]-space-[setting]"
-//                                                                         options:NSLayoutFormatAlignAllLeft
-//                                                                         metrics:metrics
-//                                                                           views:buttonsDictionary];
-//
-//    [self.view addConstraints:constraint_POS_H1];
-//    [self.view addConstraints:constraint_POS_V1];
-    
-    
- //   [UIButton alignHomeButtonContent:self.m_btnScan];
-    [UIButton alignHomeButtonContent:self.m_btnRapidRead];
-    [UIButton alignHomeButtonContent:self.m_btnSettings];
-    
-}
+
 
 - (void)initButtonsWithSize
 {
@@ -270,33 +200,17 @@
     float buttonHeight = ( height - 4 * self.m_padding.doubleValue) / 3;
     
     CGSize size  = CGSizeMake(buttonWidth, buttonHeight);
-    
-//    self.m_btnScan = [UIButton buttonForHomeScreenWithSize:size withType:ZT_BUTTON_SCAN];
-//    self.m_btnScan.translatesAutoresizingMaskIntoConstraints = NO;
-    
- //   self.m_btnRapidRead = [UIButton buttonForHomeScreenWithSize:size withType:ZT_BUTTON_RAPID_READ];
-  //  self.m_btnRapidRead.translatesAutoresizingMaskIntoConstraints = NO;
-    
- //   self.m_btnSettings = [UIButton buttonForHomeScreenWithSize:size withType:ZT_BUTTON_SETTINGS];
- //   self.m_btnSettings.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    
-//    [self.m_btnScan addTarget:self action:@selector(btnScanPressed:)
-//                  forControlEvents:UIControlEventTouchUpInside];
-    [self.m_btnRapidRead addTarget:self action:@selector(btnRapidReadPressed:)
-             forControlEvents:UIControlEventTouchUpInside];
   
     [self.m_btnSettings addTarget:self action:@selector(btnSettingsPressed:)
              forControlEvents:UIControlEventTouchUpInside];
     
   //  [self.view addSubview:self.m_btnScan];
-    [self.view addSubview:self.m_btnRapidRead];
+ 
     [self.view addSubview:self.m_btnSettings];
  
     
-    [UIButton alignHomeButtonContent:self.m_btnScan];
-    [UIButton alignHomeButtonContent:self.m_btnRapidRead];
-    [UIButton alignHomeButtonContent:self.m_btnSettings];
+ //   [UIButton alignHomeButtonContent:self.m_btnScan];
+//    [UIButton alignHomeButtonContent:self.m_btnSettings];
 
 }
 
@@ -307,24 +221,20 @@
     float width = homeFrame.size.width;
     self.m_padding = [NSNumber numberWithDouble:width * 0.03125];
     
-    self.m_btnScan = [UIButton buttonForHomeScreen:ZT_BUTTON_SCAN];
+  //  self.m_btnScan = [UIButton buttonForHomeScreen:ZT_BUTTON_SCAN];
     self.m_btnScan.translatesAutoresizingMaskIntoConstraints = NO;
     
-    self.m_btnRapidRead = [UIButton buttonForHomeScreen:ZT_BUTTON_RAPID_READ];
-    self.m_btnRapidRead.translatesAutoresizingMaskIntoConstraints = NO;
     
-    self.m_btnSettings = [UIButton buttonForHomeScreen:ZT_BUTTON_SETTINGS];
+ //   self.m_btnSettings = [UIButton buttonForHomeScreen:ZT_BUTTON_SETTINGS];
     self.m_btnSettings.translatesAutoresizingMaskIntoConstraints = NO;
     
 //    [self.m_btnScan addTarget:self action:@selector(btnScanPressed:)
 //                  forControlEvents:UIControlEventTouchUpInside];
-    [self.m_btnRapidRead addTarget:self action:@selector(btnRapidReadPressed:)
-             forControlEvents:UIControlEventTouchUpInside];
+  
     [self.m_btnSettings addTarget:self action:@selector(btnSettingsPressed:)
             forControlEvents:UIControlEventTouchUpInside];
     
-  //  [self.view addSubview:self.m_btnScan];
-    [self.view addSubview:self.m_btnRapidRead];
+    [self.view addSubview:self.m_btnScan];
     [self.view addSubview:self.m_btnSettings];
 }
 
@@ -347,6 +257,16 @@
    }
 }
 
+- (IBAction)btnGeneratePressed:(id)sender
+{
+    ScanVC *gen_vc = (ScanVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_GENE_VC"];
+    
+    if (nil != gen_vc)
+    {
+        // _filterWasOpened = YES;
+        [[self navigationController] pushViewController:gen_vc animated:YES];
+    }
+}
 
 - (IBAction)btnSettingsPressed:(id)sender
 {

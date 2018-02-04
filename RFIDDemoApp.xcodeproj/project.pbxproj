@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FF556932026D034001CEE1B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FF556922026D034001CEE1B /* CoreLocation.framework */; };
 		525660C11AB03952004D33B1 /* InventoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 525660C01AB03952004D33B1 /* InventoryData.m */; };
 		52AB4BA71A93A9C00082C35E /* HomeVCConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AB4BA61A93A9C00082C35E /* HomeVCConstraints.m */; };
 		52AB4BAA1A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AB4BA81A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m */; };
@@ -29,6 +30,8 @@
 		730F865B2025B88500C36234 /* bat_lvl_100_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */; };
 		730F865D2025B9A000C36234 /* title_antn.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F865C2025B9A000C36234 /* title_antn.png */; };
 		730F865F2025C21300C36234 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 730F865E2025C21200C36234 /* LaunchScreen.xib */; };
+		730F86622025CDF500C36234 /* GenerateMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F86612025CDF500C36234 /* GenerateMasterViewController.m */; };
+		730F86642025D71100C36234 /* Red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 730F86632025D71000C36234 /* Red.jpg */; };
 		733DB3432021B0520073852A /* ScanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 733DB3422021B0520073852A /* ScanVC.m */; };
 		7352CF072022EE6C00C17EE7 /* ParseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CEFF2022EE6B00C17EE7 /* ParseOperation.m */; };
 		7352CF082022EE6C00C17EE7 /* StockDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF002022EE6B00C17EE7 /* StockDataSource.m */; };
@@ -61,6 +64,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2FF556922026D034001CEE1B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		525660BF1AB03952004D33B1 /* InventoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryData.h; sourceTree = "<group>"; };
 		525660C01AB03952004D33B1 /* InventoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryData.m; sourceTree = "<group>"; };
 		52AB4BA51A93A9C00082C35E /* HomeVCConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVCConstraints.h; sourceTree = "<group>"; };
@@ -99,6 +103,9 @@
 		730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_100_dpo.png; sourceTree = "<group>"; };
 		730F865C2025B9A000C36234 /* title_antn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_antn.png; sourceTree = "<group>"; };
 		730F865E2025C21200C36234 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		730F86602025CDF500C36234 /* GenerateMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GenerateMasterViewController.h; sourceTree = "<group>"; };
+		730F86612025CDF500C36234 /* GenerateMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GenerateMasterViewController.m; sourceTree = "<group>"; };
+		730F86632025D71000C36234 /* Red.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Red.jpg; sourceTree = "<group>"; };
 		733DB3412021B0520073852A /* ScanVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScanVC.h; sourceTree = "<group>"; };
 		733DB3422021B0520073852A /* ScanVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanVC.m; sourceTree = "<group>"; };
 		7352CEFF2022EE6B00C17EE7 /* ParseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseOperation.m; sourceTree = "<group>"; };
@@ -161,6 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FF556932026D034001CEE1B /* CoreLocation.framework in Frameworks */,
 				78BD18401A80FC2200DB0657 /* CoreBluetooth.framework in Frameworks */,
 				78BD183F1A80FC1D00DB0657 /* ExternalAccessory.framework in Frameworks */,
 				78D66C9219BDBCF000722E6C /* CoreGraphics.framework in Frameworks */,
@@ -285,6 +293,8 @@
 				78D66D4119C7406500722E6C /* SettingsVC.h */,
 				733DB3412021B0520073852A /* ScanVC.h */,
 				733DB3422021B0520073852A /* ScanVC.m */,
+				730F86602025CDF500C36234 /* GenerateMasterViewController.h */,
+				730F86612025CDF500C36234 /* GenerateMasterViewController.m */,
 				78D66D4219C7406500722E6C /* SettingsVC.m */,
 				78D66D4419C8368100722E6C /* ReaderListVC.h */,
 				78D66D4519C8368100722E6C /* ReaderListVC.m */,
@@ -314,6 +324,7 @@
 		78D66C8E19BDBCF000722E6C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2FF556922026D034001CEE1B /* CoreLocation.framework */,
 				58240B021EEA666400BAD83C /* libsymbolrfid-sdk.a */,
 				78BD182E1A80BA2300DB0657 /* CoreBluetooth.framework */,
 				78BD182C1A80BA1C00DB0657 /* ExternalAccessory.framework */,
@@ -345,6 +356,7 @@
 		78D66C9619BDBCF000722E6C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				730F86632025D71000C36234 /* Red.jpg */,
 				730F865C2025B9A000C36234 /* title_antn.png */,
 				730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */,
 				730F86582025B87E00C36234 /* ic_settings@3x.png */,
@@ -426,6 +438,7 @@
 				730F86552025B85F00C36234 /* logo_new.png in Resources */,
 				730F865B2025B88500C36234 /* bat_lvl_100_dpo.png in Resources */,
 				730F86542025B85F00C36234 /* vertify3.png in Resources */,
+				730F86642025D71100C36234 /* Red.jpg in Resources */,
 				730F86572025B86E00C36234 /* title_rdl.png in Resources */,
 				730F86592025B87E00C36234 /* ic_settings@3x.png in Resources */,
 				730F865D2025B9A000C36234 /* title_antn.png in Resources */,
@@ -446,6 +459,7 @@
 				730F86452025B05E00C36234 /* BatteryIndicatorView.m in Sources */,
 				730F86482025B09B00C36234 /* RFIDDeviceCellVeiew.m in Sources */,
 				52AB4BAA1A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m in Sources */,
+				730F86622025CDF500C36234 /* GenerateMasterViewController.m in Sources */,
 				78D66D4919C8430A00722E6C /* ConnectionSettingsVC.m in Sources */,
 				784B003C19CAC7CF0095EE43 /* RfidAppEngine.m in Sources */,
 				78EDBD5A1B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m in Sources */,

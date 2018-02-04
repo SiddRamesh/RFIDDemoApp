@@ -16,11 +16,9 @@
 
 #import <UIKit/UIKit.h>
 #import "RFIDTabVC.h"
-//#import "FilterConfigVC.h"
 #import "SettingsVC.h"
 #import "ScanVC.h"
-//#import "AboutVC.h"
-#import "UIButton+VerticalButtonFactory.h"
+//#import "UIButton+VerticalButtonFactory.h"
 #import "ui_config.h"
 #import "AlertView.h"
 #import "UIViewController+ZT_ResponseHandler.h"
@@ -30,9 +28,12 @@ IB_DESIGNABLE
 {
     
 }
+
+- (IBAction)btnGeneratePressed:(id)sender;
 - (IBAction)btnScanPressed:(id)sender;
 - (IBAction)btnRapidReadPressed:(id)sender;
 - (IBAction)btnSettingsPressed:(id)sender;
+
 
 - (IBAction)btnAboutPressed:(id)sender;
 

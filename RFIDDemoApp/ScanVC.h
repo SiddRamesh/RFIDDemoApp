@@ -28,7 +28,7 @@
     
      UITableView *tableView;
     
-     UITableView *m_tblTags;
+  //   UITableView *m_tblTags;
      IBOutlet UIButton *m_btnStartStop;
      NSTimer *m_ViewUpdateTimer;
     

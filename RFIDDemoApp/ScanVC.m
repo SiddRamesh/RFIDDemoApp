@@ -141,14 +141,13 @@
     //TODO: - Activate
  //    [self loadStockData];                                                    //Load This for Server
     
-    // Setup the About button
-//    UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
+    // Setup the Scan button
+    UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
+    self.navigationItem.rightBarButtonItem = barButtonScan;
     
- //   self.navigationItem.rightBarButtonItem = barButtonScan;
-    
-    [m_tblTags setDelegate:self];
-    [m_tblTags setDataSource:self];
-    [m_tblTags registerClass:[zt_RFIDTagCellView class] forCellReuseIdentifier:ZT_CELL_ID_TAG_DATA];
+    [tableView setDelegate:self];
+    [tableView setDataSource:self];
+    [tableView registerClass:[zt_RFIDTagCellView class] forCellReuseIdentifier:ZT_CELL_ID_TAG_DATA];
     
  //   [self configureAppearance];
 }
@@ -183,7 +182,7 @@
             if([[[zt_RfidAppEngine sharedAppEngine] activeReader] getBatchModeStatus])
             {
                 [m_Tags removeAllObjects];
-                [m_tblTags reloadData];
+                [tableView reloadData];
             }
         }
         else
@@ -297,8 +296,8 @@
         if ([status isEqualToString:@"Inventory Started in Batch Mode"]) {
             NSLog(@"%@ btn Tag is",m_Tags);
             [m_Tags removeAllObjects];
-            [m_tblTags reloadData];
-            NSLog(@"%@ btn table",m_tblTags);
+            [tableView reloadData];
+            NSLog(@"%@ btn table",tableView);
         }
     }
     else
@@ -309,8 +308,8 @@
 
 -(void)scanDataWithTag:(NSString *)tag nPort:(NSString *)port {
     
-    // tag = @"E200637C90D1D6B16611275A";
-    // port = @"INNSA1";
+     tag = @"E200637C90D1D6B16611275A";
+     port = @"INNSA1";
     
     //first create the soap envelope
     self.soapMessage = [NSString stringWithFormat:@"<?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                           <soap:Body>                                                                                                                                                                                                  <GetAssignTag1 xmlns='http://tempuri.org/'>                                                                                                                                                                                                  <Tag>%@</Tag>                                                                                                                                                                                                                            <port>%@</port>                                                                                                                                                                                                                                     </GetAssignTag1>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>", tag, port];
@@ -323,6 +322,7 @@
     NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[soapMessage length]];
     
     //ad required headers to the request
+    [theRequest initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
     [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
     [theRequest setHTTPMethod:@"POST"];
@@ -384,7 +384,7 @@
     if(![[[zt_RfidAppEngine sharedAppEngine] activeReader] getBatchModeStatus])
     {
       //  batchModeLabel.hidden = YES;
-        [m_tblTags reloadData];
+        [tableView reloadData];
     }
 }
 
@@ -514,9 +514,9 @@
 //            return  [m_Tags count];;
 //        } break;
 //    }
-    return [m_Tags count]; //(section == m_Tags.count) ? 3 : 0;
+ //   return [m_Tags count]; //(section == m_Tags.count) ? 3 : 0;
   //  return self.stockDataSource.stockdatas.count;
-   // return (section == 0) ? 3: 3;
+    return (section == 0) ? 3 : 3;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -533,7 +533,7 @@
     }
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      static NSString *kAttributeCellID = @"AttributeCellID";
 
@@ -542,7 +542,6 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:kAttributeCellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    
  //      StockData *stockdata = self.stockDataSource.stockdatas[indexPath.row];
 //       [cell configureWithStockData:stockdata];
 
@@ -598,7 +597,7 @@
     }
     return cell;
 }
-*/
+
 //MARK: - Obsever
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -672,7 +671,7 @@
         if(batchModeLabel.hidden)
         {
             [m_Tags removeAllObjects];
-            [m_tblTags reloadData];
+            [tableView reloadData];
             batchModeLabel.hidden = NO;
         }
         
@@ -694,7 +693,7 @@
             [[[zt_RfidAppEngine sharedAppEngine] operationEngine] getTags:&statusMsg];
             [self updateOperationDataUI];
             batchModeLabel.hidden=YES;
-            m_tblTags.hidden = NO;
+            tableView.hidden = NO;
         }
         if([[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateGetTagsOperationInProgress]) //else
         {
@@ -736,16 +735,16 @@
     }
 }
 
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *RFIDTagCellIdentifier = ZT_CELL_ID_TAG_DATA;
     
-    zt_RFIDTagCellView *cell = [m_tblTags dequeueReusableCellWithIdentifier:RFIDTagCellIdentifier forIndexPath:indexPath];
+    zt_RFIDTagCellView *cell = [tableView dequeueReusableCellWithIdentifier:RFIDTagCellIdentifier forIndexPath:indexPath];
     
     if (cell == nil)
     {
-        cell = [[zt_RFIDTagCellView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:RFIDTagCellIdentifier];
+        cell = [[zt_RFIDTagCellView alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:RFIDTagCellIdentifier];
     }
     // BOOL expanded = ((m_ExpandedCellIdx == [indexPath row]) ? YES : NO);
     [self configureTagCell:cell forRow:(int)[indexPath row] isExpanded:NO];
@@ -805,5 +804,5 @@
     return cell;
 }
 
-
+*/
 @end
