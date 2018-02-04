@@ -64,6 +64,9 @@
                                                         <rect key="frame" x="216" y="311" width="39" height="64"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <state key="normal" title="Button" image="bat_lvl_100_dpo.png"/>
+                                                        <connections>
+                                                            <action selector="btnSettingsBattery:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="88V-Wu-8ne"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTl-gZ-jYJ">
                                                         <rect key="frame" x="210" y="199" width="52" height="48"/>
@@ -560,7 +563,7 @@
         <!--Zt Battery StatusVC-->
         <scene sceneID="hcM-i2-nQg">
             <objects>
-                <viewController storyboardIdentifier="ID_BATTERY_STATUS_VC" id="iUA-xY-BKl" customClass="zt_BatteryStatusVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ID_BATTERY_VC" id="iUA-xY-BKl" customClass="zt_BatteryStatusVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="shw-oo-sPC"/>
                         <viewControllerLayoutGuide type="bottom" id="wAP-ur-U09"/>

@@ -49,19 +49,6 @@
 {
     [super viewDidLoad];
     
-    if(floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
-        // for IOS 8 or later
-        // set buttons size with constr
-        
-        [self initButtonsNoSize];
-    //    [self addConstraintsSizePosition];
-        
-    } else {
-        // for early version of IOS
-        [self initButtonsWithSize];
-     //   [self addConstraintsPosition];
-    }
-    
     // Setup the About button
 //    UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(btnScanPressed:)];
     
@@ -85,12 +72,9 @@
         
         if (![[[zt_RfidAppEngine sharedAppEngine] activeReader] isActive])
         {
-            //zt_AlertView *alert = [[zt_AlertView alloc] init];
-            //[alert showWarningText:self.view withString:ZT_WARNING_NO_READER];
             return;
         }
-        
-        
+    
         if ((localSled.applyFirstFilter &&
              ![zt_SledConfiguration isPrefilterEqual:localSled.currentPrefilters[0] withPrefilter:sled.currentPrefilters[0]]) ||
             (localSled.applySecondFilter &&
@@ -155,87 +139,6 @@
     SRFID_RESULT result = [[zt_RfidAppEngine sharedAppEngine] setPrefilters:&response];
     
     [self handleCommandResult:result withStatusMessage:response];
-    
-//    sleep(1);
-//    dispatch_sync(dispatch_get_main_queue(), ^{
-//        zt_AlertView *alertView = [[zt_AlertView alloc]init];
-//        [alertView showSuccessFailure:self.view isSuccess:result];
-//    });
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection{
-    NSString *horiz = @"horizontal";
-    if(self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
-        horiz = @"compact";
-    } else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-        horiz = @"regular";
-    } else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassUnspecified) {
-        horiz = @"unspicified";
-    }
-    
-    NSString *vert = @"vertical";
-    if(self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact) {
-        vert = @"compact";
-    } else if (self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) {
-        vert = @"regular";
-    } else if (self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassUnspecified) {
-        vert = @"unspecified";
-    }
-
-}
-
-
-
-
-- (void)initButtonsWithSize
-{
-    float width = self.view.bounds.size.width;
-    float height = self.view.bounds.size.height - self.navigationController.navigationBar.frame.size.height;
-    float heightStatusBar = [UIApplication sharedApplication].statusBarFrame.size.height;
-    height -= heightStatusBar;
-    
-    self.m_padding = [NSNumber numberWithDouble:width * 0.03125];
-    
-    float buttonWidth = ( width - 3 * self.m_padding.doubleValue ) / 2;
-    float buttonHeight = ( height - 4 * self.m_padding.doubleValue) / 3;
-    
-    CGSize size  = CGSizeMake(buttonWidth, buttonHeight);
-  
-    [self.m_btnSettings addTarget:self action:@selector(btnSettingsPressed:)
-             forControlEvents:UIControlEventTouchUpInside];
-    
-  //  [self.view addSubview:self.m_btnScan];
- 
-    [self.view addSubview:self.m_btnSettings];
- 
-    
- //   [UIButton alignHomeButtonContent:self.m_btnScan];
-//    [UIButton alignHomeButtonContent:self.m_btnSettings];
-
-}
-
-- (void)initButtonsNoSize;
-{
-    
-    CGRect homeFrame = self.view.bounds;
-    float width = homeFrame.size.width;
-    self.m_padding = [NSNumber numberWithDouble:width * 0.03125];
-    
-  //  self.m_btnScan = [UIButton buttonForHomeScreen:ZT_BUTTON_SCAN];
-    self.m_btnScan.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    
- //   self.m_btnSettings = [UIButton buttonForHomeScreen:ZT_BUTTON_SETTINGS];
-    self.m_btnSettings.translatesAutoresizingMaskIntoConstraints = NO;
-    
-//    [self.m_btnScan addTarget:self action:@selector(btnScanPressed:)
-//                  forControlEvents:UIControlEventTouchUpInside];
-  
-    [self.m_btnSettings addTarget:self action:@selector(btnSettingsPressed:)
-            forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:self.m_btnScan];
-    [self.view addSubview:self.m_btnSettings];
 }
 
 
@@ -270,11 +173,21 @@
 
 - (IBAction)btnSettingsPressed:(id)sender
 {
-    zt_SettingsVC*settings_vc = (zt_SettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_SETTINGS_VC"];
+    zt_SettingsVC *settings_vc = (zt_SettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_SETTINGS_VC"];
     
     if (nil != settings_vc)
     {
         [[self navigationController] pushViewController:settings_vc animated:YES];
+    }
+}
+
+- (IBAction)btnSettingsBattery:(id)sender
+{
+    zt_BatteryStatusVC *battery_vc = (zt_BatteryStatusVC *)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_BATTERY_VC"];
+    
+    if (nil != battery_vc)
+    {
+        [[self navigationController] pushViewController:battery_vc animated:YES];
     }
 }
 

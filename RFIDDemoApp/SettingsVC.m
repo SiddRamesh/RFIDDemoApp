@@ -18,36 +18,15 @@
 #import "ReaderListVC.h"
 #import "ConnectionSettingsVC.h"
 #import "BatteryStatusVC.h"
-//#import "PowerManagementVC.h"
 #import "ui_config.h"
 #import "AlertView.h"
 
 #define ZT_VC_SETTINGS_CELL_IDX_READER_LIST                    0
 #define ZT_VC_SETTINGS_CELL_IDX_CONNECTION                     1
-#define ZT_VC_SETTINGS_CELL_IDX_ANTENNA                        2
-#define ZT_VC_SETTINGS_CELL_IDX_START_STOP_TRIGGER             4
-#define ZT_VC_SETTINGS_CELL_IDX_SINGULATION_CONTROL            3
-#define ZT_VC_SETTINGS_CELL_IDX_REGULATORY                     6
-#define ZT_VC_SETTINGS_CELL_IDX_BEEPER                         8
-#define ZT_VC_SETTINGS_CELL_IDX_SAVE                           10
-#define ZT_VC_SETTINGS_CELL_IDX_BATTERY                        7
-#define ZT_VC_SETTINGS_CELL_IDX_TAG_REPORT                     5
-#define ZT_VC_SETTINGS_CELL_IDX_PWR_MANAGEMENT                 9
 
-#define ZT_VC_SETTINGS_OPTIONS_NUMBER                          11
 
-#define ZT_VC_SETTINGS_CELL_IMAGE_READER_LIST                  @"title_rdl.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_CONNECTION                   @"title_sett.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_ANTENNA                      @"title_antn.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_START_STOP_TRIGGER           @"title_strstp.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_SINGULATION_CONTROL          @"title_singl.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_REGULATORY                   @"title_reg.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_BEEPER                       @"title_beep.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_SAVE                         @"title_save.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_BATTERY                      @"title_batt.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_TAG_REPORT                   @"title_tags.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_PWR_MANAGEMENT_ON            @"title_pwr_on.png"
-#define ZT_VC_SETTINGS_CELL_IMAGE_PWR_MANAGEMENT_OFF           @"title_pwr_off.png"
+#define ZT_VC_SETTINGS_OPTIONS_NUMBER                         2
+
 
 #define ZT_CELL_ID_ACTIVE                                      @"ID_CELL_ACTIVE"
 #define ZT_CELL_ID_DISABLE                                     @"ID_CELL_DISABLE"
@@ -80,18 +59,10 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
             [m_SettingsOptionsImages addObject:@""];
         }
         
-        
-       
-        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_BATTERY withObject:ZT_STR_SETTINGS_BATTERY];
         [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_CONNECTION withObject:ZT_STR_SETTINGS_CONNECTION];
         [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_READER_LIST withObject:ZT_STR_SETTINGS_READER_LIST];
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_BATTERY withObject:ZT_VC_SETTINGS_CELL_IMAGE_BATTERY];
-       
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_CONNECTION withObject:ZT_VC_SETTINGS_CELL_IMAGE_CONNECTION];
-        [m_SettingsOptionsImages replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_READER_LIST withObject:ZT_VC_SETTINGS_CELL_IMAGE_READER_LIST];
 
         m_OffscreenImageLabelCell = [[zt_ImageLabelCellView alloc] init];
-        
     }
     return self;
 }
@@ -168,34 +139,6 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
     if (m_LoadedViewIndex == nil) {
         // do nothing
     }
-    else
-    {
-        switch ([m_LoadedViewIndex intValue])
-        {
-            case ZT_VC_SETTINGS_CELL_IDX_ANTENNA:
-                if (![sled isAntennaConfigEqual:local])
-                    [self applyNewSetting:@"Saving antenna settings"];
-                break;
-                
-                
-                if (![sled isStartTriggerConfigEqual:local] || ![sled isStopTriggerConfigEqual:local])
-                {
-                    [self applyNewSetting:@"Saving start\\stop trigger settings"];
-                }
-                break;
-                
-                
-                if (![sled isDpoConfigEqual:local])
-                {
-                    /* update the power management settings */
-                    [self applyNewSetting:@"Saving power management settings"];
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -236,58 +179,9 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
     
     [self handleCommandResult:result withStatusMessage:response];
     
-//    /* nrv364: TBD: process failure messages for all commands */
-//    if (idx != ZT_VC_SETTINGS_CELL_IDX_REGULATORY)
-//    {
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//            zt_AlertView *alertView = [[zt_AlertView alloc]init];
-//            [alertView showSuccessFailureWithText:self.view isSuccess:result aSuccessMessage:@"Settings applied successfully" aFailureMessage:@"Failed to apply settings"];
-//        });
-//    }
-//    else
-//    {
-//        NSString *err = [NSString stringWithFormat:@"%@", [[zt_RfidAppEngine sharedAppEngine] responseFailureStatus]];
-//        
-//        NSString *failure_message = @"Failed to apply settings";
-//        
-//        if ((YES == result) && (NSOrderedSame != [err caseInsensitiveCompare:@"OK"]))
-//        {
-//            /* it's a failure message from reader */
-//            result = NO;
-//            failure_message = [failure_message stringByAppendingFormat:@":\r\n%@", err];
-//        }
-//        
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//            zt_AlertView *alertView = [[zt_AlertView alloc]init];
-//            [alertView showSuccessFailureWithText:self.view isSuccess:result aSuccessMessage:@"Settings applied successfully" aFailureMessage:failure_message];
-//        });
-//    }
+
     m_LoadedViewIndex = [NSNumber numberWithInt:-1];
 }
-
-//- (void)handleCommandResult:(SRFID_RESULT)result withStatusMessage:(NSString *)message
-//{
-//    switch (SRFID_RESULT_SUCCESS) {
-//        case SRFID_RESULT_SUCCESS:
-//            [self showSucces];
-//            break;
-//            
-//        case SRFID_RESULT_FAILURE:
-//            [self showFailure:@""];
-//            break;
-//            
-//        case SRFID_RESULT_RESPONSE_ERROR:
-//            [self showFailure:message];
-//            break;
-//            
-//        case SRFID_RESULT_RESPONSE_TIMEOUT:
-//            [self showTimeout];
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//}
 
 - (void)configureImageLabelCell:(zt_ImageLabelCellView*)cell forRow:(int)row
 {
@@ -303,16 +197,7 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         if([[[zt_RfidAppEngine sharedAppEngine] activeReader] isActive])
         {
             [cell setInfoNotice:(NSString*)[m_SettingsOptionsHeaders objectAtIndex:row]];
-            
-            // Power management has more than one possible image.
-            if ([settingHeader isEqualToString:ZT_STR_SETTINGS_PWR_MANAGEMENT])
-            {
-                [cell setCellImage:[self getImageNameForPowerManagementIcon]];
-            }
-            else
-            {
-                [cell setCellImage:(NSString*)[m_SettingsOptionsImages objectAtIndex:row]];
-            }
+            [cell setCellImage:(NSString*)[m_SettingsOptionsImages objectAtIndex:row]];
         }
         else
         {
@@ -347,34 +232,6 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         case ZT_VC_SETTINGS_CELL_IDX_CONNECTION:
             // do nothing
             break;
-//        case ZT_VC_SETTINGS_CELL_IDX_BATTERY:
-//            [self.navigationController popToViewController:self animated:YES];
-//            break;
-//        case ZT_VC_SETTINGS_CELL_IDX_ANTENNA:
-//            [self.navigationController popToViewController:self animated:YES];
-//            break;
-//        case ZT_VC_SETTINGS_CELL_IDX_START_STOP_TRIGGER:
-//            [self.navigationController popToViewController:self animated:YES];
-//            break;
-//        case ZT_VC_SETTINGS_CELL_IDX_SINGULATION_CONTROL:
-//            [self.navigationController popToViewController:self animated:YES];
-//            break;
-//        case ZT_VC_SETTINGS_CELL_IDX_REGULATORY:
-//            [self.navigationController popToViewController:self animated:YES];
-//            break;
-//        case ZT_VC_SETTINGS_CELL_IDX_BEEPER:
-//            [self.navigationController popToViewController:self animated:YES];
-//            break;
-//        case ZT_VC_SETTINGS_CELL_IDX_SAVE:
-//            [self.navigationController popToViewController:self animated:YES];
-//            break;
-//
-//        case ZT_VC_SETTINGS_CELL_IDX_TAG_REPORT:
-//            [self.navigationController popToViewController:self animated:YES];
-//            break;
-//        case ZT_VC_SETTINGS_CELL_IDX_PWR_MANAGEMENT:
-//            [self.navigationController popToViewController:self animated:YES];
-//            break;
     }
 
     
@@ -462,46 +319,6 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
     
     return _cell;
     }
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
 /* ###################################################################### */
 /* ########## Table View Delegate Protocol implementation ############### */
 /* ###################################################################### */
@@ -534,31 +351,6 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         m_LoadedViewIndex = [NSNumber numberWithInt:idx];
         [self.navigationController pushViewController:vc animated:YES];
     }
-}
-
-- (NSString *) getImageNameForPowerManagementIcon
-{
-    // Use grey image by default (dpo off)
-    NSString *imageName = ZT_VC_SETTINGS_CELL_IMAGE_PWR_MANAGEMENT_OFF;
-    
-    // Check if there is a connected reader
-    if([[[zt_RfidAppEngine sharedAppEngine] activeReader] isActive])
-    {
-        // Check if DPO is active
-        if([[[[zt_RfidAppEngine sharedAppEngine] sledConfiguration] currentDpoEnable] boolValue] )
-        {
-            // DPO is active, turn power management button green
-            imageName = ZT_VC_SETTINGS_CELL_IMAGE_PWR_MANAGEMENT_ON;
-            
-        }
-        else
-        {
-            // DPO is not active, turn power management button grey
-            imageName = ZT_VC_SETTINGS_CELL_IMAGE_PWR_MANAGEMENT_OFF;
-        }
-    }
-
-    return imageName;
 }
 
 - (void) refreshPowerManagementButton

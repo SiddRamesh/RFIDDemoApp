@@ -18,10 +18,10 @@
 #import "RFIDTabVC.h"
 #import "SettingsVC.h"
 #import "ScanVC.h"
-//#import "UIButton+VerticalButtonFactory.h"
 #import "ui_config.h"
 #import "AlertView.h"
 #import "UIViewController+ZT_ResponseHandler.h"
+#import "BatteryStatusVC.h"
 
 IB_DESIGNABLE
 @interface zt_HomeVCConstraints : UIViewController
@@ -31,11 +31,7 @@ IB_DESIGNABLE
 
 - (IBAction)btnGeneratePressed:(id)sender;
 - (IBAction)btnScanPressed:(id)sender;
-- (IBAction)btnRapidReadPressed:(id)sender;
 - (IBAction)btnSettingsPressed:(id)sender;
-
-
-- (IBAction)btnAboutPressed:(id)sender;
 
 - (void)showTabInterfaceActiveView:(int)identifier;
 
