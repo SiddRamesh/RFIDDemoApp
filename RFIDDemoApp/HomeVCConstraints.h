@@ -25,11 +25,16 @@
 #import "BatteryStatusVC.h"
 #import "GenerateMasterViewController.h"
 
-IB_DESIGNABLE
-@interface zt_HomeVCConstraints : UIViewController
+#import "MaterialControls/MDButton.h"
+
+
+
+@interface zt_HomeVCConstraints : UIViewController <RKCardViewDelegate, MDButtonDelegate>
 {
     
 }
+
+@property (nonatomic, retain) IBOutlet MDButton *FloatingActionButton;
 
 - (IBAction)btnGeneratePressed:(id)sender;
 - (IBAction)btnScanPressed:(id)sender;

@@ -45,23 +45,18 @@
     [super dealloc];
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.view.backgroundColor = [UIColor colorWithRed:0.74 green:0.86 blue:0.9 alpha:1.0];
     
-    // Setup the About button
-//    UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(btnScanPressed:)];
-    
-//    self.navigationItem.leftBarButtonItem = barButtonScan;
-    
-    // Setup the About button
-//    UIBarButtonItem *barButtonAbout = [[UIBarButtonItem alloc]initWithTitle:@"About" style:UIBarButtonItemStylePlain target:self action:@selector(btnAboutPressed:)];
-    
- //   self.navigationItem.rightBarButtonItem = barButtonAbout;
-    
+    //TODO: - Scan button
+//     UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(btnScanPressed:)];
+//     self.navigationItem.leftBarButtonItem = barButtonScan;
 }
 
+//MARK: - Device Handler
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -149,6 +144,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+//MARK:- Event Handler
 - (IBAction)btnScanPressed:(id)sender
 {
   //  [self showTabInterfaceActiveView:ZT_VC_RFIDTAB_SCAN_VC_IDX]; VerifyVCViewController

@@ -48,6 +48,11 @@
 		7352CF092022EE6C00C17EE7 /* StockData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF052022EE6C00C17EE7 /* StockData.m */; };
 		7352CF0A2022EE6C00C17EE7 /* StockCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */; };
 		738233E5202820230019C514 /* bat_lvl_100_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 738233E4202820220019C514 /* bat_lvl_100_dpo.png */; };
+		73A5EDE420285C1500A91DBC /* MDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A5EDE320285C1500A91DBC /* MDButton.m */; };
+		73A5EDE820285C8B00A91DBC /* MDRippleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A5EDE720285C8B00A91DBC /* MDRippleLayer.m */; };
+		73A5EDEB20285CAA00A91DBC /* UIColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A5EDE920285CAA00A91DBC /* UIColorHelper.m */; };
+		73A5EDEF2028603800A91DBC /* MDTouchGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A5EDED2028603700A91DBC /* MDTouchGestureRecognizer.m */; };
+		73A5EDF22028604E00A91DBC /* UIViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A5EDF02028604E00A91DBC /* UIViewHelper.m */; };
 		7835745C1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835745B1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m */; };
 		784B003919CAC4FB0095EE43 /* SledConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B003819CAC4FB0095EE43 /* SledConfiguration.m */; };
 		784B003C19CAC7CF0095EE43 /* RfidAppEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B003B19CAC7CF0095EE43 /* RfidAppEngine.m */; };
@@ -139,6 +144,17 @@
 		7352CF052022EE6C00C17EE7 /* StockData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockData.m; sourceTree = "<group>"; };
 		7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockCellTableViewCell.m; sourceTree = "<group>"; };
 		738233E4202820220019C514 /* bat_lvl_100_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bat_lvl_100_dpo.png; path = ../../../RFIDDemoApp/RFIDDemoApp/bat_lvl_100_dpo.png; sourceTree = "<group>"; };
+		73A5EDE220285C1500A91DBC /* MDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDButton.h; sourceTree = "<group>"; };
+		73A5EDE320285C1500A91DBC /* MDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDButton.m; sourceTree = "<group>"; };
+		73A5EDE520285C7500A91DBC /* MDConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDConstants.h; sourceTree = "<group>"; };
+		73A5EDE620285C8B00A91DBC /* MDRippleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRippleLayer.h; sourceTree = "<group>"; };
+		73A5EDE720285C8B00A91DBC /* MDRippleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRippleLayer.m; sourceTree = "<group>"; };
+		73A5EDE920285CAA00A91DBC /* UIColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColorHelper.m; sourceTree = "<group>"; };
+		73A5EDEA20285CAA00A91DBC /* UIColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColorHelper.h; sourceTree = "<group>"; };
+		73A5EDED2028603700A91DBC /* MDTouchGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTouchGestureRecognizer.m; sourceTree = "<group>"; };
+		73A5EDEE2028603700A91DBC /* MDTouchGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTouchGestureRecognizer.h; sourceTree = "<group>"; };
+		73A5EDF02028604E00A91DBC /* UIViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewHelper.m; sourceTree = "<group>"; };
+		73A5EDF12028604E00A91DBC /* UIViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewHelper.h; sourceTree = "<group>"; };
 		7835745A1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZT_FieldCheck.h"; sourceTree = "<group>"; };
 		7835745B1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZT_FieldCheck.m"; sourceTree = "<group>"; };
 		784B003719CAC4FB0095EE43 /* SledConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SledConfiguration.h; sourceTree = "<group>"; };
@@ -282,6 +298,7 @@
 				52AB4BA61A93A9C00082C35E /* HomeVCConstraints.m */,
 				78D66C9E19BDBCF000722E6C /* RFIDDemoAppDelegate.h */,
 				78D66C9F19BDBCF000722E6C /* RFIDDemoAppDelegate.m */,
+				73A5EDEC20285CCC00A91DBC /* MD */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -355,6 +372,24 @@
 				730F86612025CDF500C36234 /* GenerateMasterViewController.m */,
 			);
 			name = Menu;
+			sourceTree = "<group>";
+		};
+		73A5EDEC20285CCC00A91DBC /* MD */ = {
+			isa = PBXGroup;
+			children = (
+				73A5EDEE2028603700A91DBC /* MDTouchGestureRecognizer.h */,
+				73A5EDED2028603700A91DBC /* MDTouchGestureRecognizer.m */,
+				73A5EDE520285C7500A91DBC /* MDConstants.h */,
+				73A5EDE220285C1500A91DBC /* MDButton.h */,
+				73A5EDE320285C1500A91DBC /* MDButton.m */,
+				73A5EDE620285C8B00A91DBC /* MDRippleLayer.h */,
+				73A5EDE720285C8B00A91DBC /* MDRippleLayer.m */,
+				73A5EDEA20285CAA00A91DBC /* UIColorHelper.h */,
+				73A5EDE920285CAA00A91DBC /* UIColorHelper.m */,
+				73A5EDF12028604E00A91DBC /* UIViewHelper.h */,
+				73A5EDF02028604E00A91DBC /* UIViewHelper.m */,
+			);
+			name = MD;
 			sourceTree = "<group>";
 		};
 		78D66C8319BDBCEF00722E6C = {
@@ -515,7 +550,9 @@
 			files = (
 				784B003F19CAEEA50095EE43 /* AppConfiguration.m in Sources */,
 				7352CF082022EE6C00C17EE7 /* StockDataSource.m in Sources */,
+				73A5EDE420285C1500A91DBC /* MDButton.m in Sources */,
 				2FF556DD20270B1E001CEE1B /* VerifyVCViewController.m in Sources */,
+				73A5EDE820285C8B00A91DBC /* MDRippleLayer.m in Sources */,
 				52B6C6F61A8CBF2000D35518 /* AlertView.m in Sources */,
 				78D66D4619C8368100722E6C /* ReaderListVC.m in Sources */,
 				730F86452025B05E00C36234 /* BatteryIndicatorView.m in Sources */,
@@ -530,9 +567,11 @@
 				730F864E2025B18C00C36234 /* RFIDTagCellView.m in Sources */,
 				52AB54851A9C7AE50087CC70 /* ActiveReader.m in Sources */,
 				525660C11AB03952004D33B1 /* InventoryData.m in Sources */,
+				73A5EDEB20285CAA00A91DBC /* UIColorHelper.m in Sources */,
 				730F86512025B1AC00C36234 /* ImageLabelCellView.m in Sources */,
 				733DB3432021B0520073852A /* ScanVC.m in Sources */,
 				7352CF092022EE6C00C17EE7 /* StockData.m in Sources */,
+				73A5EDEF2028603800A91DBC /* MDTouchGestureRecognizer.m in Sources */,
 				784B003919CAC4FB0095EE43 /* SledConfiguration.m in Sources */,
 				730F864B2025B0B900C36234 /* OptionCellView.m in Sources */,
 				7352CF072022EE6C00C17EE7 /* ParseOperation.m in Sources */,
@@ -549,6 +588,7 @@
 				78D66C9C19BDBCF000722E6C /* main.m in Sources */,
 				52BA7CE01AE8FA4600C94D33 /* EnumMapper.m in Sources */,
 				7854A4BE1A8389EA006CE34E /* InventoryItem.m in Sources */,
+				73A5EDF22028604E00A91DBC /* UIViewHelper.m in Sources */,
 				52B296961ACBF5270034CC2F /* RegionData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
