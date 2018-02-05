@@ -92,20 +92,6 @@
     self.locatingIndicator.backgroundColor = [UIColor colorWithRed:0.0f green:0.5f blue:0.0f alpha:1.0f];
     //indicatorTimer = [NSTimer scheduledTimerWithTimeInterval:0.10 target:self selector:@selector(animateLocatorIndicator) userInfo:nil repeats:YES];
     
-    /* configure layout via constraints */
-//    [self.view removeConstraints:[self.view constraints]];
-//    
-//    NSLayoutConstraint *c1 = [NSLayoutConstraint constraintWithItem:m_tblReaderList attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
-//    [self.view addConstraint:c1];
-//    
-//    NSLayoutConstraint *c2 = [NSLayoutConstraint constraintWithItem:m_tblReaderList attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0 constant:0.0];
-//    [self.view addConstraint:c2];
-//    
-//    NSLayoutConstraint *c3 = [NSLayoutConstraint constraintWithItem:m_tblReaderList attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0 constant:0.0];
-//    [self.view addConstraint:c3];
-//    
-//    NSLayoutConstraint *c4 = [NSLayoutConstraint constraintWithItem:m_tblReaderList attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
-//    [self.view addConstraint:c4];
 }
     
 - (void)startTimer{
@@ -132,39 +118,9 @@
     
     [self deviceListHasBeenUpdated];
     
-    /*
-     configure [UPD] button in accordance with app settings:
-     - hide if detection, available and active notifications
-     are enabled
-     - otherwise show
-     
-     */
     
     NSMutableArray *right_items = [[NSMutableArray alloc] init];
     
-/* nrv364: pairing button
- 
-    hide = YES;
-    int op_mode = [[NSUserDefaults standardUserDefaults] integerForKey:ZT_SETTING_OPMODE];
-    
-    switch (op_mode)
-    {
-        case DCSSDK_OPMODE_MFI:
-            hide = NO;
-            break;
-        case DCSSDK_OPMODE_BTLE:
-            hide = YES;
-            break;
-        case DCSSDK_OPMODE_ALL:
-            hide = NO;
-            break;
-    }
-    
-    if (NO == hide)
-    {
-        [right_items addObject:m_btnPairDev];
-    }
-*/
     
     if ([right_items count] == 0)
     {

@@ -18,10 +18,12 @@
 #import "RFIDTabVC.h"
 #import "SettingsVC.h"
 #import "ScanVC.h"
+#import "VerifyVCViewController.h"
 #import "ui_config.h"
 #import "AlertView.h"
 #import "UIViewController+ZT_ResponseHandler.h"
 #import "BatteryStatusVC.h"
+#import "GenerateMasterViewController.h"
 
 IB_DESIGNABLE
 @interface zt_HomeVCConstraints : UIViewController

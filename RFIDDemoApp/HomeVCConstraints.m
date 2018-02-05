@@ -48,6 +48,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     
     // Setup the About button
 //    UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(btnScanPressed:)];
@@ -150,8 +151,8 @@
 
 - (IBAction)btnScanPressed:(id)sender
 {
-  //  [self showTabInterfaceActiveView:ZT_VC_RFIDTAB_SCAN_VC_IDX];
-    ScanVC *scan_vc = (ScanVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_SCAN_VC"];
+  //  [self showTabInterfaceActiveView:ZT_VC_RFIDTAB_SCAN_VC_IDX]; VerifyVCViewController
+    ScanVC *scan_vc = (ScanVC *)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_SCAN_VC"];
     
     if (nil != scan_vc)
     {
@@ -162,7 +163,7 @@
 
 - (IBAction)btnGeneratePressed:(id)sender
 {
-    ScanVC *gen_vc = (ScanVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_GENE_VC"];
+    GenerateMasterViewController *gen_vc = (GenerateMasterViewController *)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_GENE_VC"];
     
     if (nil != gen_vc)
     {

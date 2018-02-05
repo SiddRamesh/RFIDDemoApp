@@ -40,8 +40,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-        UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
-        self.navigationItem.rightBarButtonItem = barButtonScan;
+//        UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
+//        self.navigationItem.rightBarButtonItem = barButtonScan;
     
     [self hideKeyboardWhenTappedAround];
     

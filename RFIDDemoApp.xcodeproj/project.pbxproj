@@ -17,7 +17,7 @@
 		2FF556A42026EC19001CEE1B /* bat_lvl_empty_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF5569A2026EC19001CEE1B /* bat_lvl_empty_dpo.png */; };
 		2FF556A52026EC19001CEE1B /* bat_lvl_25_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF5569B2026EC19001CEE1B /* bat_lvl_25_dpo.png */; };
 		2FF556A62026EC19001CEE1B /* bat_lvl_50_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF5569C2026EC19001CEE1B /* bat_lvl_50_dpo.png */; };
-		2FF556A72026EC19001CEE1B /* bat_lvl_100_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FF5569D2026EC19001CEE1B /* bat_lvl_100_dpo.png */; };
+		2FF556DD20270B1E001CEE1B /* VerifyVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF556DC20270B1E001CEE1B /* VerifyVCViewController.m */; };
 		525660C11AB03952004D33B1 /* InventoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 525660C01AB03952004D33B1 /* InventoryData.m */; };
 		52AB4BA71A93A9C00082C35E /* HomeVCConstraints.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AB4BA61A93A9C00082C35E /* HomeVCConstraints.m */; };
 		52AB4BAA1A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 52AB4BA81A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m */; };
@@ -47,6 +47,7 @@
 		7352CF082022EE6C00C17EE7 /* StockDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF002022EE6B00C17EE7 /* StockDataSource.m */; };
 		7352CF092022EE6C00C17EE7 /* StockData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF052022EE6C00C17EE7 /* StockData.m */; };
 		7352CF0A2022EE6C00C17EE7 /* StockCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */; };
+		738233E5202820230019C514 /* bat_lvl_100_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 738233E4202820220019C514 /* bat_lvl_100_dpo.png */; };
 		7835745C1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835745B1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m */; };
 		784B003919CAC4FB0095EE43 /* SledConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B003819CAC4FB0095EE43 /* SledConfiguration.m */; };
 		784B003C19CAC7CF0095EE43 /* RfidAppEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 784B003B19CAC7CF0095EE43 /* RfidAppEngine.m */; };
@@ -84,8 +85,8 @@
 		2FF5569A2026EC19001CEE1B /* bat_lvl_empty_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_empty_dpo.png; sourceTree = "<group>"; };
 		2FF5569B2026EC19001CEE1B /* bat_lvl_25_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_25_dpo.png; sourceTree = "<group>"; };
 		2FF5569C2026EC19001CEE1B /* bat_lvl_50_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_50_dpo.png; sourceTree = "<group>"; };
-		2FF5569D2026EC19001CEE1B /* bat_lvl_100_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bat_lvl_100_dpo.png; path = "../../RFIDDemoApp'2:2:18/RFIDDemoApp/res/bat_lvl_100_dpo.png"; sourceTree = "<group>"; };
-		2FF556A92026EC23001CEE1B /* bat_lvl_100_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bat_lvl_100_dpo.png; path = "../../RFIDDemoApp'2:2:18/RFIDDemoApp/res/bat_lvl_100_dpo.png"; sourceTree = "<group>"; };
+		2FF556DB20270B1E001CEE1B /* VerifyVCViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VerifyVCViewController.h; sourceTree = "<group>"; };
+		2FF556DC20270B1E001CEE1B /* VerifyVCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VerifyVCViewController.m; sourceTree = "<group>"; };
 		525660BF1AB03952004D33B1 /* InventoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryData.h; sourceTree = "<group>"; };
 		525660C01AB03952004D33B1 /* InventoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryData.m; sourceTree = "<group>"; };
 		52AB4BA51A93A9C00082C35E /* HomeVCConstraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVCConstraints.h; sourceTree = "<group>"; };
@@ -137,6 +138,7 @@
 		7352CF042022EE6B00C17EE7 /* StockData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockData.h; sourceTree = "<group>"; };
 		7352CF052022EE6C00C17EE7 /* StockData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockData.m; sourceTree = "<group>"; };
 		7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockCellTableViewCell.m; sourceTree = "<group>"; };
+		738233E4202820220019C514 /* bat_lvl_100_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bat_lvl_100_dpo.png; path = ../../../RFIDDemoApp/RFIDDemoApp/bat_lvl_100_dpo.png; sourceTree = "<group>"; };
 		7835745A1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ZT_FieldCheck.h"; sourceTree = "<group>"; };
 		7835745B1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ZT_FieldCheck.m"; sourceTree = "<group>"; };
 		784B003719CAC4FB0095EE43 /* SledConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SledConfiguration.h; sourceTree = "<group>"; };
@@ -205,13 +207,13 @@
 		2FF556A82026EC22001CEE1B /* BatteryPng */ = {
 			isa = PBXGroup;
 			children = (
+				738233E4202820220019C514 /* bat_lvl_100_dpo.png */,
 				2FF5569B2026EC19001CEE1B /* bat_lvl_25_dpo.png */,
 				2FF556982026EC19001CEE1B /* bat_lvl_25.png */,
 				2FF5569C2026EC19001CEE1B /* bat_lvl_50_dpo.png */,
 				2FF556952026EC18001CEE1B /* bat_lvl_50.png */,
 				2FF556992026EC19001CEE1B /* bat_lvl_75_dpo.png */,
 				2FF556942026EC18001CEE1B /* bat_lvl_75.png */,
-				2FF556A92026EC23001CEE1B /* bat_lvl_100_dpo.png */,
 				2FF556962026EC18001CEE1B /* bat_lvl_100.png */,
 				2FF5569A2026EC19001CEE1B /* bat_lvl_empty_dpo.png */,
 				2FF556972026EC19001CEE1B /* bat_lvl_empty.png */,
@@ -219,9 +221,33 @@
 			name = BatteryPng;
 			sourceTree = "<group>";
 		};
+		2FF556AA2026EFF8001CEE1B /* Custom Element */ = {
+			isa = PBXGroup;
+			children = (
+				7835745A1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.h */,
+				7835745B1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m */,
+				78EDBD581B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.h */,
+				78EDBD591B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m */,
+				730F86412025B03A00C36234 /* SwitchCellView.h */,
+				730F86402025B03A00C36234 /* SwitchCellView.m */,
+				730F86462025B09A00C36234 /* RFIDDeviceCellView.h */,
+				730F86472025B09B00C36234 /* RFIDDeviceCellVeiew.m */,
+				730F864A2025B0B900C36234 /* OptionCellView.h */,
+				730F86492025B0B800C36234 /* OptionCellView.m */,
+				730F864D2025B18C00C36234 /* RFIDTagCellView.h */,
+				730F864C2025B18B00C36234 /* RFIDTagCellView.m */,
+				730F864F2025B1AC00C36234 /* ImageLabelCellView.h */,
+				730F86502025B1AC00C36234 /* ImageLabelCellView.m */,
+			);
+			name = "Custom Element";
+			sourceTree = "<group>";
+		};
 		52AB54801A9C791B0087CC70 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				78D66D0D19BDEC2400722E6C /* ui_config.h */,
+				784B004C19CB1A2A0095EE43 /* config.h */,
+				78BD183B1A80DC5600DB0657 /* RfidAppKeys.h */,
 				78EDBD5F1B28506A000997E5 /* FileExportManager.h */,
 				78EDBD601B28506A000997E5 /* FileExportManager.m */,
 				784B003719CAC4FB0095EE43 /* SledConfiguration.h */,
@@ -249,30 +275,13 @@
 		52AB54821A9C79BE0087CC70 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				7835745A1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.h */,
-				7835745B1B450F2400E38A29 /* UIViewController+ZT_FieldCheck.m */,
-				78EDBD581B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.h */,
-				78EDBD591B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m */,
-				730F86412025B03A00C36234 /* SwitchCellView.h */,
-				730F86402025B03A00C36234 /* SwitchCellView.m */,
-				730F86462025B09A00C36234 /* RFIDDeviceCellView.h */,
-				730F86472025B09B00C36234 /* RFIDDeviceCellVeiew.m */,
-				730F864A2025B0B900C36234 /* OptionCellView.h */,
-				730F86492025B0B800C36234 /* OptionCellView.m */,
-				730F864D2025B18C00C36234 /* RFIDTagCellView.h */,
-				730F864C2025B18B00C36234 /* RFIDTagCellView.m */,
-				730F864F2025B1AC00C36234 /* ImageLabelCellView.h */,
-				730F86502025B1AC00C36234 /* ImageLabelCellView.m */,
+				2FF556AA2026EFF8001CEE1B /* Custom Element */,
 				7353A080201F363100963DC7 /* Menu */,
 				7353A07F201F332200963DC7 /* Setting */,
 				52AB4BA51A93A9C00082C35E /* HomeVCConstraints.h */,
 				52AB4BA61A93A9C00082C35E /* HomeVCConstraints.m */,
-				78D66D1119BF0E0100722E6C /* RFIDTabVC.h */,
-				78D66D1219BF0E0100722E6C /* RFIDTabVC.m */,
 				78D66C9E19BDBCF000722E6C /* RFIDDemoAppDelegate.h */,
 				78D66C9F19BDBCF000722E6C /* RFIDDemoAppDelegate.m */,
-				52AB4BA91A93AA7B0082C35E /* UIButton+VerticalButtonFactory.h */,
-				52AB4BA81A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -280,6 +289,10 @@
 		52B6C6EF1A8CBEE700D35518 /* AlertProgressDialog */ = {
 			isa = PBXGroup;
 			children = (
+				78D66D1119BF0E0100722E6C /* RFIDTabVC.h */,
+				78D66D1219BF0E0100722E6C /* RFIDTabVC.m */,
+				52AB4BA91A93AA7B0082C35E /* UIButton+VerticalButtonFactory.h */,
+				52AB4BA81A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m */,
 				52B6C6F01A8CBF2000D35518 /* MBProgressHUD-Prefix.pch */,
 				52B6C6F11A8CBF2000D35518 /* MBProgressHUD.h */,
 				52B6C6F21A8CBF2000D35518 /* MBProgressHUD.m */,
@@ -315,6 +328,12 @@
 		7353A07F201F332200963DC7 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				78D66D4119C7406500722E6C /* SettingsVC.h */,
+				78D66D4219C7406500722E6C /* SettingsVC.m */,
+				78D66D4419C8368100722E6C /* ReaderListVC.h */,
+				78D66D4519C8368100722E6C /* ReaderListVC.m */,
+				78D66D4719C8430A00722E6C /* ConnectionSettingsVC.h */,
+				78D66D4819C8430A00722E6C /* ConnectionSettingsVC.m */,
 				784B004319CB19420095EE43 /* BatteryStatusVC.h */,
 				784B004419CB19420095EE43 /* BatteryStatusVC.m */,
 				730F86442025B05E00C36234 /* BatteryIndicatorView.h */,
@@ -330,14 +349,10 @@
 				B4F3FE371B41D23400325361 /* BaseDpoVC.m */,
 				733DB3412021B0520073852A /* ScanVC.h */,
 				733DB3422021B0520073852A /* ScanVC.m */,
+				2FF556DB20270B1E001CEE1B /* VerifyVCViewController.h */,
+				2FF556DC20270B1E001CEE1B /* VerifyVCViewController.m */,
 				730F86602025CDF500C36234 /* GenerateMasterViewController.h */,
 				730F86612025CDF500C36234 /* GenerateMasterViewController.m */,
-				78D66D4119C7406500722E6C /* SettingsVC.h */,
-				78D66D4219C7406500722E6C /* SettingsVC.m */,
-				78D66D4419C8368100722E6C /* ReaderListVC.h */,
-				78D66D4519C8368100722E6C /* ReaderListVC.m */,
-				78D66D4719C8430A00722E6C /* ConnectionSettingsVC.h */,
-				78D66D4819C8430A00722E6C /* ConnectionSettingsVC.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -378,9 +393,6 @@
 			children = (
 				78D66CA119BDBCF000722E6C /* RFIDDemoApp.storyboard */,
 				78D66CA719BDBCF000722E6C /* Images.xcassets */,
-				78D66D0D19BDEC2400722E6C /* ui_config.h */,
-				784B004C19CB1A2A0095EE43 /* config.h */,
-				78BD183B1A80DC5600DB0657 /* RfidAppKeys.h */,
 				7352CF0B2022EE7F00C17EE7 /* Stock Model */,
 				52AB54821A9C79BE0087CC70 /* ViewControllers */,
 				52AB54801A9C791B0087CC70 /* model */,
@@ -395,7 +407,6 @@
 			isa = PBXGroup;
 			children = (
 				2FF556A82026EC22001CEE1B /* BatteryPng */,
-				2FF5569D2026EC19001CEE1B /* bat_lvl_100_dpo.png */,
 				730F86632025D71000C36234 /* Red.jpg */,
 				730F865C2025B9A000C36234 /* title_antn.png */,
 				730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */,
@@ -485,10 +496,10 @@
 				2FF556A02026EC19001CEE1B /* bat_lvl_100.png in Resources */,
 				730F86642025D71100C36234 /* Red.jpg in Resources */,
 				2FF556A22026EC19001CEE1B /* bat_lvl_25.png in Resources */,
+				738233E5202820230019C514 /* bat_lvl_100_dpo.png in Resources */,
 				2FF5569E2026EC19001CEE1B /* bat_lvl_75.png in Resources */,
 				2FF556A62026EC19001CEE1B /* bat_lvl_50_dpo.png in Resources */,
 				730F86572025B86E00C36234 /* title_rdl.png in Resources */,
-				2FF556A72026EC19001CEE1B /* bat_lvl_100_dpo.png in Resources */,
 				2FF556A52026EC19001CEE1B /* bat_lvl_25_dpo.png in Resources */,
 				730F86592025B87E00C36234 /* ic_settings@3x.png in Resources */,
 				730F865D2025B9A000C36234 /* title_antn.png in Resources */,
@@ -504,6 +515,7 @@
 			files = (
 				784B003F19CAEEA50095EE43 /* AppConfiguration.m in Sources */,
 				7352CF082022EE6C00C17EE7 /* StockDataSource.m in Sources */,
+				2FF556DD20270B1E001CEE1B /* VerifyVCViewController.m in Sources */,
 				52B6C6F61A8CBF2000D35518 /* AlertView.m in Sources */,
 				78D66D4619C8368100722E6C /* ReaderListVC.m in Sources */,
 				730F86452025B05E00C36234 /* BatteryIndicatorView.m in Sources */,

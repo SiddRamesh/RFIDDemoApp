@@ -9,10 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface GenerateMasterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,CLLocationManagerDelegate> {
-    
-    
-}
+@interface GenerateMasterViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,CLLocationManagerDelegate> 
 
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 
