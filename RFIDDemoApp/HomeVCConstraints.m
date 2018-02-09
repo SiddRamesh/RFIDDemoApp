@@ -49,7 +49,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:0.74 green:0.86 blue:0.9 alpha:1.0];
+  //  self.view.backgroundColor = [UIColor colorWithRed:0.74 green:0.86 blue:0.9 alpha:1.0];
     
     //TODO: - Scan button
 //     UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(btnScanPressed:)];

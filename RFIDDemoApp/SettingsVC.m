@@ -23,9 +23,11 @@
 
 #define ZT_VC_SETTINGS_CELL_IDX_READER_LIST                    0
 #define ZT_VC_SETTINGS_CELL_IDX_CONNECTION                     1
+#define ZT_VC_SETTINGS_CELL_IDX_BATTERY                        2
 
 
-#define ZT_VC_SETTINGS_OPTIONS_NUMBER                         2
+
+#define ZT_VC_SETTINGS_OPTIONS_NUMBER                         3
 
 
 #define ZT_CELL_ID_ACTIVE                                      @"ID_CELL_ACTIVE"
@@ -61,6 +63,7 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         
         [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_CONNECTION withObject:ZT_STR_SETTINGS_CONNECTION];
         [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_READER_LIST withObject:ZT_STR_SETTINGS_READER_LIST];
+        [m_SettingsOptionsHeaders replaceObjectAtIndex:ZT_VC_SETTINGS_CELL_IDX_BATTERY withObject:ZT_STR_SETTINGS_BATTERY];
 
         m_OffscreenImageLabelCell = [[zt_ImageLabelCellView alloc] init];
     }
@@ -174,6 +177,10 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         case ZT_VC_SETTINGS_CELL_IDX_CONNECTION:
             
             break;
+            
+        case ZT_VC_SETTINGS_CELL_IDX_BATTERY:
+            
+            break;
     }
     sleep(1);
     
@@ -187,7 +194,8 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
 {
     NSString *settingHeader = (NSString*)[m_SettingsOptionsHeaders objectAtIndex:row];
     if ([settingHeader isEqualToString:ZT_STR_SETTINGS_CONNECTION] ||
-        [settingHeader isEqualToString:ZT_STR_SETTINGS_READER_LIST])
+        [settingHeader isEqualToString:ZT_STR_SETTINGS_READER_LIST] ||
+        [settingHeader isEqualToString:ZT_STR_SETTINGS_BATTERY])
     {
         [cell setInfoNotice:(NSString*)[m_SettingsOptionsHeaders objectAtIndex:row]];
         [cell setCellImage:(NSString*)[m_SettingsOptionsImages objectAtIndex:row]];
@@ -230,6 +238,9 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
             // do nothing
             break;
         case ZT_VC_SETTINGS_CELL_IDX_CONNECTION:
+            // do nothing
+            break;
+        case ZT_VC_SETTINGS_CELL_IDX_BATTERY:
             // do nothing
             break;
     }
@@ -279,7 +290,8 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
     zt_ImageLabelCellView *_cell = nil;
     NSString *settingHeader = (NSString*)[m_SettingsOptionsHeaders objectAtIndex:(int)[indexPath row]];
     if ([settingHeader isEqualToString:ZT_STR_SETTINGS_CONNECTION] ||
-        [settingHeader isEqualToString:ZT_STR_SETTINGS_READER_LIST])
+        [settingHeader isEqualToString:ZT_STR_SETTINGS_READER_LIST] ||
+        [settingHeader isEqualToString:ZT_STR_SETTINGS_BATTERY])
     {
         _cell = [tableView dequeueReusableCellWithIdentifier:ZT_CELL_ID_ACTIVE forIndexPath:indexPath];
         
@@ -343,6 +355,10 @@ static NSString *kKeyPathDpoEnable = @"currentDpoEnable";
         case ZT_VC_SETTINGS_CELL_IDX_CONNECTION:
             connection_vc = (zt_ConnectionSettingsVC*)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_CONNECTION_SETTINGS_VC"];
             vc = connection_vc;
+            break;
+        case ZT_VC_SETTINGS_CELL_IDX_BATTERY:
+            battery_vc = (zt_BatteryStatusVC *)[[UIStoryboard storyboardWithName:@"RFIDDemoApp" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"ID_BATTERY_VC"];
+            vc = battery_vc;
             break;
     }
     

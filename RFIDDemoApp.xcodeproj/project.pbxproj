@@ -47,6 +47,18 @@
 		7352CF082022EE6C00C17EE7 /* StockDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF002022EE6B00C17EE7 /* StockDataSource.m */; };
 		7352CF092022EE6C00C17EE7 /* StockData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF052022EE6C00C17EE7 /* StockData.m */; };
 		7352CF0A2022EE6C00C17EE7 /* StockCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */; };
+		7356F76E2029A13900A2F986 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7356F76D2029A13900A2F986 /* CollectionViewController.swift */; };
+		7356F7702029A13D00A2F986 /* CustomCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7356F76F2029A13D00A2F986 /* CustomCollectionViewLayout.swift */; };
+		7356F7722029A14300A2F986 /* ContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7356F7712029A14200A2F986 /* ContentCollectionViewCell.swift */; };
+		7356F7742029A14700A2F986 /* ContentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7356F7732029A14700A2F986 /* ContentCollectionViewCell.xib */; };
+		7357ECB8202C13220082FA38 /* pulSVu.m in Sources */ = {isa = PBXBuildFile; fileRef = 7357ECB7202C13220082FA38 /* pulSVu.m */; };
+		7357ECBA202C13390082FA38 /* pulSVu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7357ECB9202C13390082FA38 /* pulSVu.xib */; };
+		7364F75D202AD67500FC004B /* CNPPopupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7364F75B202AD67500FC004B /* CNPPopupController.m */; };
+		7364F75F202AD9DD00FC004B /* Scan.png in Resources */ = {isa = PBXBuildFile; fileRef = 7364F75E202AD9DD00FC004B /* Scan.png */; };
+		7364F762202ADCC800FC004B /* PulsingHaloLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7364F760202ADCC800FC004B /* PulsingHaloLayer.m */; };
+		7364F764202ADDE600FC004B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7364F763202ADDE600FC004B /* QuartzCore.framework */; };
+		7364F767202AE15B00FC004B /* bluetooth_book.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 7364F765202AE15A00FC004B /* bluetooth_book.pdf */; };
+		7364F76B202AF93400FC004B /* IPhone_5s.png in Resources */ = {isa = PBXBuildFile; fileRef = 7364F76A202AF93400FC004B /* IPhone_5s.png */; };
 		738233E5202820230019C514 /* bat_lvl_100_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 738233E4202820220019C514 /* bat_lvl_100_dpo.png */; };
 		73A5EDE420285C1500A91DBC /* MDButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A5EDE320285C1500A91DBC /* MDButton.m */; };
 		73A5EDE820285C8B00A91DBC /* MDRippleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 73A5EDE720285C8B00A91DBC /* MDRippleLayer.m */; };
@@ -143,7 +155,26 @@
 		7352CF042022EE6B00C17EE7 /* StockData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockData.h; sourceTree = "<group>"; };
 		7352CF052022EE6C00C17EE7 /* StockData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockData.m; sourceTree = "<group>"; };
 		7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockCellTableViewCell.m; sourceTree = "<group>"; };
+		7356F76D2029A13900A2F986 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		7356F76F2029A13D00A2F986 /* CustomCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayout.swift; sourceTree = "<group>"; };
+		7356F7712029A14200A2F986 /* ContentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCollectionViewCell.swift; sourceTree = "<group>"; };
+		7356F7732029A14700A2F986 /* ContentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentCollectionViewCell.xib; sourceTree = "<group>"; };
+		7357ECB6202C13220082FA38 /* pulSVu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pulSVu.h; sourceTree = "<group>"; };
+		7357ECB7202C13220082FA38 /* pulSVu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pulSVu.m; sourceTree = "<group>"; };
+		7357ECB9202C13390082FA38 /* pulSVu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = pulSVu.xib; sourceTree = "<group>"; };
+		7364F75B202AD67500FC004B /* CNPPopupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNPPopupController.m; sourceTree = "<group>"; };
+		7364F75C202AD67500FC004B /* CNPPopupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNPPopupController.h; sourceTree = "<group>"; };
+		7364F75E202AD9DD00FC004B /* Scan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Scan.png; sourceTree = "<group>"; };
+		7364F760202ADCC800FC004B /* PulsingHaloLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PulsingHaloLayer.m; sourceTree = "<group>"; };
+		7364F761202ADCC800FC004B /* PulsingHaloLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PulsingHaloLayer.h; sourceTree = "<group>"; };
+		7364F763202ADDE600FC004B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7364F765202AE15A00FC004B /* bluetooth_book.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = bluetooth_book.pdf; sourceTree = "<group>"; };
+		7364F769202AE3FA00FC004B /* PulsingHalo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PulsingHalo.h; sourceTree = "<group>"; };
+		7364F76A202AF93400FC004B /* IPhone_5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IPhone_5s.png; path = ../../../IPhone_5s.png; sourceTree = "<group>"; };
+		7377D5C2202D64380093A6AF /* IPhone_5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IPhone_5s.png; path = ../../../IPhone_5s.png; sourceTree = "<group>"; };
+		7377D5C3202D64500093A6AF /* IPhone_5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IPhone_5s.png; path = ../../../IPhone_5s.png; sourceTree = "<group>"; };
 		738233E4202820220019C514 /* bat_lvl_100_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bat_lvl_100_dpo.png; path = ../../../RFIDDemoApp/RFIDDemoApp/bat_lvl_100_dpo.png; sourceTree = "<group>"; };
+		73851780202D649900FCE856 /* IPhone_5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IPhone_5s.png; path = ../../../IPhone_5s.png; sourceTree = "<group>"; };
 		73A5EDE220285C1500A91DBC /* MDButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDButton.h; sourceTree = "<group>"; };
 		73A5EDE320285C1500A91DBC /* MDButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDButton.m; sourceTree = "<group>"; };
 		73A5EDE520285C7500A91DBC /* MDConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDConstants.h; sourceTree = "<group>"; };
@@ -207,6 +238,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7364F764202ADDE600FC004B /* QuartzCore.framework in Frameworks */,
 				2FF556932026D034001CEE1B /* CoreLocation.framework in Frameworks */,
 				78BD18401A80FC2200DB0657 /* CoreBluetooth.framework in Frameworks */,
 				78BD183F1A80FC1D00DB0657 /* ExternalAccessory.framework in Frameworks */,
@@ -306,6 +338,11 @@
 		52B6C6EF1A8CBEE700D35518 /* AlertProgressDialog */ = {
 			isa = PBXGroup;
 			children = (
+				7377D5C3202D64500093A6AF /* IPhone_5s.png */,
+				73851780202D649900FCE856 /* IPhone_5s.png */,
+				7364F765202AE15A00FC004B /* bluetooth_book.pdf */,
+				7377D5C2202D64380093A6AF /* IPhone_5s.png */,
+				7364F75E202AD9DD00FC004B /* Scan.png */,
 				78D66D1119BF0E0100722E6C /* RFIDTabVC.h */,
 				78D66D1219BF0E0100722E6C /* RFIDTabVC.m */,
 				52AB4BA91A93AA7B0082C35E /* UIButton+VerticalButtonFactory.h */,
@@ -362,16 +399,36 @@
 		7353A080201F363100963DC7 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				B4F3FE361B41D23400325361 /* BaseDpoVC.h */,
-				B4F3FE371B41D23400325361 /* BaseDpoVC.m */,
+				7356F7752029A16600A2F986 /* CollectionSwift */,
 				733DB3412021B0520073852A /* ScanVC.h */,
 				733DB3422021B0520073852A /* ScanVC.m */,
+				7356F76D2029A13900A2F986 /* CollectionViewController.swift */,
 				2FF556DB20270B1E001CEE1B /* VerifyVCViewController.h */,
 				2FF556DC20270B1E001CEE1B /* VerifyVCViewController.m */,
-				730F86602025CDF500C36234 /* GenerateMasterViewController.h */,
-				730F86612025CDF500C36234 /* GenerateMasterViewController.m */,
 			);
 			name = Menu;
+			sourceTree = "<group>";
+		};
+		7356F7752029A16600A2F986 /* CollectionSwift */ = {
+			isa = PBXGroup;
+			children = (
+				730F86602025CDF500C36234 /* GenerateMasterViewController.h */,
+				730F86612025CDF500C36234 /* GenerateMasterViewController.m */,
+				7357ECB6202C13220082FA38 /* pulSVu.h */,
+				7357ECB7202C13220082FA38 /* pulSVu.m */,
+				7357ECB9202C13390082FA38 /* pulSVu.xib */,
+				B4F3FE361B41D23400325361 /* BaseDpoVC.h */,
+				B4F3FE371B41D23400325361 /* BaseDpoVC.m */,
+				7364F769202AE3FA00FC004B /* PulsingHalo.h */,
+				7364F761202ADCC800FC004B /* PulsingHaloLayer.h */,
+				7364F760202ADCC800FC004B /* PulsingHaloLayer.m */,
+				7364F75C202AD67500FC004B /* CNPPopupController.h */,
+				7364F75B202AD67500FC004B /* CNPPopupController.m */,
+				7356F7732029A14700A2F986 /* ContentCollectionViewCell.xib */,
+				7356F7712029A14200A2F986 /* ContentCollectionViewCell.swift */,
+				7356F76F2029A13D00A2F986 /* CustomCollectionViewLayout.swift */,
+			);
+			name = CollectionSwift;
 			sourceTree = "<group>";
 		};
 		73A5EDEC20285CCC00A91DBC /* MD */ = {
@@ -412,6 +469,7 @@
 		78D66C8E19BDBCF000722E6C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7364F763202ADDE600FC004B /* QuartzCore.framework */,
 				2FF556922026D034001CEE1B /* CoreLocation.framework */,
 				58240B021EEA666400BAD83C /* libsymbolrfid-sdk.a */,
 				78BD182E1A80BA2300DB0657 /* CoreBluetooth.framework */,
@@ -427,6 +485,7 @@
 			isa = PBXGroup;
 			children = (
 				78D66CA119BDBCF000722E6C /* RFIDDemoApp.storyboard */,
+				7364F76A202AF93400FC004B /* IPhone_5s.png */,
 				78D66CA719BDBCF000722E6C /* Images.xcassets */,
 				7352CF0B2022EE7F00C17EE7 /* Stock Model */,
 				52AB54821A9C79BE0087CC70 /* ViewControllers */,
@@ -517,18 +576,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7364F76B202AF93400FC004B /* IPhone_5s.png in Resources */,
 				2FF556A12026EC19001CEE1B /* bat_lvl_empty.png in Resources */,
 				730F865F2025C21300C36234 /* LaunchScreen.xib in Resources */,
+				7364F767202AE15B00FC004B /* bluetooth_book.pdf in Resources */,
+				7356F7742029A14700A2F986 /* ContentCollectionViewCell.xib in Resources */,
 				78D66CA819BDBCF000722E6C /* Images.xcassets in Resources */,
 				78D66C9A19BDBCF000722E6C /* InfoPlist.strings in Resources */,
 				78D66CA319BDBCF000722E6C /* RFIDDemoApp.storyboard in Resources */,
 				730F86552025B85F00C36234 /* logo_new.png in Resources */,
+				7364F75F202AD9DD00FC004B /* Scan.png in Resources */,
 				2FF556A42026EC19001CEE1B /* bat_lvl_empty_dpo.png in Resources */,
 				730F865B2025B88500C36234 /* bat_lvl_100_dpo.png in Resources */,
 				2FF5569F2026EC19001CEE1B /* bat_lvl_50.png in Resources */,
 				730F86542025B85F00C36234 /* vertify3.png in Resources */,
 				2FF556A32026EC19001CEE1B /* bat_lvl_75_dpo.png in Resources */,
 				2FF556A02026EC19001CEE1B /* bat_lvl_100.png in Resources */,
+				7357ECBA202C13390082FA38 /* pulSVu.xib in Resources */,
 				730F86642025D71100C36234 /* Red.jpg in Resources */,
 				2FF556A22026EC19001CEE1B /* bat_lvl_25.png in Resources */,
 				738233E5202820230019C514 /* bat_lvl_100_dpo.png in Resources */,
@@ -548,12 +612,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7357ECB8202C13220082FA38 /* pulSVu.m in Sources */,
+				7356F76E2029A13900A2F986 /* CollectionViewController.swift in Sources */,
 				784B003F19CAEEA50095EE43 /* AppConfiguration.m in Sources */,
 				7352CF082022EE6C00C17EE7 /* StockDataSource.m in Sources */,
 				73A5EDE420285C1500A91DBC /* MDButton.m in Sources */,
 				2FF556DD20270B1E001CEE1B /* VerifyVCViewController.m in Sources */,
 				73A5EDE820285C8B00A91DBC /* MDRippleLayer.m in Sources */,
 				52B6C6F61A8CBF2000D35518 /* AlertView.m in Sources */,
+				7364F762202ADCC800FC004B /* PulsingHaloLayer.m in Sources */,
 				78D66D4619C8368100722E6C /* ReaderListVC.m in Sources */,
 				730F86452025B05E00C36234 /* BatteryIndicatorView.m in Sources */,
 				730F86482025B09B00C36234 /* RFIDDeviceCellVeiew.m in Sources */,
@@ -563,6 +630,7 @@
 				784B003C19CAC7CF0095EE43 /* RfidAppEngine.m in Sources */,
 				78EDBD5A1B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m in Sources */,
 				784B004519CB19420095EE43 /* BatteryStatusVC.m in Sources */,
+				7364F75D202AD67500FC004B /* CNPPopupController.m in Sources */,
 				78EDBD611B28506A000997E5 /* FileExportManager.m in Sources */,
 				730F864E2025B18C00C36234 /* RFIDTagCellView.m in Sources */,
 				52AB54851A9C7AE50087CC70 /* ActiveReader.m in Sources */,
@@ -571,6 +639,7 @@
 				730F86512025B1AC00C36234 /* ImageLabelCellView.m in Sources */,
 				733DB3432021B0520073852A /* ScanVC.m in Sources */,
 				7352CF092022EE6C00C17EE7 /* StockData.m in Sources */,
+				7356F7702029A13D00A2F986 /* CustomCollectionViewLayout.swift in Sources */,
 				73A5EDEF2028603800A91DBC /* MDTouchGestureRecognizer.m in Sources */,
 				784B003919CAC4FB0095EE43 /* SledConfiguration.m in Sources */,
 				730F864B2025B0B900C36234 /* OptionCellView.m in Sources */,
@@ -587,6 +656,7 @@
 				52AB4BA71A93A9C00082C35E /* HomeVCConstraints.m in Sources */,
 				78D66C9C19BDBCF000722E6C /* main.m in Sources */,
 				52BA7CE01AE8FA4600C94D33 /* EnumMapper.m in Sources */,
+				7356F7722029A14300A2F986 /* ContentCollectionViewCell.swift in Sources */,
 				7854A4BE1A8389EA006CE34E /* InventoryItem.m in Sources */,
 				73A5EDF22028604E00A91DBC /* UIViewHelper.m in Sources */,
 				52B296961ACBF5270034CC2F /* RegionData.m in Sources */,
@@ -629,6 +699,8 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -648,7 +720,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -669,6 +741,8 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -681,7 +755,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -701,7 +775,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RFIDDemoApp/RFIDDemoApp-Prefix.pch";
 				INFOPLIST_FILE = "RFIDDemoApp/RFIDDemoApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -732,7 +806,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RFIDDemoApp/RFIDDemoApp-Prefix.pch";
 				INFOPLIST_FILE = "RFIDDemoApp/RFIDDemoApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

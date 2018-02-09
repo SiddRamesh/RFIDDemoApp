@@ -29,7 +29,7 @@
 
 
 
-@interface zt_HomeVCConstraints : UIViewController <RKCardViewDelegate, MDButtonDelegate>
+@interface zt_HomeVCConstraints : UIViewController <MDButtonDelegate>
 {
     
 }

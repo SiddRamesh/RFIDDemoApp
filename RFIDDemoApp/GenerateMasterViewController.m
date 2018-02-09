@@ -7,6 +7,7 @@
 //
 
 #import "GenerateMasterViewController.h"
+#import "AlertView.h"
 
 @interface GenerateMasterViewController ()
 
@@ -45,9 +46,11 @@
     
     [self hideKeyboardWhenTappedAround];
     
-    CLLocationCoordinate2D coordinate = [self getLocation];
-    _lat = [NSString stringWithFormat:@"%f", coordinate.latitude];
-    _longi = [NSString stringWithFormat:@"%f", coordinate.longitude];
+    [self locationSet];
+    
+//    CLLocationCoordinate2D coordinate = [self getLocation];
+//    _lat = [NSString stringWithFormat:@"%f", coordinate.latitude];
+//    _longi = [NSString stringWithFormat:@"%f", coordinate.longitude];
     
     NSLog(@"*dLatitude : %@", _lat);
     NSLog(@"*dLongitude : %@", _longi);
@@ -69,21 +72,34 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-     return (section == 0) ? 3 : 3;
+    switch (section) {
+        case 0: {
+            return 3;
+        } break;
+        case 1: {
+            return 3;
+        } break;
+        default: {
+            return 4;
+        } break;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    switch (section) {
-        case 0: {
-            return NSLocalizedString(@"Information", @"Information");
-        } break;
-        case 1: {
-            return NSLocalizedString(@"Entry Info", @"Entry Information");
-        } break;
-        default: {
-            return NSLocalizedString(@"Tracking Data", @"Tracking Data");
-        } break;
-    }
+    
+     return NSLocalizedString(@"Information", @"Information");
+    
+//    switch (section) {
+//        case 0: {
+//            return NSLocalizedString(@"Information", @"Information");
+//        } break;
+//        case 1: {
+//            return NSLocalizedString(@"Entry Info", @"Entry Information");
+//        } break;
+//        default: {
+//            return NSLocalizedString(@"Tracking Data", @"Tracking Data");
+//        } break;
+//    }
 }
 
 -(UITextField*) makeTextField: (NSString*)text placeholder: (NSString*)placeholder  {
@@ -157,11 +173,11 @@
             } break;
             case 1: {
                 cell.textLabel.text = NSLocalizedString(@"Latitude :", @"Latitude");
-                cell.detailTextLabel.text = self.lat;
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%f", self.locationManager.location.coordinate.latitude];//  self.lat;
             } break;
             case 2: {
                 cell.textLabel.text = NSLocalizedString(@"Longitude :", @"Longitude");
-                cell.detailTextLabel.text =  self.longi;
+                cell.detailTextLabel.text =  [NSString stringWithFormat:@"%f", self.locationManager.location.coordinate.longitude];
             }break;
             default: {
                 cell.textLabel.text = NSLocalizedString(@"Area :",@"Area");
@@ -206,15 +222,8 @@
     // [sender resignFirstResponder];
 }
 
-/*
+
 -(void)locationSet {
-    
-    _locationManager.allowsBackgroundLocationUpdates = false; /// for continues update
-    _locationManager.delegate = self;
-    [_locationManager requestWhenInUseAuthorization ];
-    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [_locationManager startUpdatingLocation ];
-    [_locationManager startMonitoringSignificantLocationChanges ];
     
     // Here you can check whether you have allowed the permission or not.
     if (CLLocationManager.locationServicesEnabled)
@@ -222,47 +231,60 @@
         switch([CLLocationManager authorizationStatus])
         {
            
+            case kCLAuthorizationStatusAuthorizedWhenInUse:
+                [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Accessing Location.." withDuration:3];
+                
+                _locationManager.allowsBackgroundLocationUpdates = false; /// for continues update
+                _locationManager.delegate = self;
+                [_locationManager requestWhenInUseAuthorization];
+                _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+                [_locationManager startUpdatingLocation];
+                [_locationManager startMonitoringSignificantLocationChanges];
+                break;
             case kCLAuthorizationStatusNotDetermined:
                 NSLog(@"Not Determined");
-                [self showAlertMessage:@"Alert" withMessage:@"Location service is disabled!!"];
+                [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Not Determined" withDuration:3];
                 break;
             case kCLAuthorizationStatusRestricted:
                  NSLog(@"Restricted");
-                  [self showAlertMessage:@"Alert" withMessage:@"Location service is disabled!!"];
+                   [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Restricted" withDuration:3];
                 break;
             case kCLAuthorizationStatusDenied:
                  NSLog(@"Denied");
-                  [self showAlertMessage:@"Alert" withMessage:@"Location service is disabled!!"];
+                 [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Location Service is Denied!" withDuration:3];
                 break;
             case kCLAuthorizationStatusAuthorizedAlways:
-                <#code#>
+                 [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Authorized" withDuration:3];
                 break;
-            case kCLAuthorizationStatusAuthorizedWhenInUse:
-                 CLLocationDegrees  *clldeg = (locationManager.location?.coordinate.latitude)!
-                let longitude: CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
-                let location = CLLocation(latitude: latitude, longitude: longitude) //changed!!!
-                latitudelbl.text  = latitude.description
-                longitudelbl.text = longitude.description
+           
+                
+             //   CLGeocoder().
+                
+          //       CLLocationDegrees  *clldeg = (locationManager.location?.coordinate.latitude)!
+          //      let longitude: CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
+        //        let location = CLLocation(latitude: latitude, longitude: longitude) //changed!!!
+         //       latitudelbl.text  = latitude.description
+          //      longitudelbl.text = longitude.description
                 // print("Lat : %f  Long : %f",latitude as Any,longitude as Any) 8650232078 vodone 100
-                CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) -> Void in
-                    if error != nil {
-                        return
-                    }else if let country = placemarks?.first?.country,
-                        let city = placemarks?.first?.locality,
-                        let pot = placemarks?.first?.postalCode {
-                            print(city + ",",country)
-                            self.locationlbl.text = pot + ", " + city + ", " + country
-                            self.activityIndicatorView.stopAnimating()
-                            self.activityIndicatorView.hidesWhenStopped = true
-                        }
-                    else {
-                    }
-                })
-                break;
+                
+//                CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) -> Void in
+//                    if error != nil {
+//                        return
+//                    }else if let country = placemarks?.first?.country,
+//                        let city = placemarks?.first?.locality,
+//                        let pot = placemarks?.first?.postalCode {
+//                            print(city + ",",country)
+//                            self.locationlbl.text = pot + ", " + city + ", " + country
+//                        }
+//                    else {
+//                    }
+//                })
+               // break;
         }
     }
 }
 
+ /*
 -(void)showAlertMessage:(NSString *)messageTitle withMessage:(NSString *)message  {
     UIAlertController *alertController = [UIAlertController new];
     alertController.title = messageTitle;
@@ -333,8 +355,6 @@
     [alertView.layer setCornerRadius:  5.0f];
     [alertView.layer setBorderWidth: 2.0f];
     [alertView.layer setMasksToBounds: YES];
-    
-    
     
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, width, 20)];

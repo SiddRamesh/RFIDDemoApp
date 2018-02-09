@@ -16,11 +16,28 @@
 
 #import "InventoryItem.h"
 
+#import "CNPPopupController.h"
+#import "PulsingHaloLayer.h"
+
+#import "pulSVu.h"
+
+//#import "Pulsator-Swift.h"
+
 #define ZT_INVENTORY_TIMER_INTERVAL          0.2
+
+#define kMaxRadius 200
+#define kMaxDuration 10
+
 
 @import MapKit;
 
-@interface ScanVC ()
+@interface ScanVC () <CNPPopupControllerDelegate>
+
+@property (nonatomic, assign) PulsingHaloLayer *halo;
+@property (nonatomic, assign)  UIImageView *beaconView;
+@property (nonatomic, assign)  UIView *uiView;
+
+@property (nonatomic, strong) CNPPopupController *popupController;
 
 @property (nonatomic, strong) StockDataSource *stockDataSource;
 @property (assign) id localChangedObserver;
@@ -67,8 +84,7 @@
 
 @implementation ScanVC
 
-//@synthesize tableView;
-//@synthesize serialLbl,iecLbl, billLbl,truckLbl,codebl,portLbl,dateLbl,timeLbl,enteryByLbl,esealLbl; //resultLabel;
+@synthesize m_tblTags;
 @synthesize soapMessage, tag, port, webResponseData, currentElement;
 
 /* default cstr for storyboard */
@@ -80,7 +96,6 @@
         m_Mapper = [[zt_EnumMapper alloc] initWithMEMORYBANKMapperForInventory];
         m_Tags = [NSMutableArray new];
         m_SelectedInventoryOption = [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] getSelectedInventoryMemoryBankUI];
-        [m_btnOptions setTitle:[m_Mapper getStringByEnum:m_SelectedInventoryOption]];
     }
     return self;
 }
@@ -97,12 +112,9 @@
     [_code release];
     [_bill release];
     [_serialCellView release];
+    [m_tblTags release];
+    [_tagIdStr release];
     [super dealloc];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    
-    [super viewDidAppear:animated];
 }
 
 - (void)viewDidLoad {
@@ -111,14 +123,21 @@
  //   UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
 //    self.navigationItem.rightBarButtonItem = barButtonScan;
     
-    [tableView setDelegate:self];
-    [tableView setDataSource:self];
-    [tableView registerClass:[zt_RFIDTagCellView class] forCellReuseIdentifier:ZT_CELL_ID_TAG_DATA];
+    [m_tblTags setDelegate:self];
+    [m_tblTags setDataSource:self];
+    [m_tblTags registerClass:[zt_RFIDTagCellView class] forCellReuseIdentifier:ZT_CELL_ID_TAG_DATA];
+    
+    [self showPopupWithStyle:CNPPopupStyleFullscreen];
+    
+    flag = false;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [m_tblTags release];
+    [_tagIdStr release];
+    [super viewWillDisappear:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -146,7 +165,7 @@
             if([[[zt_RfidAppEngine sharedAppEngine] activeReader] getBatchModeStatus])
             {
                 [m_Tags removeAllObjects];
-                [tableView reloadData];
+                [m_tblTags reloadData];
             }
         }
         else
@@ -162,6 +181,10 @@
     [super viewWillDisappear:animated];
     [[[zt_RfidAppEngine sharedAppEngine] operationEngine] removeOperationListener:self];
     [[zt_RfidAppEngine sharedAppEngine] removeTriggerEventDelegate:self];
+    
+    [m_tblTags release];
+    [_tagIdStr release];
+    
 }
 
 - (BOOL)onNewTriggerEvent:(BOOL)pressed
@@ -213,17 +236,15 @@
     /* TBD */
     zt_InventoryItem *tag_data = (zt_InventoryItem *)[m_Tags objectAtIndex:row];
     _tagIdStr = tag_data.getTagId;
-    NSLog(@"%@ Feteched tag ID",tag_data.getTagId);
-    [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
-    //NSLog(@"%@ This tagID is to be Scan..",_tagIdStr);
+    
+    [tag_cell setTagData:tag_data.getTagId];
+ //   [tag_cell setTagCount:[NSString stringWithFormat:@"%d", tag_data.getCount]];
 
 }
 
 //MARK: - Main
 - (IBAction)btnStartStopPressed:(id)sender
 {
- 
-
     if([[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateGetTagsOperationInProgress])
     {
         return;
@@ -239,13 +260,13 @@
             rfid_res = [[zt_RfidAppEngine sharedAppEngine] purgeTags:&status];
         }
         rfid_res = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] startInventory:YES aMemoryBank:m_SelectedInventoryOption message:&status];
-        [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
+     //   [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
     //    NSLog(@"%@ This tagID is to be Scan..",_tagIdStr);
         if ([status isEqualToString:@"Inventory Started in Batch Mode"]) {
             NSLog(@"%@ btn Tag is",m_Tags);
             [m_Tags removeAllObjects];
-            [tableView reloadData];
-            NSLog(@"%@ btn table",tableView);
+            [m_tblTags reloadData];
+        //    NSLog(@"%@ btn table",tableView);
         }
     }
     else
@@ -254,10 +275,97 @@
     }
 }
 
--(void)scanDataWithTag:(NSString *)tag nPort:(NSString *)port {
+//MARK: - Radio Operation
+- (void)radioStateChangedOperationRequested:(BOOL)requested aType:(int)operation_type
+{
+    if (ZT_RADIO_OPERATION_INVENTORY != operation_type)
+    {
+        return;
+    }
     
-     tag = @"E200637C90D1D6B16611275A";
-     port = @"INNSA1";
+    if (YES == requested)
+    {
+        [UIView performWithoutAnimation:^{
+            [m_btnStartStop setTitle:@"STOP" forState:UIControlStateNormal];
+            [m_btnStartStop layoutIfNeeded];
+        }];
+        
+        [m_btnOptions setEnabled:NO];
+        
+        /* clear selection information */
+        //   m_ExpandedCellIdx = -1;
+        [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearTagIdAccessGracefully];
+        [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearTagIdLocationingGracefully];
+        [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearSelectedItem];
+        
+        /* clear tags only on start of new operation */
+        [m_Tags removeAllObjects];
+        if(batchModeLabel.hidden)
+        {
+            [m_Tags removeAllObjects];
+            [m_tblTags reloadData];
+            batchModeLabel.hidden = NO;
+        }
+        [self updateOperationDataUI];
+    }
+    else
+    {
+        [UIView performWithoutAnimation:^{
+            [m_btnStartStop setTitle:@"START" forState:UIControlStateNormal];
+            [m_btnStartStop layoutIfNeeded];
+        }];
+        
+        [m_btnOptions setEnabled:YES];
+        
+        if(!batchModeLabel.hidden)
+        {
+            NSString *statusMsg;
+            [[[zt_RfidAppEngine sharedAppEngine] operationEngine] getTags:&statusMsg];
+            [self updateOperationDataUI];
+            batchModeLabel.hidden=YES;
+            m_tblTags.hidden = NO;
+        }
+        if([[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateGetTagsOperationInProgress]) //else
+        {
+            NSString *statusMsg;
+            [[[zt_RfidAppEngine sharedAppEngine] operationEngine] purgeTags:&statusMsg];
+            if (![[[zt_RfidAppEngine sharedAppEngine] activeReader] isActive])
+            {
+                [[zt_RfidAppEngine sharedAppEngine] reconnectAfterBatchMode];
+            }
+        }
+        /* update statictics */
+        [self updateOperationDataUI];
+    }
+}
+
+- (void)radioStateChangedOperationInProgress:(BOOL)in_progress aType:(int)operation_type
+{
+    if (ZT_RADIO_OPERATION_INVENTORY != operation_type)
+    {
+        return;
+    }
+    
+    if (YES == in_progress)
+    {
+        /* start timer */
+        m_ViewUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:ZT_INVENTORY_TIMER_INTERVAL target:self selector:@selector(updateOperationDataUI) userInfo:nil repeats:true];
+    }
+    else
+    {
+        /* stop timer */
+        if (m_ViewUpdateTimer != nil)
+        {
+            [m_ViewUpdateTimer invalidate];
+            m_ViewUpdateTimer = nil;
+        }
+        
+        /* update statistics */
+        [self updateOperationDataUI];
+    }
+}
+
+-(void)scanDataWithTag:(NSString *)tag nPort:(NSString *)port {
     
     //first create the soap envelope
     self.soapMessage = [NSString stringWithFormat:@"<?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                           <soap:Body>                                                                                                                                                                                                  <GetAssignTag1 xmlns='http://tempuri.org/'>                                                                                                                                                                                                  <Tag>%@</Tag>                                                                                                                                                                                                                            <port>%@</port>                                                                                                                                                                                                                                     </GetAssignTag1>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>", tag, port];
@@ -283,6 +391,7 @@
     if(connection)
     {
         self.webResponseData = [NSMutableData data];
+        
     }
     else
     {
@@ -332,7 +441,7 @@
     if(![[[zt_RfidAppEngine sharedAppEngine] activeReader] getBatchModeStatus])
     {
       //  batchModeLabel.hidden = YES;
-        [tableView reloadData];
+        [m_tblTags reloadData];
     }
 }
 
@@ -347,6 +456,12 @@
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    
+//    if (data != nil) {
+//        [self showPopupWithTagStatus:@"complete" found:@"Not Tampered"];
+//    } else
+//        [self showPopupWithTagStatus:@"complete" found:@"Tampered"];
+    
     [self.webResponseData  appendData:data];
 }
 
@@ -361,52 +476,74 @@
     //setting delegate of XML parser to self
     xmlParser.delegate = self;
     [xmlParser parse];
-    
-    //FIXME: - Handle Parsed Object
-//    // Run the parser
-//    @try{
-//        BOOL parsingResult = [xmlParser parse];
-//        NSLog(@"%i parsing result",parsingResult);
-//    }
-//    @catch (NSException* exception)
-//    {
-//        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Server Error" message:[exception reason] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-//        [alert show];
-//        return;
-//    }
-    
+ //   [self.popupController dismissPopupControllerAnimated:YES];
 }
 
 //MARK: - NSXMlParser Delegate Methods
--(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:
-(NSString *)qName attributes:(NSDictionary *)attributeDict
+-(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
     currentElement = elementName;
-   NSLog(@"%@ Element -> ",elementName);
+ //  NSLog(@"%@ Element -> ",elementName);
     self.ele1 = elementName;
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-        if ([_ele1 isEqualToString:@"S1"]) { self.Serial.text = string;  }
-        if ([_ele1 isEqualToString:@"S2"]) { self.iec.text = string; }
-        if ([_ele1 isEqualToString:@"S3"]) { self.bill.text = string; }
-        if ([_ele1 isEqualToString:@"S4"]) {  self.truck.text =  string; }
-        if ([_ele1 isEqualToString:@"S5"]) {  self.code.text =  string; }
-        if ([_ele1 isEqualToString:@"S6"]) {  self.port.text =  string; }
-        if ([_ele1 isEqualToString:@"S7"]) {  self.date.text =  string; }
-        if ([_ele1 isEqualToString:@"S8"]) {  self.time.text =  string; }
-        if ([_ele1 isEqualToString:@"S9"]) {  self.enteryByLbl =  string; }
-        if ([_ele1 isEqualToString:@"S10"]){  self.eseal.text =  string; }
-
-    [zt_AlertView showInfoMessage:self.view withHeader:@"VERIFY" withDetails:@"Verified" withDuration:3];
+    [self.popupController dismissPopupControllerAnimated:YES];///working..
     
-    NSLog(@"%@ PData ->: ",string);
+  //  if (self.popupController != nil) {
+    
+        [self showPopupWithTagStatus:@"complete" found:@"Not Tampered"]; //Working
+    //    flag = true;
+    if ([_ele1 isEqualToString:@"S2"]) { self.iec.text = [@" IEC No. : " stringByAppendingString:string]; }
+        if ([_ele1 isEqualToString:@"S3"]) { self.bill.text = [@" Bill No. :  " stringByAppendingString:string]; }
+        if ([_ele1 isEqualToString:@"S7"]) {  self.date.text =  [@" Date :  " stringByAppendingString:string]; }
+        if ([_ele1 isEqualToString:@"S10"]){  self.eseal.text =  [@" E-Seal :  " stringByAppendingString:string]; }
+    // Sealing Date
+        if ([_ele1 isEqualToString:@"S8"]) {  self.time.text =  [@" Time :  " stringByAppendingString:string]; }
+        if ([_ele1 isEqualToString:@"S6"]) {  self.port.text =  [@" Dest. Port :  " stringByAppendingString:string]; }
+    // Container No.
+        if ([_ele1 isEqualToString:@"S4"]) {  self.truck.text =  [@" Truck No :  " stringByAppendingString:string]; }
+    // lat, long, IMEI..
+        if ([_ele1 isEqualToString:@"S1"]) { self.Serial.text = [@" Serial No. :  " stringByAppendingString:string]; }
+        if ([_ele1 isEqualToString:@"S5"]) {  self.code.text =  [@" Code No. :  " stringByAppendingString:string]; }
+        if ([_ele1 isEqualToString:@"S9"]) {  self.enteryByLbl =  [@" Entry By :  " stringByAppendingString:string]; }
+ //   }
+  //   NSLog(@"%@ PData ->: ",string);
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     NSLog(@"Parsed Element : %@", currentElement);
+    if (flag == false) {
+        
+      //  [self showPopupWithTagStatus:@"cancel" found:@"Tampered"];
+    }
+}
+
+-(void)setData {
+    self.iec.text = [@" IEC No. : " stringByAppendingString:self.iecLbl];
+}
+
+- (void)showPopupWithTagStatus:(NSString *)imageName found:(NSString *)string {
+    
+    NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    
+    NSAttributedString *title = [[NSAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName : [UIFont boldSystemFontOfSize:24], NSParagraphStyleAttributeName : paragraphStyle}];
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.numberOfLines = 0;
+    titleLabel.attributedText = title;
+    
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    
+    self.popupController = [[CNPPopupController alloc] initWithContents:@[titleLabel,imageView]];
+    self.popupController.theme = [CNPPopupTheme defaultTheme];
+    self.popupController.theme.popupStyle = CNPPopupStyleCentered;
+    self.popupController.delegate = self;
+    [self.popupController presentPopupControllerAnimated:YES];
 }
 
 //MARK: - NSURLSessionTask Delegate Methods
@@ -428,185 +565,159 @@
     }
 }
 
-
 //MARK: - Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)table {
-    return 3;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    
-    return 3;
+    return [m_Tags count];
 }
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    switch (section) {
-        case 0: {
-            return NSLocalizedString(@"Information", @"Information");
-        } break;
-        case 1: {
-            return NSLocalizedString(@"Tracking Data", @"Tracking Data");
-        } break;
-        default: {
-            return NSLocalizedString(@"Entry Info", @"Entry Information");
-        } break;
-    }
-}
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-     static NSString *kAttributeCellID = @"AttributeCellID";
-
+     static NSString *kAttributeCellID = ZT_CELL_ID_TAG_DATA;
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kAttributeCellID];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:kAttributeCellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-
-    if (indexPath.section == 0) {
-        switch (indexPath.row) {
-            case 0: {
-                cell.textLabel.text = NSLocalizedString(@"Serial No", @"Serial No :");
-                cell.detailTextLabel.text = @"Serial No";// self.serialLbl;    //  stockdata.serial;
-            } break;
-            case 1: {
-                cell.textLabel.text = NSLocalizedString(@"IEC", @"IEC :");
-                cell.detailTextLabel.text = @"Serial No"; //stockdata.iec;
-            } break;
-            default: {
-                cell.textLabel.text = NSLocalizedString(@"Bill No", @"Bill No. :");
-                cell.detailTextLabel.text =  @"Serial No"; //stockdata.bill;
-            } break;
-        }
-    } else if (indexPath.section == 1) {
-        switch (indexPath.row) {
-            case 0: {
-                cell.textLabel.text = NSLocalizedString(@"Truck No", @"Truck No. :");
-                cell.detailTextLabel.text = @"Serial No"; // stockdata.truck;
-            } break;
-            case 1: {
-                cell.textLabel.text = NSLocalizedString(@"Dest. Port", @"Dest. Port :");
-                cell.detailTextLabel.text =  @"Serial No"; // stockdata.port;
-            }break;
-//            case 2: {
-//                cell.textLabel.text = NSLocalizedString(@"Code", @"Code :");
-//                cell.detailTextLabel.text =   stockdata.code;
-//            }break;
-            default: {
-                cell.textLabel.text = NSLocalizedString(@"e-Seal", @"e-Seal :");
-                cell.detailTextLabel.text =  @"Serial No"; // stockdata.eseal;
-            } break;
-        }
-    } else {
-        switch (indexPath.row) {
-            case 0: {
-                cell.textLabel.text = NSLocalizedString(@"Date", @"Date :");
-                cell.detailTextLabel.text = @"Serial No"; // stockdata.datee;
-            } break;
-            case 1: {
-                cell.textLabel.text = NSLocalizedString(@"Time", @"Time :");
-                cell.detailTextLabel.text =  @"Serial No"; // stockdata.time;
-            }break;
-            default: {
-                cell.textLabel.text = NSLocalizedString(@"Entry By", @"Entry By :");
-                cell.detailTextLabel.text = @"Serial No"; // stockdata.entryby;
-            } break;
-        }
-    }
+    zt_InventoryItem *tag_data = (zt_InventoryItem *)[m_Tags objectAtIndex:[indexPath row]];
+    _tagIdStr = tag_data.getTagId;
+    NSLog(@"%@ This TID isto be Scan..",_tagIdStr);
+    cell.textLabel.text = [@"TID : " stringByAppendingString:_tagIdStr];
+    [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
+ 
     return cell;
 }
 
-//MARK: - Radio Operation
-- (void)radioStateChangedOperationRequested:(BOOL)requested aType:(int)operation_type
-{
-    if (ZT_RADIO_OPERATION_INVENTORY != operation_type)
-    {
-        return;
-    }
+- (void)viewDidAppear:(BOOL)animated {
     
-    if (YES == requested)
-    {
-        [UIView performWithoutAnimation:^{
-            [m_btnStartStop setTitle:@"STOP" forState:UIControlStateNormal];
-            [m_btnStartStop layoutIfNeeded];
-        }];
-        
-        [m_btnOptions setEnabled:NO];
-        
-        /* clear selection information */
-     //   m_ExpandedCellIdx = -1;
-        [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearTagIdAccessGracefully];
-        [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearTagIdLocationingGracefully];
-        [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearSelectedItem];
-        
-        /* clear tags only on start of new operation */
-        [m_Tags removeAllObjects];
-        if(batchModeLabel.hidden)
-        {
-            [m_Tags removeAllObjects];
-            [tableView reloadData];
-            batchModeLabel.hidden = NO;
-        }
-        
-        [self updateOperationDataUI];
-        
-    }
-    else
-    {
-        [UIView performWithoutAnimation:^{
-            [m_btnStartStop setTitle:@"START" forState:UIControlStateNormal];
-            [m_btnStartStop layoutIfNeeded];
-        }];
-        
-        [m_btnOptions setEnabled:YES];
-        
-        if(!batchModeLabel.hidden)
-        {
-            NSString *statusMsg;
-            [[[zt_RfidAppEngine sharedAppEngine] operationEngine] getTags:&statusMsg];
-            [self updateOperationDataUI];
-            batchModeLabel.hidden=YES;
-            tableView.hidden = NO;
-        }
-        if([[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateGetTagsOperationInProgress]) //else
-        {
-            NSString *statusMsg;
-            [[[zt_RfidAppEngine sharedAppEngine] operationEngine] purgeTags:&statusMsg];
-            if (![[[zt_RfidAppEngine sharedAppEngine] activeReader] isActive])
-            {
-                [[zt_RfidAppEngine sharedAppEngine] reconnectAfterBatchMode];
-            }
-        }
-        /* update statictics */
-        [self updateOperationDataUI];
-    }
+    [super viewDidAppear:animated];
+    
+    self.Serial.layer.borderWidth = 2.0; self.Serial.layer.cornerRadius = 5; self.Serial.layer.masksToBounds = true;
+    self.iec.layer.borderWidth = 2.0; self.iec.layer.cornerRadius = 5; self.iec.layer.masksToBounds = true;
+    self.bill.layer.borderWidth = 2.0; self.bill.layer.cornerRadius = 5; self.bill.layer.masksToBounds = true;
+    self.truck.layer.borderWidth = 2.0; self.truck.layer.cornerRadius = 5; self.truck.layer.masksToBounds = true;
+    self.code.layer.borderWidth = 2.0; self.code.layer.cornerRadius = 5; self.code.layer.masksToBounds = true;
+    self.port.layer.borderWidth = 2.0; self.port.layer.cornerRadius = 5; self.port.layer.masksToBounds = true;
+    self.time.layer.borderWidth = 2.0; self.time.layer.cornerRadius = 5; self.time.layer.masksToBounds = true;
+    self.date.layer.borderWidth = 2.0; self.date.layer.cornerRadius = 5; self.date.layer.masksToBounds = true;
+    self.eseal.layer.borderWidth = 2.0; self.eseal.layer.cornerRadius = 5; self.eseal.layer.masksToBounds = true;
 }
 
-- (void)radioStateChangedOperationInProgress:(BOOL)in_progress aType:(int)operation_type
-{
-    if (ZT_RADIO_OPERATION_INVENTORY != operation_type)
-    {
-        return;
-    }
-    
-    if (YES == in_progress)
-    {
-        /* start timer */
-        m_ViewUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:ZT_INVENTORY_TIMER_INTERVAL target:self selector:@selector(updateOperationDataUI) userInfo:nil repeats:true];
-    }
-    else
-    {
-        /* stop timer */
-        if (m_ViewUpdateTimer != nil)
-        {
-            [m_ViewUpdateTimer invalidate];
-            m_ViewUpdateTimer = nil;
-        }
-        
-        /* update statistics */
-        [self updateOperationDataUI];
-    }
+
+//MARK: - PopUp Controller
+#pragma mark - CNPPopupController Delegate
+
+- (void)popupController:(CNPPopupController *)controller didDismissWithButtonTitle:(NSString *)title {
+    NSLog(@"Dismissed with button title: %@", title);
 }
+
+- (void)popupControllerDidPresent:(CNPPopupController *)controller {
+    NSLog(@"Popup controller presented.");
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    self.halo.position = self.beaconView.center;
+}
+
+
+- (void)showPopupWithStyle:(CNPPopupStyle)popupStyle {
+    
+    NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    
+    NSAttributedString *title = [[NSAttributedString alloc] initWithString:@"Scan the Tag!" attributes:@{NSFontAttributeName : [UIFont boldSystemFontOfSize:24], NSParagraphStyleAttributeName : paragraphStyle}];
+    NSAttributedString *lineOne = [[NSAttributedString alloc] initWithString:@"or its" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:18], NSParagraphStyleAttributeName : paragraphStyle}];
+    NSAttributedString *lineTwo = [[NSAttributedString alloc] initWithString:@"Tampered!" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:18], NSForegroundColorAttributeName : [UIColor colorWithRed:0.46 green:0.8 blue:1.0 alpha:1.0], NSParagraphStyleAttributeName : paragraphStyle}];
+    
+    CNPPopupButton *button = [[CNPPopupButton alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [button setTitle:@"Close Me" forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor colorWithRed:0.46 green:0.8 blue:1.0 alpha:1.0];
+    button.layer.cornerRadius = 4;
+    button.selectionHandler = ^(CNPPopupButton *button){
+        [self.popupController dismissPopupControllerAnimated:YES];
+        NSLog(@"Block for button: %@", button.titleLabel.text);
+    };
+    
+    UIView *vu = (pulSVu *) [[[NSBundle mainBundle] loadNibNamed:@"pulSVu" owner:self options:nil] lastObject];
+    vu = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 400)];
+    vu.backgroundColor = [UIColor whiteColor];
+    
+    UIImageView *pulseImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50.0, 100.0)];
+    //   self.beaconView.contentMode = UIViewContentModeScaleAspectFit;
+    pulseImg.center = CGPointMake(200, 200);
+    pulseImg.image = [UIImage imageNamed:@"IPhone_5s"];
+    [vu addSubview:pulseImg];
+    
+    PulsingHaloLayer *layer = [PulsingHaloLayer layer];
+    [pulseImg.layer addSublayer:layer];
+    [pulseImg.superview.layer insertSublayer:layer below:pulseImg.layer];
+    layer.position = pulseImg.center;
+    
+    // Customization...
+    layer.pulseInterval = 1;
+    layer.haloLayerNumber = 5;
+    layer.radius = kMaxRadius;
+    layer.animationDuration = kMaxDuration;
+    UIColor *pulCol = [[UIColor alloc] initWithRed:0 green:0.45 blue:0.75 alpha:0.8];
+    layer.backgroundColor = pulCol.CGColor;
+    [layer start];
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.numberOfLines = 0;
+    titleLabel.attributedText = title;
+    
+    UILabel *lineOneLabel = [[UILabel alloc] init];
+    lineOneLabel.numberOfLines = 0;
+    lineOneLabel.attributedText = lineOne;
+    
+    UILabel *lineTwoLabel = [[UILabel alloc] init];
+    lineTwoLabel.numberOfLines = 0;
+    lineTwoLabel.attributedText = lineTwo;
+
+    
+    UIColor *col = [UIColor blueColor];
+    [self.halo setBackgroundColor:col.CGColor];
+    self.halo.radius = kMaxRadius;
+    self.halo.animationDuration = kMaxDuration;
+    [self.halo start];
+    
+    self.popupController = [[CNPPopupController alloc] initWithContents:@[titleLabel, vu,lineOneLabel ,lineTwoLabel]]; // lineOneLabel ,lineTwoLabel
+    self.popupController.theme = [CNPPopupTheme defaultTheme];
+    self.popupController.theme.popupStyle = popupStyle;
+    self.popupController.delegate = self;
+    [self.popupController presentPopupControllerAnimated:YES];
+}
+
+
+-(IBAction)resetData:(id)sender {
+    
+    _tagIdStr = @" ";
+    self.Serial.text = @" Serial No. :  ";
+    self.iec.text = @" IEC : ";
+    self.bill.text = @" Bill No. :  ";
+    self.truck.text = @" Truck No. :  ";
+    self.code.text = @" Code No. :  ";
+    self.port.text = @" Dest. Port :  ";
+    self.time.text = @" Time :  ";
+    self.date.text = @" Date :  ";
+    self.eseal.text = @" E-Seal :  ";
+    [m_Tags removeAllObjects];
+ //   [m_tblTags reloadData];
+    
+    //   [self showPopupWithStyle:CNPPopupStyleCentered];
+    [self showPopupWithStyle:CNPPopupStyleActionSheet];
+}
+
 
 @end
