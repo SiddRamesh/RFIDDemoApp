@@ -1,24 +1,22 @@
-
 //
-//  VerifiedVC.m
-//  RFIDDemoApp
+//  SearchViewController.swift
+//  StockAxiz
 //
-//  Created by Ramesh Siddanavar on 2/6/18.
-//  Copyright © 2018 Motorola Solutions. All rights reserved.
+//  Created by Ramesh Siddanavar on 1/19/18.
+//  Copyright © 2018 Ramesh Siddanavar. All rights reserved.
 //
-
 
 import UIKit
 
-class CollectionViewController: UIViewController {
-
-    @IBOutlet weak var collectionView: UICollectionView!
+class SearchViewController: UIViewController {
+    
+   @IBOutlet weak var collectionView: UICollectionView!
     let scan:ScanVC = ScanVC()
     
     let que:OperationQueue = OperationQueue()
     var dataTask:URLSessionDataTask = URLSessionDataTask()
     var theRequest:NSMutableURLRequest = NSMutableURLRequest()
-    var parser:XMLParser = XMLParser()
+    var xmlParser:XMLParser = XMLParser()
     var captureString:String = String()
     var captureDouble:Double = Double()
     var reportDatas:[ReportData] = [ReportData]()
@@ -28,26 +26,22 @@ class CollectionViewController: UIViewController {
     let contentCellIdentifier = "ContentCellIdentifier"
     
     final let urlString = URL(string: "http://atm-india.in/RFIDDemoservice.asmx")
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-
         collectionView.register(UINib(nibName: "ContentCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: contentCellIdentifier)
-        
-       self.search("GetIncomingInformation", "All","All","INNSA1")
+
+        self.search("GetVerifyContainerAll", "All","All","INNSA1")
     }
-        
+    
     func search(_ webService: String, _ bill: String, _ iec: String,_ port: String ) {
-        
-        let dat = "02/12/2018"
         
         let soapMessage = """
         <?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                           <soap:Body>                                                                                                                                                                                                  <\(webService) xmlns='http://tempuri.org/'>
         <billno>\(bill)</billno>
-        <iec>\(iec)</iec>
-        <date>\(dat)</date>                                                                                                                                                                                                                         <port>\(port)</port>                                                                                                                                                                                                                                     </\(webService)>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>
+        <iec>\(iec)</iec>                                                                                                                                                                                                                          <port>\(port)</port>                                                                                                                                                                                                                                     </\(webService)>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>
         """
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         theRequest = NSMutableURLRequest.init(url: self.urlString!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60)
@@ -59,7 +53,7 @@ class CollectionViewController: UIViewController {
         dataTask = URLSession.shared.dataTask(with: theRequest as URLRequest) { data, response, error in
             if((error) != nil) {
                 self.que.addOperation {
-                    self.parser(self.parser, parseErrorOccurred: error!)
+                    self.parser(self.xmlParser, parseErrorOccurred: error!)
                 }
                 print(error!.localizedDescription)
             }else { // For Debuging...
@@ -68,9 +62,9 @@ class CollectionViewController: UIViewController {
                 DispatchQueue.main.async {
                     print("The following Stocks are available:")
                     OperationQueue.main.addOperation {
-                        self.parser = XMLParser(data: data!)
-                        self.parser.delegate = self
-                        self.parser.parse()
+                        self.xmlParser = XMLParser(data: data!)
+                        self.xmlParser.delegate = self
+                        self.xmlParser.parse()
                         self.collectionView.reloadData()
                         print("______________________________________")
                         print("Decoding Data... Done")
@@ -83,18 +77,16 @@ class CollectionViewController: UIViewController {
         print("Searching Data...",theRequest)
     }
     
-    func sshowAlertMessage(messageTitle: NSString, withMessage: NSString) ->Void  {
-        let alertController = UIAlertController(title: messageTitle as String, message: withMessage as String, preferredStyle: .alert)
+    override  func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
         
-        let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction!) in }
-        alertController.addAction(OKAction)
-        self.present(alertController, animated: true, completion:nil)
+        reportDatas.removeAll()
     }
-    
-    //E.O.L
+   
 }
 
-extension CollectionViewController : XMLParserDelegate {
+
+extension SearchViewController : XMLParserDelegate {
     
     func parserDidStartDocument(_ parser: XMLParser) {
         
@@ -145,41 +137,42 @@ extension CollectionViewController : XMLParserDelegate {
         
         if reportDatas.isEmpty { print("Error, No Data Found") } else {
             print(reportDatas.count)
-            scan.showPopup(withTagStatus: "complete", found: "Updated Data")
+            scan.showPopup(withTagStatus: "complete", found: "Updated")
             //   print("Data is", reportDatas[2].S5)
             //   print("S1 ->", reportdat.S1)
             //   print("S2 -> ", reportdat.S2)
         }
+        
     }
     
     func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         
         if reportDatas.isEmpty { print("Error !")
-            scan.showPopup(withTagStatus: "cancel", found: "Data Not Found!")
+            scan.showPopup(withTagStatus: "cancel", found: "Data Not Found")
         }
     }
 }
 
 // MARK: - UICollectionViewDataSource
-extension CollectionViewController: UICollectionViewDataSource {
-
+extension SearchViewController : UICollectionViewDataSource {
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return reportDatas.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return 14 //No. of coloumns //Also change in main file...
     }
     
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: contentCellIdentifier, for: indexPath) as! ContentCollectionViewCell
-
-//        if indexPath.section == 0 {
-//            cell.backgroundColor = UIColor.gray
-//        }
+        
+        //        if indexPath.section == 0 {
+        //            cell.backgroundColor = UIColor.gray
+        //        }
         
         if indexPath.section % 2 != 0 {
             cell.backgroundColor = UIColor.white
@@ -193,14 +186,14 @@ extension CollectionViewController: UICollectionViewDataSource {
             cell.backgroundColor = UIColor.red
         }
         
-    //    let fon:UIFont = .boldSystemFont(ofSize: 20)
+        //    let fon:UIFont = .boldSystemFont(ofSize: 20)
         let para:NSMutableParagraphStyle = NSMutableParagraphStyle()
         para.lineBreakMode = .byWordWrapping
         para.alignment = .center
         
         
         if indexPath.section == 0 {
-
+            
             switch indexPath.row {
             case 0:
                 cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
@@ -245,10 +238,8 @@ extension CollectionViewController: UICollectionViewDataSource {
                 cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Count "
             }
-
-            //For Content....
             
-        } else {
+        } else  {
             
             switch indexPath.row {
                 
@@ -275,23 +266,25 @@ extension CollectionViewController: UICollectionViewDataSource {
             case 10:
                 cell.contentLabel.text = reportDatas[indexPath.section].S11
             case 11:
-                cell.contentLabel.text = "Mumbai, IN"//self.areaLbl.text!
+                cell.contentLabel.text = "Mumbai, IN"
             case 12:
                 cell.contentLabel.text = reportDatas[indexPath.section].S12
             default:
                 cell.contentLabel.text = reportDatas[indexPath.section].S13
             }
             
+            //END.....Mian
         }
-
+        
         return cell
     }
-
+    
 }
 
 // MARK: - UICollectionViewDelegate
-extension CollectionViewController: UICollectionViewDelegate {
-
+extension SearchViewController : UICollectionViewDelegate {
+    
 }
+
 
 

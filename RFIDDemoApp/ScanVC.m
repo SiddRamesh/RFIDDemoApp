@@ -14,14 +14,14 @@
 #import "StockData.h"
 #import "StockCellTableViewCell.h"
 
+#import "ReportData.h"
+
 #import "InventoryItem.h"
 
 #import "CNPPopupController.h"
 #import "PulsingHaloLayer.h"
 
 #import "pulSVu.h"
-
-//#import "Pulsator-Swift.h"
 
 #define ZT_INVENTORY_TIMER_INTERVAL          0.2
 
@@ -38,6 +38,18 @@
 @property (nonatomic, assign)  UIView *uiView;
 
 @property (nonatomic, strong) CNPPopupController *popupController;
+
+@property (nonatomic, strong) ReportData *reportdat;
+@property (nonatomic, strong) NSMutableArray *reportDatas;
+
+@property (nonatomic, strong) NSOperationQueue *que;
+@property (nonatomic, strong) NSURLSessionDataTask *dataTask;
+@property (nonatomic, strong) NSMutableURLRequest *theRequest;
+@property (nonatomic, strong) NSXMLParser *xmlParser;
+@property (nonatomic, strong) NSString *captureString;
+@property (nonatomic, assign) BOOL *flag;
+
+
 
 @property (nonatomic, strong) StockDataSource *stockDataSource;
 @property (assign) id localChangedObserver;
@@ -65,8 +77,9 @@
 @property (retain, nonatomic) IBOutlet UILabel *date;
 @property (retain, nonatomic) IBOutlet UILabel *port;
 @property (retain, nonatomic) IBOutlet UILabel *time;
-@property (retain, nonatomic) IBOutlet UILabel *code;
 @property (retain, nonatomic) IBOutlet UILabel *bill;
+@property (retain, nonatomic) IBOutlet UILabel *shipDate;
+@property (retain, nonatomic) IBOutlet UILabel *container;
 
 @property(nonatomic, retain) UILabel *tag;
 //@property(nonatomic, retain) UILabel *port;
@@ -93,6 +106,11 @@
     self = [super initWithCoder:aDecoder];
     if (self != nil)
     {
+         _flag = false;
+        _reportdat = [ReportData new];
+      //  _reportDatas = [[NSArray alloc] initWithObjects:_reportdat, nil];
+        _reportDatas =  [NSMutableArray array]; //[[NSMutableArray alloc] arrayByAddingObject:_reportdat];
+        
         m_Mapper = [[zt_EnumMapper alloc] initWithMEMORYBANKMapperForInventory];
         m_Tags = [NSMutableArray new];
         m_SelectedInventoryOption = [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] getSelectedInventoryMemoryBankUI];
@@ -109,7 +127,7 @@
     [_date release];
  //   [_port release];
     [_time release];
-    [_code release];
+  //  [_code release];
     [_bill release];
     [_serialCellView release];
     [m_tblTags release];
@@ -130,6 +148,8 @@
     [self showPopupWithStyle:CNPPopupStyleFullscreen];
     
     flag = false;
+    
+     [self scanDataWithTag:@"862425120607AAA000000021" nPort:@"INNSA1"]; // New
 }
 
 - (void)didReceiveMemoryWarning {
@@ -384,29 +404,66 @@
     [theRequest setHTTPMethod:@"POST"];
     [theRequest setHTTPBody: [soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
     
-    //initiate the request
-    NSURLConnection *connection =
-    [[NSURLConnection alloc] initWithRequest:theRequest delegate:self startImmediately:true];
     
-    if(connection)
-    {
-        self.webResponseData = [NSMutableData data];
-        
-    }
-    else
-    {
-        NSLog(@"Connection is NULL");
-    }
-    [connection start];
-    
-    //TODO: - Session Management
-//    NSURLSession *soapSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
-//                                                                      delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-//    NSURLSessionDataTask *dataTask = [soapSession dataTaskWithURL: url];
-//    self.webResponseData = [NSMutableData new];
-//    [dataTask resume];
-    
+    _dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest
+                                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                       
+                                                       [[NSOperationQueue mainQueue] addOperationWithBlock: ^{
+                                                           
+                                                           if (error != nil && response == nil) {
+                                                               if (error.code == NSURLErrorAppTransportSecurityRequiresSecureConnection) {
+                                                                   
+                                                                   NSAssert(NO, @"NSURLErrorAppTransportSecurityRequiresSecureConnection");
+                                                               }
+                                                               else {
+                                                                   // use KVO to notify our client of this error
+                                                               }
+                                                           }
+                                                           if (response != nil) {
+                                                               NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                                               if (((httpResponse.statusCode/100) == 2) && [response.MIMEType isEqual:@"text/xml"]) {
+                                                                   NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+                                                                   parser.delegate = self;
+                                                                   [parser parse];
+                                                                   [self setData];
+                                                                   
+                                                               } else {
+                                                                   NSString *errorString =
+                                                                   NSLocalizedString(@"HTTP Error", @"Error message displayed when receiving an error from the server.");
+                                                                 //  NSDictionary *userInfo = @{NSLocalizedDescriptionKey : errorString};
+                                                                   [self showPopupWithTagStatus:@"cancel" found:errorString];
+                                                               } //else ...
+                                                           }
+                                                       }];
+                                                   }];
+    [self.dataTask resume];
 }
+    
+    
+//
+//    //initiate the request
+//    NSURLConnection *connection =
+//    [[NSURLConnection alloc] initWithRequest:theRequest delegate:self startImmediately:true];
+//
+//    if(connection)
+//    {
+//        self.webResponseData = [NSMutableData data];
+//
+//    }
+//    else
+//    {
+//        NSLog(@"Connection is NULL");
+//    }
+//    [connection start];
+//
+//    //TODO: - Session Management
+////    NSURLSession *soapSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+////                                                                      delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+////    NSURLSessionDataTask *dataTask = [soapSession dataTaskWithURL: url];
+////    self.webResponseData = [NSMutableData new];
+////    [dataTask resume];
+//
+//}
 
 - (void)updateOperationDataUI
 {
@@ -444,7 +501,7 @@
         [m_tblTags reloadData];
     }
 }
-
+/*
 //MARK: - Connection Delegate Methods.
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSLog(@"Some error in your Connection. Please try again.");
@@ -478,19 +535,44 @@
     [xmlParser parse];
  //   [self.popupController dismissPopupControllerAnimated:YES];
 }
+*/
 
 //MARK: - NSXMlParser Delegate Methods
+-(void) parserDidStartDocument:(NSXMLParser *)parser {
+    
+    _flag = false;
+    _captureString = @"";
+    _reportDatas = [NSMutableArray new];
+}
+
+
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
     currentElement = elementName;
  //  NSLog(@"%@ Element -> ",elementName);
-    self.ele1 = elementName;
+ //   self.ele1 = elementName;
+    
+    flag = false;
+    _captureString = @"";
+    
+    if ([elementName isEqualToString:@"ReportData"]) { _reportdat = [[ReportData alloc] init]; }
+    else if ([elementName isEqualToString:@"S1"] || [elementName isEqualToString:@"S2"] || [elementName isEqualToString:@"S3"] || [elementName isEqualToString:@"S4"]
+             || [elementName isEqualToString:@"S5"] || [elementName isEqualToString:@"S6"] || [elementName isEqualToString:@"S7"] || [elementName isEqualToString:@"S8"] || [elementName isEqualToString:@"S9"] || [elementName isEqualToString:@"S10"])
+             
+        //|| [elementName isEqualToString:@"S10"] || [elementName isEqualToString:@"S11"] ||
+         //    [elementName isEqualToString:@"12"] || [elementName isEqualToString:@"13"])
+    { flag = true; }
+    
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    [self.popupController dismissPopupControllerAnimated:YES];///working..
     
+    if (flag) {_captureString = [_captureString stringByAppendingString:string]; }
+    
+    
+    [self.popupController dismissPopupControllerAnimated:YES];///working..
+/*
   //  if (self.popupController != nil) {
     
         [self showPopupWithTagStatus:@"complete" found:@"Not Tampered"]; //Working
@@ -510,19 +592,66 @@
         if ([_ele1 isEqualToString:@"S9"]) {  self.enteryByLbl =  [@" Entry By :  " stringByAppendingString:string]; }
  //   }
   //   NSLog(@"%@ PData ->: ",string);
+ */
+    NSLog(@"%@ PData ->: ",string);
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
+    flag = false;
+    
+    if ([elementName isEqualToString:@"S1"]) { _reportdat.S1 = _captureString; }
+    else if ([elementName isEqualToString:@"S2"]) { _reportdat.S2 = _captureString; }
+    else if ([elementName isEqualToString:@"S3"]) { _reportdat.S3 = _captureString; }
+    else if ([elementName isEqualToString:@"S4"]) { _reportdat.S4 = _captureString; }
+    else if ([elementName isEqualToString:@"S5"]) { _reportdat.S5 = _captureString; }
+    else if ([elementName isEqualToString:@"S6"]) { _reportdat.S6 = _captureString; }
+    else if ([elementName isEqualToString:@"S7"]) { _reportdat.S7 = _captureString; }
+    else if ([elementName isEqualToString:@"S8"]) { _reportdat.S8 = _captureString; }
+    else if ([elementName isEqualToString:@"S9"]) { _reportdat.S9 = _captureString; }
+    else if ([elementName isEqualToString:@"S10"]) { _reportdat.S10 = _captureString; }
+//    else if ([elementName isEqualToString:@"S11"]) { _reportdat.S1 = _captureString; }
+ //   else if ([elementName isEqualToString:@"S12"]) { _reportdat.S1 = _captureString; }
+ //   else if ([elementName isEqualToString:@"S13"]) { _reportdat.S1 = _captureString; }
+    else if ([elementName isEqualToString:@"ReportData"]) { [_reportDatas addObject:_reportdat];} // arrayByAddingObject:_reportdat]; } //addObject:_reportdat];}
+    
+ /*
     NSLog(@"Parsed Element : %@", currentElement);
     if (flag == false) {
         
       //  [self showPopupWithTagStatus:@"cancel" found:@"Tampered"];
     }
+    
+    */
 }
 
+-(void)parserDidEndDocument:(NSXMLParser *)parser {
+
+    if (_reportDatas == nil) {
+        NSLog(@"No Data Found");
+        [self showPopupWithTagStatus:@"cancel" found:@"Tampered"];
+    }
+}
+
+
 -(void)setData {
-    self.iec.text = [@" IEC No. : " stringByAppendingString:self.iecLbl];
+    
+   // ReportData *repo = (_reportDatas)[indexPath.row];
+    
+    self.Serial.text = [@" Serial No. : " stringByAppendingString:_reportdat.S1];
+    self.iec.text = [@" IEC No. : " stringByAppendingString:_reportdat.S2];
+    self.bill.text = [@" Bill No. : " stringByAppendingString:_reportdat.S3];
+    self.truck.text = [@" Truck No. : " stringByAppendingString:_reportdat.S4];
+    self.eseal.text = [@" e-Seal No. : " stringByAppendingString:_reportdat.S5];
+    self.port.text = [@" Dest. Port : " stringByAppendingString:_reportdat.S6];
+    self.shipDate.text = [@" Sealing Date : " stringByAppendingString:_reportdat.S7];
+    self.time.text = [@" Sealing Time : " stringByAppendingString:_reportdat.S8];
+    self.date.text = [@" Bill date : " stringByAppendingString:_reportdat.S9];
+    self.container.text = [@" Container No. : " stringByAppendingString:_reportdat.S10];
+    
+    //     self.iec.text = [@" IEC No. : " stringByAppendingString:repo.S11];
+    //    self.iec.text = [@" IEC No. : " stringByAppendingString:repo.S12];
+    //    self.iec.text = [@" IEC No. : " stringByAppendingString:repo.S13];
 }
 
 - (void)showPopupWithTagStatus:(NSString *)imageName found:(NSString *)string {
@@ -547,23 +676,23 @@
 }
 
 //MARK: - NSURLSessionTask Delegate Methods
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
-{
-    //handle data here
-    [self.webResponseData appendData:data];
-}
-
-
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
-{
-    if (error) {
-        NSLog(@"%@ failed: %@", task.originalRequest.URL, error);
-    }else{
-        NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[self.webResponseData length]);
-        NSString *theXML = [[NSString alloc] initWithBytes:[self.webResponseData bytes] length:[self.webResponseData length] encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",theXML);
-    }
-}
+//- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+//{
+//    //handle data here
+//    [self.webResponseData appendData:data];
+//}
+//
+//
+//- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
+//{
+//    if (error) {
+//        NSLog(@"%@ failed: %@", task.originalRequest.URL, error);
+//    }else{
+//        NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[self.webResponseData length]);
+//        NSString *theXML = [[NSString alloc] initWithBytes:[self.webResponseData bytes] length:[self.webResponseData length] encoding:NSUTF8StringEncoding];
+//        NSLog(@"%@",theXML);
+//    }
+//}
 
 //MARK: - Table view methods
 
@@ -587,9 +716,9 @@
     zt_InventoryItem *tag_data = (zt_InventoryItem *)[m_Tags objectAtIndex:[indexPath row]];
     _tagIdStr = tag_data.getTagId;
     NSLog(@"%@ This TID isto be Scan..",_tagIdStr);
-    cell.textLabel.text = [@"TID : " stringByAppendingString:_tagIdStr];
-    [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
- 
+    cell.textLabel.text =  [@"TID : " stringByAppendingString:_tagIdStr];
+ //   [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"]; // All working...
+   
     return cell;
 }
 
@@ -601,11 +730,12 @@
     self.iec.layer.borderWidth = 2.0; self.iec.layer.cornerRadius = 5; self.iec.layer.masksToBounds = true;
     self.bill.layer.borderWidth = 2.0; self.bill.layer.cornerRadius = 5; self.bill.layer.masksToBounds = true;
     self.truck.layer.borderWidth = 2.0; self.truck.layer.cornerRadius = 5; self.truck.layer.masksToBounds = true;
-    self.code.layer.borderWidth = 2.0; self.code.layer.cornerRadius = 5; self.code.layer.masksToBounds = true;
+    self.container.layer.borderWidth = 2.0; self.container.layer.cornerRadius = 5; self.container.layer.masksToBounds = true;
     self.port.layer.borderWidth = 2.0; self.port.layer.cornerRadius = 5; self.port.layer.masksToBounds = true;
     self.time.layer.borderWidth = 2.0; self.time.layer.cornerRadius = 5; self.time.layer.masksToBounds = true;
     self.date.layer.borderWidth = 2.0; self.date.layer.cornerRadius = 5; self.date.layer.masksToBounds = true;
     self.eseal.layer.borderWidth = 2.0; self.eseal.layer.cornerRadius = 5; self.eseal.layer.masksToBounds = true;
+    self.shipDate.layer.borderWidth = 2.0; self.shipDate.layer.cornerRadius = 5; self.shipDate.layer.masksToBounds = true;
 }
 
 
@@ -636,7 +766,7 @@
     
     NSAttributedString *title = [[NSAttributedString alloc] initWithString:@"Scan the Tag!" attributes:@{NSFontAttributeName : [UIFont boldSystemFontOfSize:24], NSParagraphStyleAttributeName : paragraphStyle}];
     NSAttributedString *lineOne = [[NSAttributedString alloc] initWithString:@"or its" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:18], NSParagraphStyleAttributeName : paragraphStyle}];
-    NSAttributedString *lineTwo = [[NSAttributedString alloc] initWithString:@"Tampered!" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:18], NSForegroundColorAttributeName : [UIColor colorWithRed:0.46 green:0.8 blue:1.0 alpha:1.0], NSParagraphStyleAttributeName : paragraphStyle}];
+    NSAttributedString *lineTwo = [[NSAttributedString alloc] initWithString:@"Tampered!" attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:18], NSForegroundColorAttributeName : [UIColor colorWithRed:1.46 green:0.8 blue:0.8 alpha:1.0], NSParagraphStyleAttributeName : paragraphStyle}];
     
     CNPPopupButton *button = [[CNPPopupButton alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -650,12 +780,12 @@
     };
     
     UIView *vu = (pulSVu *) [[[NSBundle mainBundle] loadNibNamed:@"pulSVu" owner:self options:nil] lastObject];
-    vu = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 400)];
+    vu = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
     vu.backgroundColor = [UIColor whiteColor];
     
     UIImageView *pulseImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50.0, 100.0)];
     //   self.beaconView.contentMode = UIViewContentModeScaleAspectFit;
-    pulseImg.center = CGPointMake(200, 200);
+    pulseImg.center = CGPointMake(150, 150);
     pulseImg.image = [UIImage imageNamed:@"IPhone_5s"];
     [vu addSubview:pulseImg];
     
@@ -692,7 +822,7 @@
     self.halo.animationDuration = kMaxDuration;
     [self.halo start];
     
-    self.popupController = [[CNPPopupController alloc] initWithContents:@[titleLabel, vu,lineOneLabel ,lineTwoLabel]]; // lineOneLabel ,lineTwoLabel
+    self.popupController = [[CNPPopupController alloc] initWithContents:@[titleLabel, vu,lineOneLabel ,lineTwoLabel,button]]; // lineOneLabel ,lineTwoLabel
     self.popupController.theme = [CNPPopupTheme defaultTheme];
     self.popupController.theme.popupStyle = popupStyle;
     self.popupController.delegate = self;
@@ -707,11 +837,12 @@
     self.iec.text = @" IEC : ";
     self.bill.text = @" Bill No. :  ";
     self.truck.text = @" Truck No. :  ";
-    self.code.text = @" Code No. :  ";
+    self.container.text = @" Container No. :  ";
     self.port.text = @" Dest. Port :  ";
     self.time.text = @" Time :  ";
     self.date.text = @" Date :  ";
     self.eseal.text = @" E-Seal :  ";
+    self.shipDate.text = @" Shipping Date :  ";
     [m_Tags removeAllObjects];
  //   [m_tblTags reloadData];
     

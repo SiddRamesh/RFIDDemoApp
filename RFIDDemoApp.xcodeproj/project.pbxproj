@@ -37,16 +37,19 @@
 		730F86552025B85F00C36234 /* logo_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F86532025B85F00C36234 /* logo_new.png */; };
 		730F86572025B86E00C36234 /* title_rdl.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F86562025B86D00C36234 /* title_rdl.png */; };
 		730F86592025B87E00C36234 /* ic_settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F86582025B87E00C36234 /* ic_settings@3x.png */; };
-		730F865B2025B88500C36234 /* bat_lvl_100_dpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */; };
 		730F865D2025B9A000C36234 /* title_antn.png in Resources */ = {isa = PBXBuildFile; fileRef = 730F865C2025B9A000C36234 /* title_antn.png */; };
 		730F865F2025C21300C36234 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 730F865E2025C21200C36234 /* LaunchScreen.xib */; };
 		730F86622025CDF500C36234 /* GenerateMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 730F86612025CDF500C36234 /* GenerateMasterViewController.m */; };
 		730F86642025D71100C36234 /* Red.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 730F86632025D71000C36234 /* Red.jpg */; };
 		733DB3432021B0520073852A /* ScanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 733DB3422021B0520073852A /* ScanVC.m */; };
+		735155A0202EBB0100215290 /* Datas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7351559E202EBB0100215290 /* Datas.swift */; };
+		735155A1202EBB0100215290 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7351559F202EBB0100215290 /* SearchViewController.swift */; };
 		7352CF072022EE6C00C17EE7 /* ParseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CEFF2022EE6B00C17EE7 /* ParseOperation.m */; };
 		7352CF082022EE6C00C17EE7 /* StockDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF002022EE6B00C17EE7 /* StockDataSource.m */; };
 		7352CF092022EE6C00C17EE7 /* StockData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF052022EE6C00C17EE7 /* StockData.m */; };
 		7352CF0A2022EE6C00C17EE7 /* StockCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */; };
+		735404F2203162CF008FB729 /* ReportData.m in Sources */ = {isa = PBXBuildFile; fileRef = 735404F1203162CF008FB729 /* ReportData.m */; };
+		735404F420319AA6008FB729 /* VerifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735404F320319AA6008FB729 /* VerifyController.swift */; };
 		7356F76E2029A13900A2F986 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7356F76D2029A13900A2F986 /* CollectionViewController.swift */; };
 		7356F7702029A13D00A2F986 /* CustomCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7356F76F2029A13D00A2F986 /* CustomCollectionViewLayout.swift */; };
 		7356F7722029A14300A2F986 /* ContentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7356F7712029A14200A2F986 /* ContentCollectionViewCell.swift */; };
@@ -139,7 +142,6 @@
 		730F86532025B85F00C36234 /* logo_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_new.png; sourceTree = "<group>"; };
 		730F86562025B86D00C36234 /* title_rdl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_rdl.png; sourceTree = "<group>"; };
 		730F86582025B87E00C36234 /* ic_settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_settings@3x.png"; sourceTree = "<group>"; };
-		730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bat_lvl_100_dpo.png; sourceTree = "<group>"; };
 		730F865C2025B9A000C36234 /* title_antn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_antn.png; sourceTree = "<group>"; };
 		730F865E2025C21200C36234 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		730F86602025CDF500C36234 /* GenerateMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GenerateMasterViewController.h; sourceTree = "<group>"; };
@@ -147,6 +149,8 @@
 		730F86632025D71000C36234 /* Red.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Red.jpg; sourceTree = "<group>"; };
 		733DB3412021B0520073852A /* ScanVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScanVC.h; sourceTree = "<group>"; };
 		733DB3422021B0520073852A /* ScanVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanVC.m; sourceTree = "<group>"; };
+		7351559E202EBB0100215290 /* Datas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Datas.swift; sourceTree = "<group>"; };
+		7351559F202EBB0100215290 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7352CEFF2022EE6B00C17EE7 /* ParseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseOperation.m; sourceTree = "<group>"; };
 		7352CF002022EE6B00C17EE7 /* StockDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockDataSource.m; sourceTree = "<group>"; };
 		7352CF012022EE6B00C17EE7 /* StockCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockCellTableViewCell.h; sourceTree = "<group>"; };
@@ -155,6 +159,9 @@
 		7352CF042022EE6B00C17EE7 /* StockData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockData.h; sourceTree = "<group>"; };
 		7352CF052022EE6C00C17EE7 /* StockData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockData.m; sourceTree = "<group>"; };
 		7352CF062022EE6C00C17EE7 /* StockCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockCellTableViewCell.m; sourceTree = "<group>"; };
+		735404F0203162CF008FB729 /* ReportData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportData.h; sourceTree = "<group>"; };
+		735404F1203162CF008FB729 /* ReportData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportData.m; sourceTree = "<group>"; };
+		735404F320319AA6008FB729 /* VerifyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyController.swift; sourceTree = "<group>"; };
 		7356F76D2029A13900A2F986 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		7356F76F2029A13D00A2F986 /* CustomCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayout.swift; sourceTree = "<group>"; };
 		7356F7712029A14200A2F986 /* ContentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -402,6 +409,9 @@
 				7356F7752029A16600A2F986 /* CollectionSwift */,
 				733DB3412021B0520073852A /* ScanVC.h */,
 				733DB3422021B0520073852A /* ScanVC.m */,
+				7351559E202EBB0100215290 /* Datas.swift */,
+				735404F320319AA6008FB729 /* VerifyController.swift */,
+				7351559F202EBB0100215290 /* SearchViewController.swift */,
 				7356F76D2029A13900A2F986 /* CollectionViewController.swift */,
 				2FF556DB20270B1E001CEE1B /* VerifyVCViewController.h */,
 				2FF556DC20270B1E001CEE1B /* VerifyVCViewController.m */,
@@ -412,6 +422,8 @@
 		7356F7752029A16600A2F986 /* CollectionSwift */ = {
 			isa = PBXGroup;
 			children = (
+				735404F0203162CF008FB729 /* ReportData.h */,
+				735404F1203162CF008FB729 /* ReportData.m */,
 				730F86602025CDF500C36234 /* GenerateMasterViewController.h */,
 				730F86612025CDF500C36234 /* GenerateMasterViewController.m */,
 				7357ECB6202C13220082FA38 /* pulSVu.h */,
@@ -503,7 +515,6 @@
 				2FF556A82026EC22001CEE1B /* BatteryPng */,
 				730F86632025D71000C36234 /* Red.jpg */,
 				730F865C2025B9A000C36234 /* title_antn.png */,
-				730F865A2025B88500C36234 /* bat_lvl_100_dpo.png */,
 				730F86582025B87E00C36234 /* ic_settings@3x.png */,
 				730F86562025B86D00C36234 /* title_rdl.png */,
 				730F86532025B85F00C36234 /* logo_new.png */,
@@ -587,7 +598,6 @@
 				730F86552025B85F00C36234 /* logo_new.png in Resources */,
 				7364F75F202AD9DD00FC004B /* Scan.png in Resources */,
 				2FF556A42026EC19001CEE1B /* bat_lvl_empty_dpo.png in Resources */,
-				730F865B2025B88500C36234 /* bat_lvl_100_dpo.png in Resources */,
 				2FF5569F2026EC19001CEE1B /* bat_lvl_50.png in Resources */,
 				730F86542025B85F00C36234 /* vertify3.png in Resources */,
 				2FF556A32026EC19001CEE1B /* bat_lvl_75_dpo.png in Resources */,
@@ -626,6 +636,7 @@
 				730F86482025B09B00C36234 /* RFIDDeviceCellVeiew.m in Sources */,
 				52AB4BAA1A93AA7B0082C35E /* UIButton+VerticalButtonFactory.m in Sources */,
 				730F86622025CDF500C36234 /* GenerateMasterViewController.m in Sources */,
+				735404F420319AA6008FB729 /* VerifyController.swift in Sources */,
 				78D66D4919C8430A00722E6C /* ConnectionSettingsVC.m in Sources */,
 				784B003C19CAC7CF0095EE43 /* RfidAppEngine.m in Sources */,
 				78EDBD5A1B26DEB8000997E5 /* UIViewController+ZT_ResponseHandler.m in Sources */,
@@ -634,6 +645,7 @@
 				78EDBD611B28506A000997E5 /* FileExportManager.m in Sources */,
 				730F864E2025B18C00C36234 /* RFIDTagCellView.m in Sources */,
 				52AB54851A9C7AE50087CC70 /* ActiveReader.m in Sources */,
+				735155A0202EBB0100215290 /* Datas.swift in Sources */,
 				525660C11AB03952004D33B1 /* InventoryData.m in Sources */,
 				73A5EDEB20285CAA00A91DBC /* UIColorHelper.m in Sources */,
 				730F86512025B1AC00C36234 /* ImageLabelCellView.m in Sources */,
@@ -650,7 +662,9 @@
 				7352CF0A2022EE6C00C17EE7 /* StockCellTableViewCell.m in Sources */,
 				78D66D4319C7406500722E6C /* SettingsVC.m in Sources */,
 				78D66CA019BDBCF000722E6C /* RFIDDemoAppDelegate.m in Sources */,
+				735404F2203162CF008FB729 /* ReportData.m in Sources */,
 				52B6C6F51A8CBF2000D35518 /* MBProgressHUD.m in Sources */,
+				735155A1202EBB0100215290 /* SearchViewController.swift in Sources */,
 				78EDBE051B3453E7000997E5 /* RadioOperationEngine.m in Sources */,
 				730F86422025B03A00C36234 /* SwitchCellView.m in Sources */,
 				52AB4BA71A93A9C00082C35E /* HomeVCConstraints.m in Sources */,

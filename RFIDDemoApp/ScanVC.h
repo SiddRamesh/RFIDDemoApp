@@ -15,6 +15,7 @@
 
 #import "MaterialControls/MDButton.h"
 
+
 @interface ScanVC : BaseDpoVC <UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate,NSURLSessionTaskDelegate, NSURLConnectionDelegate,NSURLConnectionDataDelegate, NSXMLParserDelegate, zt_IRfidAppEngineTriggerEventDelegate, zt_IRadioOperationEngineListener, MDButtonDelegate> {
     
      IBOutlet UIButton *m_btnStartStop;
@@ -40,5 +41,6 @@
 
 -(IBAction)resetData:(id)sender;
 
+- (void)showPopupWithTagStatus:(NSString *)imageName found:(NSString *)string;
 
 @end

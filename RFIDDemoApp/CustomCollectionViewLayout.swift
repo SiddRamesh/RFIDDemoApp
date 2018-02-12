@@ -168,7 +168,7 @@ extension CustomCollectionViewLayout {
         }
         // for content size...
         let size: CGSize = text.size(attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 18.0)])
-        let width: CGFloat = size.width + 40    //16
+        let width: CGFloat = size.width + 50    //16
         return CGSize(width: width, height: 50) //30
     }
 
