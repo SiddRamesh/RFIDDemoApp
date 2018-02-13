@@ -50,7 +50,6 @@
 @property (nonatomic, assign) BOOL *flag;
 
 
-
 @property (nonatomic, strong) StockDataSource *stockDataSource;
 @property (assign) id localChangedObserver;
 @property (nonatomic, strong) UIAlertController *alert;
@@ -145,7 +144,7 @@
     [m_tblTags setDataSource:self];
     [m_tblTags registerClass:[zt_RFIDTagCellView class] forCellReuseIdentifier:ZT_CELL_ID_TAG_DATA];
     
-    [self showPopupWithStyle:CNPPopupStyleFullscreen];
+    [self showPopupWithStyle:CNPPopupStyleActionSheet];
     
     flag = false;
     
@@ -262,39 +261,6 @@
 
 }
 
-//MARK: - Main
-- (IBAction)btnStartStopPressed:(id)sender
-{
-    if([[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateGetTagsOperationInProgress])
-    {
-        return;
-    }
-    BOOL inventory_requested = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateInventoryRequested];
-    SRFID_RESULT rfid_res = SRFID_RESULT_FAILURE;
-    NSString *status = [[NSString alloc] init];
-    
-    if (NO == inventory_requested)
-    {
-        if ([[[zt_RfidAppEngine sharedAppEngine] sledConfiguration] isUniqueTagsReport] == [NSNumber numberWithBool:YES])
-        {
-            rfid_res = [[zt_RfidAppEngine sharedAppEngine] purgeTags:&status];
-        }
-        rfid_res = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] startInventory:YES aMemoryBank:m_SelectedInventoryOption message:&status];
-     //   [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
-    //    NSLog(@"%@ This tagID is to be Scan..",_tagIdStr);
-        if ([status isEqualToString:@"Inventory Started in Batch Mode"]) {
-            NSLog(@"%@ btn Tag is",m_Tags);
-            [m_Tags removeAllObjects];
-            [m_tblTags reloadData];
-        //    NSLog(@"%@ btn table",tableView);
-        }
-    }
-    else
-    {
-        rfid_res = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] stopInventory:nil];
-    }
-}
-
 //MARK: - Radio Operation
 - (void)radioStateChangedOperationRequested:(BOOL)requested aType:(int)operation_type
 {
@@ -385,85 +351,38 @@
     }
 }
 
--(void)scanDataWithTag:(NSString *)tag nPort:(NSString *)port {
+//MARK: - Main
+- (IBAction)btnStartStopPressed:(id)sender
+{
+    if([[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateGetTagsOperationInProgress])
+    {
+        return;
+    }
+    BOOL inventory_requested = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] getStateInventoryRequested];
+    SRFID_RESULT rfid_res = SRFID_RESULT_FAILURE;
+    NSString *status = [[NSString alloc] init];
     
-    //first create the soap envelope
-    self.soapMessage = [NSString stringWithFormat:@"<?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                           <soap:Body>                                                                                                                                                                                                  <GetAssignTag1 xmlns='http://tempuri.org/'>                                                                                                                                                                                                  <Tag>%@</Tag>                                                                                                                                                                                                                            <port>%@</port>                                                                                                                                                                                                                                     </GetAssignTag1>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>", tag, port];
-   
-    NSLog(@"%@ tag n %@ port",tag,port);
-    
-    //Now create a request to the URL
-    NSURL *url = [NSURL URLWithString:@"http://atm-india.in/RFIDDemoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[soapMessage length]];
-    
-    //ad required headers to the request
-    [theRequest initWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
-    _dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest
-                                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                       
-                                                       [[NSOperationQueue mainQueue] addOperationWithBlock: ^{
-                                                           
-                                                           if (error != nil && response == nil) {
-                                                               if (error.code == NSURLErrorAppTransportSecurityRequiresSecureConnection) {
-                                                                   
-                                                                   NSAssert(NO, @"NSURLErrorAppTransportSecurityRequiresSecureConnection");
-                                                               }
-                                                               else {
-                                                                   // use KVO to notify our client of this error
-                                                               }
-                                                           }
-                                                           if (response != nil) {
-                                                               NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                                                               if (((httpResponse.statusCode/100) == 2) && [response.MIMEType isEqual:@"text/xml"]) {
-                                                                   NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-                                                                   parser.delegate = self;
-                                                                   [parser parse];
-                                                                   [self setData];
-                                                                   
-                                                               } else {
-                                                                   NSString *errorString =
-                                                                   NSLocalizedString(@"HTTP Error", @"Error message displayed when receiving an error from the server.");
-                                                                 //  NSDictionary *userInfo = @{NSLocalizedDescriptionKey : errorString};
-                                                                   [self showPopupWithTagStatus:@"cancel" found:errorString];
-                                                               } //else ...
-                                                           }
-                                                       }];
-                                                   }];
-    [self.dataTask resume];
+    if (NO == inventory_requested)
+    {
+        if ([[[zt_RfidAppEngine sharedAppEngine] sledConfiguration] isUniqueTagsReport] == [NSNumber numberWithBool:YES])
+        {
+            rfid_res = [[zt_RfidAppEngine sharedAppEngine] purgeTags:&status];
+        }
+        rfid_res = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] startInventory:YES aMemoryBank:m_SelectedInventoryOption message:&status];
+        //   [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"];
+        //    NSLog(@"%@ This tagID is to be Scan..",_tagIdStr);
+        if ([status isEqualToString:@"Inventory Started in Batch Mode"]) {
+            NSLog(@"%@ btn Tag is",m_Tags);
+            [m_Tags removeAllObjects];
+            [m_tblTags reloadData];
+            //    NSLog(@"%@ btn table",tableView);
+        }
+    }
+    else
+    {
+        rfid_res = [[[zt_RfidAppEngine sharedAppEngine] operationEngine] stopInventory:nil];
+    }
 }
-    
-    
-//
-//    //initiate the request
-//    NSURLConnection *connection =
-//    [[NSURLConnection alloc] initWithRequest:theRequest delegate:self startImmediately:true];
-//
-//    if(connection)
-//    {
-//        self.webResponseData = [NSMutableData data];
-//
-//    }
-//    else
-//    {
-//        NSLog(@"Connection is NULL");
-//    }
-//    [connection start];
-//
-//    //TODO: - Session Management
-////    NSURLSession *soapSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
-////                                                                      delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-////    NSURLSessionDataTask *dataTask = [soapSession dataTaskWithURL: url];
-////    self.webResponseData = [NSMutableData new];
-////    [dataTask resume];
-//
-//}
 
 - (void)updateOperationDataUI
 {
@@ -501,41 +420,62 @@
         [m_tblTags reloadData];
     }
 }
-/*
-//MARK: - Connection Delegate Methods.
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"Some error in your Connection. Please try again.");
+
+-(void)scanDataWithTag:(NSString *)tag nPort:(NSString *)port {
+    
+    //first create the soap envelope
+    self.soapMessage = [NSString stringWithFormat:@"<?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                           <soap:Body>                                                                                                                                                                                                  <GetAssignTag1 xmlns='http://tempuri.org/'>                                                                                                                                                                                                  <Tag>%@</Tag>                                                                                                                                                                                                                            <port>%@</port>                                                                                                                                                                                                                                     </GetAssignTag1>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>", tag, port];
+    
+    NSLog(@"%@ tag n %@ port",tag,port);
+    
+    //Now create a request to the URL
+  //  NSURL *url = [NSURL URLWithString:@"http://atm-india.in/RFIDDemoservice.asmx"];
+    NSURL *url = [NSURL URLWithString:@"http://atm-india.in/EnopeckService.asmx"];
+    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
+    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[soapMessage length]];
+    
+    //ad required headers to the request
+    [theRequest initWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:60];
+    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
+    [theRequest setHTTPMethod:@"POST"];
+    [theRequest setHTTPBody: [soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    _dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    
+                                                    [[NSOperationQueue mainQueue] addOperationWithBlock: ^{
+                                                        
+                                                        if (error != nil && response == nil) {
+                                                            if (error.code == NSURLErrorAppTransportSecurityRequiresSecureConnection) {
+                                                                
+                                                                NSAssert(NO, @"NSURLErrorAppTransportSecurityRequiresSecureConnection");
+                                                            }
+                                                            else {
+                                                                // use KVO to notify our client of this error
+                                                            }
+                                                        }
+                                                        if (response != nil) {
+                                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                                            if (((httpResponse.statusCode/100) == 2) && [response.MIMEType isEqual:@"text/xml"]) {
+                                                                NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+                                                                parser.delegate = self;
+                                                                [parser parse];
+                                                                [self setData];
+                                                                
+                                                            } else {
+                                                                NSString *errorString =
+                                                                NSLocalizedString(@"HTTP Error", @"Error message displayed when receiving an error from the server.");
+                                                                //  NSDictionary *userInfo = @{NSLocalizedDescriptionKey : errorString};
+                                                                [self showPopupWithTagStatus:@"cancel" found:errorString];
+                                                                //  abort();
+                                                            } //else ...
+                                                        }
+                                                    }];
+                                                }];
+    [self.dataTask resume];
 }
 
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    self.webResponseData = [NSMutableData new];
-    [self.webResponseData  setLength:0];
-}
-
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-//    if (data != nil) {
-//        [self showPopupWithTagStatus:@"complete" found:@"Not Tampered"];
-//    } else
-//        [self showPopupWithTagStatus:@"complete" found:@"Tampered"];
-    
-    [self.webResponseData  appendData:data];
-}
-
--(void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSLog(@"Received %lu Bytes", (unsigned long)[self.webResponseData length]);
-    NSString *theXML = [[NSString alloc] initWithBytes:[self.webResponseData mutableBytes] length:[self.webResponseData length] encoding:NSUTF8StringEncoding];
-   // NSLog(@"%@",theXML);
-    
-    NSData *myData = [theXML dataUsingEncoding:NSUTF8StringEncoding];
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
-    
-    //setting delegate of XML parser to self
-    xmlParser.delegate = self;
-    [xmlParser parse];
- //   [self.popupController dismissPopupControllerAnimated:YES];
-}
-*/
 
 //MARK: - NSXMlParser Delegate Methods
 -(void) parserDidStartDocument:(NSXMLParser *)parser {
@@ -549,51 +489,40 @@
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
     currentElement = elementName;
- //  NSLog(@"%@ Element -> ",elementName);
- //   self.ele1 = elementName;
     
     flag = false;
     _captureString = @"";
     
+ //   if (![elementName isEqualToString:@"ReportData"]) { [self showPopupWithTagStatus:@"cancel" found:@"Data Not FOund"]; abort(); } elementName != nil &&
+    
     if ([elementName isEqualToString:@"ReportData"]) { _reportdat = [[ReportData alloc] init]; }
     else if ([elementName isEqualToString:@"S1"] || [elementName isEqualToString:@"S2"] || [elementName isEqualToString:@"S3"] || [elementName isEqualToString:@"S4"]
-             || [elementName isEqualToString:@"S5"] || [elementName isEqualToString:@"S6"] || [elementName isEqualToString:@"S7"] || [elementName isEqualToString:@"S8"] || [elementName isEqualToString:@"S9"] || [elementName isEqualToString:@"S10"])
-             
-        //|| [elementName isEqualToString:@"S10"] || [elementName isEqualToString:@"S11"] ||
-         //    [elementName isEqualToString:@"12"] || [elementName isEqualToString:@"13"])
-    { flag = true; }
-    
+             || [elementName isEqualToString:@"S5"] || [elementName isEqualToString:@"S6"] || [elementName isEqualToString:@"S7"] || [elementName isEqualToString:@"S8"]
+             || [elementName isEqualToString:@"S9"] || [elementName isEqualToString:@"S10"]) { flag = true; }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     
-    if (flag) {_captureString = [_captureString stringByAppendingString:string]; }
+    //FIXME: - Handle Parsed Object
+        // Run the parser
+        @try{
+             if (flag) {_captureString = [_captureString stringByAppendingString:string]; }
+            NSLog(@"Nil Data");
+        }
+        @catch (NSException* exception)
+        {
+            [self showPopupWithTagStatus:@"cancel" found:[exception reason]];
+            NSLog(@"%@",exception.reason);
+            return;
+        }
     
-    
+    //Ok..
+ //   if (flag) {_captureString = [_captureString stringByAppendingString:string]; }
+
     [self.popupController dismissPopupControllerAnimated:YES];///working..
-/*
-  //  if (self.popupController != nil) {
     
-        [self showPopupWithTagStatus:@"complete" found:@"Not Tampered"]; //Working
-    //    flag = true;
-    if ([_ele1 isEqualToString:@"S2"]) { self.iec.text = [@" IEC No. : " stringByAppendingString:string]; }
-        if ([_ele1 isEqualToString:@"S3"]) { self.bill.text = [@" Bill No. :  " stringByAppendingString:string]; }
-        if ([_ele1 isEqualToString:@"S7"]) {  self.date.text =  [@" Date :  " stringByAppendingString:string]; }
-        if ([_ele1 isEqualToString:@"S10"]){  self.eseal.text =  [@" E-Seal :  " stringByAppendingString:string]; }
-    // Sealing Date
-        if ([_ele1 isEqualToString:@"S8"]) {  self.time.text =  [@" Time :  " stringByAppendingString:string]; }
-        if ([_ele1 isEqualToString:@"S6"]) {  self.port.text =  [@" Dest. Port :  " stringByAppendingString:string]; }
-    // Container No.
-        if ([_ele1 isEqualToString:@"S4"]) {  self.truck.text =  [@" Truck No :  " stringByAppendingString:string]; }
-    // lat, long, IMEI..
-        if ([_ele1 isEqualToString:@"S1"]) { self.Serial.text = [@" Serial No. :  " stringByAppendingString:string]; }
-        if ([_ele1 isEqualToString:@"S5"]) {  self.code.text =  [@" Code No. :  " stringByAppendingString:string]; }
-        if ([_ele1 isEqualToString:@"S9"]) {  self.enteryByLbl =  [@" Entry By :  " stringByAppendingString:string]; }
- //   }
-  //   NSLog(@"%@ PData ->: ",string);
- */
-    NSLog(@"%@ PData ->: ",string);
+  //  NSLog(@"%@ PData ->: ",string);
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -610,26 +539,30 @@
     else if ([elementName isEqualToString:@"S8"]) { _reportdat.S8 = _captureString; }
     else if ([elementName isEqualToString:@"S9"]) { _reportdat.S9 = _captureString; }
     else if ([elementName isEqualToString:@"S10"]) { _reportdat.S10 = _captureString; }
-//    else if ([elementName isEqualToString:@"S11"]) { _reportdat.S1 = _captureString; }
- //   else if ([elementName isEqualToString:@"S12"]) { _reportdat.S1 = _captureString; }
- //   else if ([elementName isEqualToString:@"S13"]) { _reportdat.S1 = _captureString; }
-    else if ([elementName isEqualToString:@"ReportData"]) { [_reportDatas addObject:_reportdat];} // arrayByAddingObject:_reportdat]; } //addObject:_reportdat];}
-    
- /*
-    NSLog(@"Parsed Element : %@", currentElement);
+    else if ([elementName isEqualToString:@"ReportData"]) { [_reportDatas addObject:_reportdat];}
+ 
+    //NSLog(@"Parsed Element : %@", currentElement);
     if (flag == false) {
         
       //  [self showPopupWithTagStatus:@"cancel" found:@"Tampered"];
     }
-    
-    */
 }
 
 -(void)parserDidEndDocument:(NSXMLParser *)parser {
 
+    NSLog(@"%lu",(unsigned long)_reportDatas.count);
+    
     if (_reportDatas == nil) {
         NSLog(@"No Data Found");
         [self showPopupWithTagStatus:@"cancel" found:@"Tampered"];
+    }
+}
+
+-(void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError{
+    
+     assert([NSThread isMainThread]);
+    if (parseError.code != NSXMLParserDelegateAbortedParseError) {
+        [self performSelectorOnMainThread:@selector(parserDidEndDocument:) withObject:parseError waitUntilDone:NO];
     }
 }
 
@@ -638,6 +571,7 @@
     
    // ReportData *repo = (_reportDatas)[indexPath.row];
     
+    [self showPopupWithTagStatus:@"complete" found:@"Not Tampered"];
     self.Serial.text = [@" Serial No. : " stringByAppendingString:_reportdat.S1];
     self.iec.text = [@" IEC No. : " stringByAppendingString:_reportdat.S2];
     self.bill.text = [@" Bill No. : " stringByAppendingString:_reportdat.S3];
@@ -649,9 +583,9 @@
     self.date.text = [@" Bill date : " stringByAppendingString:_reportdat.S9];
     self.container.text = [@" Container No. : " stringByAppendingString:_reportdat.S10];
     
-    //     self.iec.text = [@" IEC No. : " stringByAppendingString:repo.S11];
-    //    self.iec.text = [@" IEC No. : " stringByAppendingString:repo.S12];
-    //    self.iec.text = [@" IEC No. : " stringByAppendingString:repo.S13];
+    //     self.iec.text = [@" Lat. : " stringByAppendingString:repo.S11];
+    //    self.iec.text = [@" Long. : " stringByAppendingString:repo.S12];
+    //    self.iec.text = [@" Verified. : " stringByAppendingString:repo.S13];
 }
 
 - (void)showPopupWithTagStatus:(NSString *)imageName found:(NSString *)string {
@@ -674,25 +608,6 @@
     self.popupController.delegate = self;
     [self.popupController presentPopupControllerAnimated:YES];
 }
-
-//MARK: - NSURLSessionTask Delegate Methods
-//- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
-//{
-//    //handle data here
-//    [self.webResponseData appendData:data];
-//}
-//
-//
-//- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
-//{
-//    if (error) {
-//        NSLog(@"%@ failed: %@", task.originalRequest.URL, error);
-//    }else{
-//        NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[self.webResponseData length]);
-//        NSString *theXML = [[NSString alloc] initWithBytes:[self.webResponseData bytes] length:[self.webResponseData length] encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@",theXML);
-//    }
-//}
 
 //MARK: - Table view methods
 

@@ -328,7 +328,7 @@
         }
         else
         {
-            [cell setActiveWithModel:@"Unknown" withSerial:@"Unknown" withBTAddress:@"Unknown"];
+            [cell setActiveWithModel:[sled readerModel] withSerial:[sled readerSerialNumber] withBTAddress:[sled readerBTAddress]]; //@"Unknown"
         }
     }
     else
@@ -372,7 +372,7 @@
 
 - (CGFloat)heightForDeviceInfoCellAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = 0.5;
+    CGFloat height = 1.0;
     
     srfidReaderInfo *info = (srfidReaderInfo*)[[[zt_RfidAppEngine sharedAppEngine] getActualDeviceList] objectAtIndex:(int)[indexPath row]];
     [m_OffScreenTagCell setDataWithReaderInfo:info widthIndex:(int)[indexPath row]];
@@ -392,7 +392,8 @@
         }
         else
         {
-            [m_OffScreenTagCell setActiveWithModel:@"Unknown" withSerial:@"Unknown" withBTAddress:@"Unknown"];
+            [m_OffScreenTagCell setActiveWithModel:[sled readerModel] withSerial:[sled readerSerialNumber] withBTAddress:[sled readerBTAddress]];
+           // [m_OffScreenTagCell setActiveWithModel:@"Unknown" withSerial:@"Unknown" withBTAddress:@"Unknown"];
         }
     }
     else

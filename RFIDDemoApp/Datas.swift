@@ -8,36 +8,6 @@
 
 import UIKit
 
-//class Datas: Codable {
-//    let data: [Dataz]
-//
-//    init(data: [Dataz]) {
-//        self.data = data
-//    }
-//}
-
-/*
- class Dataz: Codable {
- 
- var IEC_CODE: String!
- var S_BILL_NO: String!
- var E_SEAL_NO: String!
- var SERIAL_CODE: String!
- var SEALING_DATE: String!
- var SEALING_TIME: String!
- var DESTINATION_PORT: String!
- var CONTAINER_NO: String!
- var VEHICLE_NO: String!
- var SHIPPING_DATE: String!
- 
- var TID_NO: String!
- var LATITUDE : String!
- var LONGITUDE : String!
- var AREA : String!
- var VERIFIED : String!
- }
- 
-*/
 class ReportData: NSObject {
     
     var S1: String!
@@ -57,5 +27,4 @@ class ReportData: NSObject {
     enum CodingKeys: String, CodingKey {
         case S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13
     }
-    
 }

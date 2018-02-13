@@ -11,7 +11,13 @@ import UIKit
 class SearchViewController: UIViewController {
     
    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var activityIndicatorView = UIActivityIndicatorView()
+    var container: UIView = UIView()
+    var loadingView: UIView = UIView()
+    
     let scan:ScanVC = ScanVC()
+   
     
     let que:OperationQueue = OperationQueue()
     var dataTask:URLSessionDataTask = URLSessionDataTask()
@@ -25,14 +31,17 @@ class SearchViewController: UIViewController {
     
     let contentCellIdentifier = "ContentCellIdentifier"
     
-    final let urlString = URL(string: "http://atm-india.in/RFIDDemoservice.asmx")
+    final let urlString = URL(string: "http://atm-india.in/EnopeckService.asmx")
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "ContentCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: contentCellIdentifier)
-
+        showActivityView(view)
+        
         self.search("GetVerifyContainerAll", "All","All","INNSA1")
     }
     
@@ -44,7 +53,7 @@ class SearchViewController: UIViewController {
         <iec>\(iec)</iec>                                                                                                                                                                                                                          <port>\(port)</port>                                                                                                                                                                                                                                     </\(webService)>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>
         """
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        theRequest = NSMutableURLRequest.init(url: self.urlString!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60)
+        theRequest = NSMutableURLRequest.init(url: self.urlString!, cachePolicy: .reloadRevalidatingCacheData, timeoutInterval: 60)
         theRequest.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
         theRequest.addValue(String(soapMessage.count), forHTTPHeaderField: "Content-Length")
         theRequest.httpMethod = "POST"
@@ -81,6 +90,37 @@ class SearchViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
         reportDatas.removeAll()
+    }
+    
+    func showActivityView(_ view: UIView) {
+        
+        container.frame = view.frame
+        container.center = view.center
+        container.backgroundColor = UIColor.clear
+        
+        loadingView.frame = CGRect.init(x:0, y:0, width:80.0, height:80.0)
+        loadingView.center = view.center
+        loadingView.backgroundColor = UIColor(white:0.0, alpha: 0.7)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        activityIndicatorView.activityIndicatorViewStyle = .whiteLarge
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.frame = CGRect.init(x: UIScreen.main.bounds.size.width/2, y: UIScreen.main.bounds.size.height/2, width: 80.0, height: 80.0)
+        activityIndicatorView.center = self.view.center
+        
+        loadingView.addSubview(activityIndicatorView)
+        container.addSubview(loadingView)
+        view.addSubview(container)
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.bringSubview(toFront: view)
+        activityIndicatorView.startAnimating()
+        
+    }
+    
+    open func hideActivityView(){
+        activityIndicatorView.stopAnimating()
+        container.removeFromSuperview()
     }
    
 }
@@ -137,6 +177,7 @@ extension SearchViewController : XMLParserDelegate {
         
         if reportDatas.isEmpty { print("Error, No Data Found") } else {
             print(reportDatas.count)
+            hideActivityView()
             scan.showPopup(withTagStatus: "complete", found: "Updated")
             //   print("Data is", reportDatas[2].S5)
             //   print("S1 ->", reportdat.S1)
@@ -162,7 +203,7 @@ extension SearchViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 14 //No. of coloumns //Also change in main file...
+        return 13 //No. of coloumns //Also change in main file...
     }
     
     
@@ -191,51 +232,34 @@ extension SearchViewController : UICollectionViewDataSource {
         para.lineBreakMode = .byWordWrapping
         para.alignment = .center
         
-        
         if indexPath.section == 0 {
-            
+             cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
             switch indexPath.row {
             case 0:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " IEC Code  "
             case 1:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Bill No. "
             case 2:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Bill Date "
             case 3:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " e-Seal No. "
             case 4:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Sealing Date "
             case 5:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Sealing Time "
             case 6:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Dest. Port "
             case 7:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Container No. "
             case 8:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Truck No. "
             case 9:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Latitude "
             case 10:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Longitude "
             case 11:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
-                cell.contentLabel.text = " Area "
-            case 12:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Verified "
             default:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Count "
             }
             
@@ -265,9 +289,9 @@ extension SearchViewController : UICollectionViewDataSource {
                 cell.contentLabel.text = reportDatas[indexPath.section].S10
             case 10:
                 cell.contentLabel.text = reportDatas[indexPath.section].S11
+//            case 11:
+//                cell.contentLabel.text = "Mumbai, IN"
             case 11:
-                cell.contentLabel.text = "Mumbai, IN"
-            case 12:
                 cell.contentLabel.text = reportDatas[indexPath.section].S12
             default:
                 cell.contentLabel.text = reportDatas[indexPath.section].S13

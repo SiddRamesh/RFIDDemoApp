@@ -9,7 +9,7 @@ import UIKit
 
 class CustomCollectionViewLayout: UICollectionViewLayout {
 
-    let numberOfColumns = 14
+    let numberOfColumns = 13
     var shouldPinFirstColumn = true
     var shouldPinFirstRow = true
 

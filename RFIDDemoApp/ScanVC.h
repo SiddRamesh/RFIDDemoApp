@@ -33,7 +33,7 @@
     UIBarButtonItem *m_btnOptions;
     
     BOOL flag;
-}
+} 
 
 @property (nonatomic, retain) IBOutlet UITableView *m_tblTags;
 

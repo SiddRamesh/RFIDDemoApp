@@ -231,7 +231,7 @@
     NSLog(@"%@ tag n %@ port",tag,port);
     
     //Now create a request to the URL
-    NSURL *url = [NSURL URLWithString:@"http://atm-india.in/RFIDDemoservice.asmx"];
+    NSURL *url = [NSURL URLWithString:@"http://atm-india.in/EnopeckService.asmx"];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[_soapMessage length]];
     

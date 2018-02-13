@@ -14,6 +14,9 @@ class CollectionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     let scan:ScanVC = ScanVC()
+    var activityIndicatorView = UIActivityIndicatorView()
+    var container: UIView = UIView()
+    var loadingView: UIView = UIView()
     
     let que:OperationQueue = OperationQueue()
     var dataTask:URLSessionDataTask = URLSessionDataTask()
@@ -27,7 +30,7 @@ class CollectionViewController: UIViewController {
     
     let contentCellIdentifier = "ContentCellIdentifier"
     
-    final let urlString = URL(string: "http://atm-india.in/RFIDDemoservice.asmx")
+    final let urlString = URL(string: "http://atm-india.in/EnopeckService.asmx")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +39,7 @@ class CollectionViewController: UIViewController {
 
         collectionView.register(UINib(nibName: "ContentCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: contentCellIdentifier)
         
+        showActivityView(view)
        self.search("GetIncomingInformation", "All","All","INNSA1")
     }
         
@@ -50,7 +54,7 @@ class CollectionViewController: UIViewController {
         <date>\(dat)</date>                                                                                                                                                                                                                         <port>\(port)</port>                                                                                                                                                                                                                                     </\(webService)>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>
         """
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        theRequest = NSMutableURLRequest.init(url: self.urlString!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60)
+        theRequest = NSMutableURLRequest.init(url: self.urlString!, cachePolicy: .reloadRevalidatingCacheData, timeoutInterval: 60)
         theRequest.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
         theRequest.addValue(String(soapMessage.count), forHTTPHeaderField: "Content-Length")
         theRequest.httpMethod = "POST"
@@ -89,6 +93,37 @@ class CollectionViewController: UIViewController {
         let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction!) in }
         alertController.addAction(OKAction)
         self.present(alertController, animated: true, completion:nil)
+    }
+    
+    func showActivityView(_ view: UIView) {
+        
+        container.frame = view.frame
+        container.center = view.center
+        container.backgroundColor = UIColor.clear
+        
+        loadingView.frame = CGRect.init(x:0, y:0, width:80.0, height:80.0)
+        loadingView.center = view.center
+        loadingView.backgroundColor = UIColor(white:0.0, alpha: 0.7)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
+        activityIndicatorView.activityIndicatorViewStyle = .whiteLarge
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.frame = CGRect.init(x: UIScreen.main.bounds.size.width/2, y: UIScreen.main.bounds.size.height/2, width: 80.0, height: 80.0)
+        activityIndicatorView.center = self.view.center
+        
+        loadingView.addSubview(activityIndicatorView)
+        container.addSubview(loadingView)
+        view.addSubview(container)
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.bringSubview(toFront: view)
+        activityIndicatorView.startAnimating()
+        
+    }
+    
+    open func hideActivityView(){
+        activityIndicatorView.stopAnimating()
+        container.removeFromSuperview()
     }
     
     //E.O.L
@@ -145,6 +180,7 @@ extension CollectionViewController : XMLParserDelegate {
         
         if reportDatas.isEmpty { print("Error, No Data Found") } else {
             print(reportDatas.count)
+            hideActivityView()
             scan.showPopup(withTagStatus: "complete", found: "Updated Data")
             //   print("Data is", reportDatas[2].S5)
             //   print("S1 ->", reportdat.S1)
@@ -169,7 +205,7 @@ extension CollectionViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 14 //No. of coloumns //Also change in main file...
+        return 13 //No. of coloumns //Also change in main file...
     }
     
 
@@ -235,10 +271,10 @@ extension CollectionViewController: UICollectionViewDataSource {
             case 10:
                 cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Longitude "
+//            case 11:
+//                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
+//                cell.contentLabel.text = " Area "
             case 11:
-                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
-                cell.contentLabel.text = " Area "
-            case 12:
                 cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Verified "
             default:
@@ -274,9 +310,9 @@ extension CollectionViewController: UICollectionViewDataSource {
                 cell.contentLabel.text = reportDatas[indexPath.section].S10
             case 10:
                 cell.contentLabel.text = reportDatas[indexPath.section].S11
+//            case 11:
+//                cell.contentLabel.text = "Mumbai, IN"//self.areaLbl.text!
             case 11:
-                cell.contentLabel.text = "Mumbai, IN"//self.areaLbl.text!
-            case 12:
                 cell.contentLabel.text = reportDatas[indexPath.section].S12
             default:
                 cell.contentLabel.text = reportDatas[indexPath.section].S13

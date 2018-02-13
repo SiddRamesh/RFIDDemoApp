@@ -12,7 +12,9 @@ class VerifyController: UIViewController, UITableViewDelegate {
 
     @IBOutlet var tableView: UITableView!
     
-    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    var activityIndicatorView = UIActivityIndicatorView()
+    var container: UIView = UIView()
+    var loadingView: UIView = UIView()
     
     var popupController:CNPPopupController?
     var scan:ScanVC?
@@ -28,7 +30,7 @@ class VerifyController: UIViewController, UITableViewDelegate {
     var flag:Bool = false
     
     
-    final let urlString = URL(string: "http://atm-india.in/RFIDDemoservice.asmx")
+    final let urlString = URL(string: "http://atm-india.in/EnopeckService.asmx")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,18 +39,31 @@ class VerifyController: UIViewController, UITableViewDelegate {
         tableView.dataSource = self
       
          self.search("GetAssignTag1", "862425120607AAA000000021","INNSA1")
-        activity()
+         showActivityView(view)
     }
 
     func search(_ webService: String, _ tag: String,_ port: String ) {
         
-        let soapMessage = """
-        <?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                           <soap:Body>                                                                                                                                                                                                  <\(webService) xmlns='http://tempuri.org/'>
-        <Tag>\(tag)</Tag>                                                                                                                                                                                                                          <port>\(port)</port>                                                                                                                                                                                                                                     </\(webService)>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>
-        """
+//        let soapMessage = """
+//        <?xml version='1.0' encoding='utf-8'?>                                                                                                                                                                           <soap12:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap12='http://www.w3.org/2003/05/soap-envelope/'>                           <soap12:Body>                                                                                                                                                                                                      <\(webService) xmlns='http://tempuri.org/'>
+//            <Tag>\(tag)</Tag>                                                                                                                                                                                                                          <port>\(port)</port>                                                                                                                                                                                                                               </\(webService)>                                                                                                                                                                                                                             </soap12:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap12:Envelope>
+//        """
+
         
+        let soapMessage = """
+                            <?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <\(webService) xmlns="http://tempuri.org/">
+      <Tag>\(tag)</Tag>
+      <port>\(port)</port>
+    </\(webService)>
+  </soap12:Body>
+</soap12:Envelope>
+
+"""
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        theRequest = NSMutableURLRequest.init(url: self.urlString!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60)
+        theRequest = NSMutableURLRequest.init(url: self.urlString!, cachePolicy: .reloadRevalidatingCacheData, timeoutInterval: 60)
         theRequest.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
         theRequest.addValue(String(soapMessage.count), forHTTPHeaderField: "Content-Length")
         theRequest.httpMethod = "POST"
@@ -66,12 +81,24 @@ class VerifyController: UIViewController, UITableViewDelegate {
                 DispatchQueue.main.async {
                     print("The following Stocks are available:")
                     OperationQueue.main.addOperation {
+                        
+                        if (response != nil) {
+                            if response?.mimeType == "application/soap+xml" {
+                                self.parser = XMLParser(data: data!)
+                                self.parser.delegate = self
+                                self.parser.parse()
+                                self.tableView.reloadData()
+                                print("SOAP 1.2 Called...")
+                            }
+                        } else {
+
                         self.parser = XMLParser(data: data!)
                         self.parser.delegate = self
                         self.parser.parse()
                         self.tableView.reloadData()
                         print("______________________________________")
                         print("Decoding Data... Done")
+                       }//else
                     }
                 }
             }
@@ -81,13 +108,35 @@ class VerifyController: UIViewController, UITableViewDelegate {
         print("Searching Data...",theRequest)
     }
     
-    func activity(){
+    func showActivityView(_ view: UIView) {
+        
+        container.frame = view.frame
+        container.center = view.center
+        container.backgroundColor = UIColor.clear
+        
+        loadingView.frame = CGRect.init(x:0, y:0, width:80.0, height:80.0)
+        loadingView.center = view.center
+        loadingView.backgroundColor = UIColor(white:0.0, alpha: 0.7)
+        loadingView.clipsToBounds = true
+        loadingView.layer.cornerRadius = 10
+        
         activityIndicatorView.activityIndicatorViewStyle = .whiteLarge
         activityIndicatorView.hidesWhenStopped = true
         activityIndicatorView.frame = CGRect.init(x: UIScreen.main.bounds.size.width/2, y: UIScreen.main.bounds.size.height/2, width: 80.0, height: 80.0)
         activityIndicatorView.center = self.view.center
-
-        self.view.addSubview(activityIndicatorView)
+        
+        loadingView.addSubview(activityIndicatorView)
+        container.addSubview(loadingView)
+        view.addSubview(container)
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.bringSubview(toFront: view)
+        activityIndicatorView.startAnimating()
+        
+    }
+    
+    open func hideActivityView(){
+        activityIndicatorView.stopAnimating()
+        container.removeFromSuperview()
     }
     
     override func didReceiveMemoryWarning() {
@@ -186,7 +235,8 @@ extension VerifyController : XMLParserDelegate {
     
     func parserDidEndDocument(_ parser: XMLParser) {
         
-        if reportDatas.isEmpty { print("Error, No Data Found") } else {
+        hideActivityView()
+        if reportDatas.isEmpty { print("Error, No Data Found"); self.showPopupWithStyle(CNPPopupStyle.centered, "cancel", found: "Data Not Found!") } else {
             print(reportDatas.count)
             let scan = ScanVC()
             scan.showPopup(withTagStatus: "complete", found: "Updated Data")

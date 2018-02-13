@@ -44,7 +44,7 @@
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m8A-by-3r9">
-                                                                <rect key="frame" x="144" y="140" width="32" height="30"/>
+                                                                <rect key="frame" x="144" y="466" width="32" height="30"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <state key="normal" title="Vrify"/>
                                                                 <connections>
@@ -346,10 +346,10 @@
             </objects>
             <point key="canvasLocation" x="3580" y="295"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Verified Tags-->
         <scene sceneID="CPv-Xq-XfV">
             <objects>
-                <viewController id="679-lx-CDB" customClass="CollectionViewController" customModule="RFIDDemoApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Verified Tags" id="679-lx-CDB" customClass="CollectionViewController" customModule="RFIDDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uG8-SP-xQA"/>
                         <viewControllerLayoutGuide type="bottom" id="u4N-6F-TZa"/>
@@ -377,7 +377,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <navigationItem key="navigationItem" id="tBn-bj-6ub"/>
+                    <navigationItem key="navigationItem" title="Verified tags" id="tBn-bj-6ub"/>
                     <connections>
                         <outlet property="collectionView" destination="T3o-PY-qFg" id="dYr-eQ-cGl"/>
                     </connections>
@@ -386,10 +386,10 @@
             </objects>
             <point key="canvasLocation" x="1431" y="-36"/>
         </scene>
-        <!--Verify Controller-->
+        <!--Verify Swift-->
         <scene sceneID="Gjx-Sm-Tmx">
             <objects>
-                <viewController id="ylB-td-vQw" customClass="VerifyController" customModule="RFIDDemoApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Verify Swift" id="ylB-td-vQw" customClass="VerifyController" customModule="RFIDDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jba-SM-FYo"/>
                         <viewControllerLayoutGuide type="bottom" id="D84-bM-CQ7"/>
@@ -398,14 +398,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ybu-FV-TRz">
+                                <rect key="frame" x="0.0" y="242" width="320" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gDE-hF-GhA">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="Ybu-FV-TRz">
-                                    <rect key="frame" x="0.0" y="116" width="320" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </activityIndicatorView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Lazy" id="SEG-Kf-Bb7">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
@@ -428,7 +428,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <navigationItem key="navigationItem" id="rRv-4w-spe"/>
+                    <navigationItem key="navigationItem" title="Verify S" id="rRv-4w-spe"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="Ybu-FV-TRz" id="7af-9y-2lm"/>
                         <outlet property="tableView" destination="gDE-hF-GhA" id="zs5-cX-6ee"/>
@@ -609,10 +609,10 @@
             </objects>
             <point key="canvasLocation" x="1102" y="1265"/>
         </scene>
-        <!--ScanVC-->
+        <!--Verify-->
         <scene sceneID="mqk-M7-0wT">
             <objects>
-                <viewController storyboardIdentifier="ID_SCAN_VC" id="e0C-kp-CbK" customClass="ScanVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ID_SCAN_VC" title="Verify" id="e0C-kp-CbK" customClass="ScanVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Fsw-nU-LaL"/>
                         <viewControllerLayoutGuide type="bottom" id="8hA-Xi-9h8"/>
@@ -697,7 +697,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="  Bill Date :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFl-gt-nn8">
-                                <rect key="frame" x="16" y="367" width="278" height="31"/>
+                                <rect key="frame" x="16" y="367" width="288" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -718,8 +718,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCx-X0-bhj" customClass="MDButton">
-                                <rect key="frame" x="55" y="466" width="209" height="37"/>
+                                <rect key="frame" x="55" y="453" width="209" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Reset">
                                     <color key="titleColor" red="0.78098688471502586" green="0.068617243306017497" blue="0.17269121119981717" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -857,10 +858,10 @@
             </objects>
             <point key="canvasLocation" x="1022" y="630"/>
         </scene>
-        <!--Search View Controller-->
+        <!--Inc. Containers-->
         <scene sceneID="0mv-o4-smv">
             <objects>
-                <viewController id="0TK-LO-ben" customClass="SearchViewController" customModule="RFIDDemoApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Inc. Containers" id="0TK-LO-ben" customClass="SearchViewController" customModule="RFIDDemoApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QZd-EX-OHO"/>
                         <viewControllerLayoutGuide type="bottom" id="ZRg-FW-LuU"/>
@@ -888,7 +889,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <navigationItem key="navigationItem" id="5Kw-p2-FND"/>
+                    <navigationItem key="navigationItem" title="Inc. Containers" id="5Kw-p2-FND"/>
                     <connections>
                         <outlet property="collectionView" destination="1st-cv-aMu" id="bkt-PI-aqI"/>
                     </connections>
