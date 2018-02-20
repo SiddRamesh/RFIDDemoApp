@@ -422,7 +422,7 @@ zt_RfidAppEngine *_g_sharedAppEngine;
 {
     if (SRFID_MEMORYBANK_EPC == mem_bank)
     {
-        return @"EPC";
+        return @"EPC"; NSLog(@"%d EPC",mem_bank);
     }
     else if (SRFID_MEMORYBANK_RESV == mem_bank)
     {

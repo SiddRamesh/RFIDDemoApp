@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,52 +18,65 @@
             <subviews>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2018 Symbol. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
                     <rect key="frame" x="20" y="439" width="441" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ATM's RFID" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="20" y="110" width="441" height="43"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p8O-QP-FnB">
-                    <rect key="frame" x="193" y="81" width="96" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="96" id="KMK-rg-cO9"/>
+                        <constraint firstAttribute="height" constant="21" id="hYP-Xc-HDC"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="atmlogo" translatesAutoresizingMaskIntoConstraints="NO" id="Ty6-Ki-nOv">
+                    <rect key="frame" x="134" y="70" width="212" height="55"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="212" id="Et9-nN-raK"/>
+                        <constraint firstAttribute="height" constant="55" id="qO1-Yo-iUt"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sri_balaji_logo" translatesAutoresizingMaskIntoConstraints="NO" id="bjj-oN-EbK">
+                    <rect key="frame" x="166" y="298" width="148" height="133"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="133" id="IQN-vJ-5ug"/>
+                        <constraint firstAttribute="width" constant="148" id="uyy-nh-G79"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" RFID" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
+                    <rect key="frame" x="146" y="114" width="189" height="39"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="39" id="0VB-QL-FIK"/>
+                        <constraint firstAttribute="width" constant="189" id="dJO-VF-5GH"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_new" translatesAutoresizingMaskIntoConstraints="NO" id="XMk-bP-wuC">
-                    <rect key="frame" x="20" y="161" width="460" height="214"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="214" id="Kck-WY-QEf"/>
-                    </constraints>
+                    <rect key="frame" x="0.0" y="144" width="480" height="150"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="XMk-bP-wuC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="5PU-uH-15G"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="1/3" constant="-28.5" id="5cJ-9S-tgC"/>
-                <constraint firstItem="XMk-bP-wuC" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="8" id="90d-tf-8Oh"/>
-                <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Koa-jz-hwk"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
-                <constraint firstItem="p8O-QP-FnB" firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Uuk-RP-xfo"/>
-                <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
-                <constraint firstItem="XMk-bP-wuC" firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" constant="9.5" id="k53-rv-JMa"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="p8O-QP-FnB" secondAttribute="bottom" constant="8" symbolic="YES" id="pnC-CU-58g"/>
+                <constraint firstItem="bjj-oN-EbK" firstAttribute="top" secondItem="XMk-bP-wuC" secondAttribute="bottom" constant="4" id="0G2-wW-UU3"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" symbolic="YES" id="2Lz-pB-WF6"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="6IO-3q-5Pl"/>
+                <constraint firstAttribute="trailing" secondItem="XMk-bP-wuC" secondAttribute="trailing" id="Bdd-c0-Bmn"/>
+                <constraint firstItem="XMk-bP-wuC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Tuk-LD-9Qg"/>
+                <constraint firstItem="Ty6-Ki-nOv" firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="V2w-NI-9Pa"/>
+                <constraint firstItem="Ty6-Ki-nOv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="70" id="Vtw-3V-FcW"/>
+                <constraint firstItem="XMk-bP-wuC" firstAttribute="top" secondItem="Ty6-Ki-nOv" secondAttribute="bottom" constant="19" id="WHB-iP-LME"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="bjj-oN-EbK" secondAttribute="bottom" constant="8" symbolic="YES" id="Zga-DI-Ee7"/>
+                <constraint firstItem="XMk-bP-wuC" firstAttribute="centerX" secondItem="bjj-oN-EbK" secondAttribute="centerX" id="bWB-78-bR9"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="114" id="pIx-mE-wES"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="centerX" secondItem="XMk-bP-wuC" secondAttribute="centerX" id="wJH-3c-Nju"/>
+                <constraint firstItem="bjj-oN-EbK" firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="zRK-wz-A2c"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="548" y="455"/>
+            <point key="canvasLocation" x="488" y="442"/>
         </view>
     </objects>
     <resources>
+        <image name="atmlogo" width="143" height="96"/>
         <image name="logo_new" width="186" height="29"/>
+        <image name="sri_balaji_logo" width="1266" height="1618"/>
     </resources>
 </document>

@@ -13,6 +13,7 @@ class ContentCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+      //  contentLabel.sizeToFit()
     }
 
 }

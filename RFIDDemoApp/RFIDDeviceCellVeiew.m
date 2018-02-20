@@ -371,9 +371,6 @@
     [m_lblSerialNotice removeFromSuperview];
     [m_lblSerialData removeFromSuperview];
    // [m_lblBluetoothAddress removeFromSuperview];
-
-    
-    
 }
 
 

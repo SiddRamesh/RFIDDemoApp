@@ -13,7 +13,10 @@ import UIKit
 class CollectionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    var popupController:CNPPopupController?
     let scan:ScanVC = ScanVC()
+    
     var activityIndicatorView = UIActivityIndicatorView()
     var container: UIView = UIView()
     var loadingView: UIView = UIView()
@@ -38,21 +41,28 @@ class CollectionViewController: UIViewController {
         collectionView.dataSource = self
 
         collectionView.register(UINib(nibName: "ContentCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: contentCellIdentifier)
+//
+        let barButton = UIBarButtonItem.init(title: "Filter", style: .plain, target: self, action:#selector(showFilter))
+        self.navigationItem.rightBarButtonItem = barButton
         
         showActivityView(view)
-       self.search("GetIncomingInformation", "All","All","INNSA1")
+       self.search("All","All","INNSA1")
     }
         
-    func search(_ webService: String, _ bill: String, _ iec: String,_ port: String ) {
+    func search( _ bill: String, _ iec: String,_ port: String ) {
         
-        let dat = "02/12/2018"
+        let webService = "GetVerifyContainerAll" //"GetIncomingInformation"  <date>\(dat)</date>
+    //    let dat = "02/12/2018"
+        
         
         let soapMessage = """
         <?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                           <soap:Body>                                                                                                                                                                                                  <\(webService) xmlns='http://tempuri.org/'>
         <billno>\(bill)</billno>
         <iec>\(iec)</iec>
-        <date>\(dat)</date>                                                                                                                                                                                                                         <port>\(port)</port>                                                                                                                                                                                                                                     </\(webService)>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>
+        <port>\(port)</port>                                                                                                                                                                                                                                     </\(webService)>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>
         """
+        
+        
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         theRequest = NSMutableURLRequest.init(url: self.urlString!, cachePolicy: .reloadRevalidatingCacheData, timeoutInterval: 60)
         theRequest.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -85,6 +95,7 @@ class CollectionViewController: UIViewController {
         dataTask.resume()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         print("Searching Data...",theRequest)
+        showActivityView(view)
     }
     
     func sshowAlertMessage(messageTitle: NSString, withMessage: NSString) ->Void  {
@@ -126,7 +137,77 @@ class CollectionViewController: UIViewController {
         container.removeFromSuperview()
     }
     
+    func showFilter() {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
+        paragraphStyle.alignment = NSTextAlignment.center
+        
+        let title = NSAttributedString(string: "Filters", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 24), NSParagraphStyleAttributeName: paragraphStyle])
+        
+        //Bill
+        let billTextField = UITextField.init(frame: CGRect(x: 10, y: 10, width: 230, height: 35))
+        billTextField.borderStyle = UITextBorderStyle.roundedRect
+        billTextField.placeholder = "Bill"
+        
+        //Date
+        let dateTextField = UITextField.init(frame: CGRect(x: 10, y: 10, width: 230, height: 35))
+        dateTextField.borderStyle = UITextBorderStyle.roundedRect
+        dateTextField.placeholder = "Date"
+        
+        //IEC
+        let iecTextField = UITextField.init(frame: CGRect(x: 10, y: 10, width: 230, height: 35))
+        iecTextField.borderStyle = UITextBorderStyle.roundedRect
+        iecTextField.placeholder = "IEC"
+        
+        //Port
+        let portTextField = UITextField.init(frame: CGRect(x: 10, y: 10, width: 230, height: 35))
+        portTextField.borderStyle = UITextBorderStyle.roundedRect
+        portTextField.placeholder = "Port"
+        
+        
+        let titleLabel = UILabel()
+        titleLabel.numberOfLines = 0;
+        titleLabel.attributedText = title
+        
+        let button = CNPPopupButton.init(frame: CGRect(x: 0, y: 0, width: 200, height: 60))
+        button.setTitleColor(UIColor.white, for: UIControlState())
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.setTitle("Search", for: UIControlState())
+        
+        button.backgroundColor = UIColor.init(red: 0.46, green: 0.8, blue: 1.0, alpha: 1.0)
+        
+        button.layer.cornerRadius = 4;
+        button.selectionHandler = { (button) -> Void in
+            self.popupController?.dismiss(animated: true)
+            //  print("Block for button: \(button.titleLabel?.text)")
+            self.search(billTextField.text!, iecTextField.text!, portTextField.text!)
+        }
+        
+        let popupController = CNPPopupController(contents:[titleLabel, billTextField, iecTextField, portTextField, button])
+        popupController.theme = CNPPopupTheme.default()
+        popupController.theme.popupStyle = .centered
+        // LFL added settings for custom color and blur
+        popupController.theme.maskType = .custom
+        popupController.theme.customMaskColor = UIColor.blue
+        popupController.theme.blurEffectAlpha = 1.0
+        popupController.delegate = self
+        self.popupController = popupController
+        popupController.present(animated: true)
+    }
+    
     //E.O.L
+}
+
+extension CollectionViewController : CNPPopupControllerDelegate {
+    
+    func popupControllerWillDismiss(_ controller: CNPPopupController) {
+        print("Popup controller will be dismissed")
+    }
+    
+    func popupControllerDidPresent(_ controller: CNPPopupController) {
+        print("Popup controller presented")
+    }
 }
 
 extension CollectionViewController : XMLParserDelegate {
@@ -171,20 +252,23 @@ extension CollectionViewController : XMLParserDelegate {
         else if elementName == "S12" { reportdat.S12 = captureString }
         else if elementName == "S13" { reportdat.S13 = captureString }
             
-        else if elementName == "ReportData" { reportDatas.append(reportdat) }
+        else if elementName == "ReportData" { reportDatas.append(reportdat) } //else { parser.abortParsing() }
         
         //print("End -> ",elementName)
     }
     
     func parserDidEndDocument(_ parser: XMLParser) {
         
-        if reportDatas.isEmpty { print("Error, No Data Found") } else {
+        hideActivityView()
+        if reportDatas.isEmpty { print("Error, No Data Found")
+          //  self.showPopupWithStyle(CNPPopupStyle.centered, "cancel", found: "Data Not Found!")
+            scan.showPopup(withTagStatus: "cancel", found: "Data Not Found!")
+            parser.abortParsing()
+            dataTask.cancel()
+        } else {
             print(reportDatas.count)
-            hideActivityView()
+         //   hideActivityView()
             scan.showPopup(withTagStatus: "complete", found: "Updated Data")
-            //   print("Data is", reportDatas[2].S5)
-            //   print("S1 ->", reportdat.S1)
-            //   print("S2 -> ", reportdat.S2)
         }
     }
     
@@ -192,6 +276,7 @@ extension CollectionViewController : XMLParserDelegate {
         
         if reportDatas.isEmpty { print("Error !")
             scan.showPopup(withTagStatus: "cancel", found: "Data Not Found!")
+            parser.abortParsing()
         }
     }
 }
@@ -200,7 +285,16 @@ extension CollectionViewController : XMLParserDelegate {
 extension CollectionViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return reportDatas.count
+      //  return reportDatas.count
+        
+        let count = reportDatas.count
+        
+        // if there's no data yet, return enough rows to fill the screen
+        if (count == 0)
+        {
+            return 2
+        }
+        return count;
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -211,11 +305,21 @@ extension CollectionViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: contentCellIdentifier, for: indexPath) as! ContentCollectionViewCell
-
-//        if indexPath.section == 0 {
-//            cell.backgroundColor = UIColor.gray
-//        }
+       
+        var cell:ContentCollectionViewCell
+        
+        let nodeCount = reportDatas.count
+        
+        if (nodeCount == 1 && indexPath.row == 1)
+        {
+            cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "Hold", for: indexPath) as! ContentCollectionViewCell)
+            
+        }
+        else {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: contentCellIdentifier, for: indexPath) as! ContentCollectionViewCell
+            
+            if (nodeCount > 1)
+            {
         
         if indexPath.section % 2 != 0 {
             cell.backgroundColor = UIColor.white
@@ -224,9 +328,9 @@ extension CollectionViewController: UICollectionViewDataSource {
         }
         
         if reportDatas[indexPath.section].S12 == "Yes" {
-            cell.backgroundColor = UIColor.green
+            cell.backgroundColor = UIColor.init(red: 0.0, green: 1.0, blue: 0.0, alpha: 0.8)
         } else {
-            cell.backgroundColor = UIColor.red
+            cell.backgroundColor = UIColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.8)
         }
         
     //    let fon:UIFont = .boldSystemFont(ofSize: 20)
@@ -271,9 +375,6 @@ extension CollectionViewController: UICollectionViewDataSource {
             case 10:
                 cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Longitude "
-//            case 11:
-//                cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
-//                cell.contentLabel.text = " Area "
             case 11:
                 cell.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.8)
                 cell.contentLabel.text = " Verified "
@@ -307,11 +408,9 @@ extension CollectionViewController: UICollectionViewDataSource {
             case 8:
                 cell.contentLabel.text = reportDatas[indexPath.section].S9
             case 9:
-                cell.contentLabel.text = reportDatas[indexPath.section].S10
+                cell.contentLabel.text = reportDatas[indexPath.section].S10 ?? "N/A"
             case 10:
-                cell.contentLabel.text = reportDatas[indexPath.section].S11
-//            case 11:
-//                cell.contentLabel.text = "Mumbai, IN"//self.areaLbl.text!
+                cell.contentLabel.text = reportDatas[indexPath.section].S11 ?? "N/A"
             case 11:
                 cell.contentLabel.text = reportDatas[indexPath.section].S12
             default:
@@ -319,7 +418,8 @@ extension CollectionViewController: UICollectionViewDataSource {
             }
             
         }
-
+            } // node..
+        } // else...
         return cell
     }
 

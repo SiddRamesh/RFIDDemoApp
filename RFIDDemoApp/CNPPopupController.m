@@ -25,6 +25,7 @@ static inline UIViewAnimationOptions UIViewAnimationCurveToAnimationOptions(UIVi
 @property (nonatomic, retain) UIView *popupView;
 @property (nonatomic, retain) NSArray <UIView *> *views;
 @property (nonatomic,assign) BOOL dismissAnimated;
+@property (nonatomic, retain) UIPickerView *pickerVire;
 
 @end
 
@@ -62,7 +63,7 @@ static inline UIViewAnimationOptions UIViewAnimationCurveToAnimationOptions(UIVi
         self.theme = [CNPPopupTheme defaultTheme];
 
         [self addPopupContents];
-        
+        [self hideKeyboardWhenTappedAround];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
         
@@ -90,6 +91,7 @@ static inline UIViewAnimationOptions UIViewAnimationCurveToAnimationOptions(UIVi
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [super dealloc];
 }
 
 - (void)orientationWillChange {
@@ -228,7 +230,28 @@ CGFloat CNP_UIInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orie
     return [self calculateContentSizeThatFits:size andUpdateLayout:NO];
 }
 
-#pragma mark - Keyboard 
+
+
+-(void)dissmissDate:(UIDatePicker *)sender {
+    
+    [self.popupView endEditing:YES];
+}
+
+
+#pragma mark - Keyboard
+
+-(void)hideKeyboardWhenTappedAround {
+    
+    UITapGestureRecognizer *tap = [UITapGestureRecognizer new];
+    [tap addTarget:self action:@selector(dissmissKey)];
+    [tap cancelsTouchesInView];
+    [self.popupView addGestureRecognizer:tap];
+}
+
+-(void)dissmissKey {
+    
+    [self.popupView endEditing:YES];
+}
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {

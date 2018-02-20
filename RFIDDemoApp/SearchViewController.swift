@@ -16,8 +16,8 @@ class SearchViewController: UIViewController {
     var container: UIView = UIView()
     var loadingView: UIView = UIView()
     
+    var popupController:CNPPopupController?
     let scan:ScanVC = ScanVC()
-   
     
     let que:OperationQueue = OperationQueue()
     var dataTask:URLSessionDataTask = URLSessionDataTask()
@@ -28,12 +28,13 @@ class SearchViewController: UIViewController {
     var reportDatas:[ReportData] = [ReportData]()
     var reportdat:ReportData = ReportData()
     var flag:Bool = false
+    var dat:String = ""
     
     let contentCellIdentifier = "ContentCellIdentifier"
     
     final let urlString = URL(string: "http://atm-india.in/EnopeckService.asmx")
     
-    
+    //No Data When search..
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,15 +43,29 @@ class SearchViewController: UIViewController {
         collectionView.register(UINib(nibName: "ContentCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: contentCellIdentifier)
         showActivityView(view)
         
-        self.search("GetVerifyContainerAll", "All","All","INNSA1")
+        let datee = NSDate.init()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        dat = dateFormatter.string(from: datee as Date)
+        
+        //   UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
+        //    self.navigationItem.rightBarButtonItem = barButtonScan;
+        
+        let barButton = UIBarButtonItem.init(title: "Filter", style: .plain, target: self, action:#selector(showFilter))
+        self.navigationItem.rightBarButtonItem = barButton
+        self.search("All","All","INNSA1",dat)
     }
     
-    func search(_ webService: String, _ bill: String, _ iec: String,_ port: String ) {
+    func search(_ bill: String, _ iec: String,_ port: String,_ datee:String ) {
+        
+        let webService = "GetIncomingInformation" // "GetVerifyContainerAll"
         
         let soapMessage = """
         <?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                           <soap:Body>                                                                                                                                                                                                  <\(webService) xmlns='http://tempuri.org/'>
         <billno>\(bill)</billno>
-        <iec>\(iec)</iec>                                                                                                                                                                                                                          <port>\(port)</port>                                                                                                                                                                                                                                     </\(webService)>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>
+        <iec>\(iec)</iec>
+        <date>\(datee)</date>
+        <port>\(port)</port>                                                                                                                                                                                                                                     </\(webService)>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>
         """
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         theRequest = NSMutableURLRequest.init(url: self.urlString!, cachePolicy: .reloadRevalidatingCacheData, timeoutInterval: 60)
@@ -77,6 +92,7 @@ class SearchViewController: UIViewController {
                         self.collectionView.reloadData()
                         print("______________________________________")
                         print("Decoding Data... Done")
+                        self.hideActivityView()
                     }
                 }
             }
@@ -84,14 +100,20 @@ class SearchViewController: UIViewController {
         dataTask.resume()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         print("Searching Data...",theRequest)
+       // showActivityView(view)
     }
     
+    //MARK: - Filters
+    
+    
+
     override  func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
         reportDatas.removeAll()
     }
     
+    //MARK: - Activity View
     func showActivityView(_ view: UIView) {
         
         container.frame = view.frame
@@ -122,7 +144,80 @@ class SearchViewController: UIViewController {
         activityIndicatorView.stopAnimating()
         container.removeFromSuperview()
     }
+    
+    func showFilter() {
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
+        paragraphStyle.alignment = NSTextAlignment.center
+        
+        let title = NSAttributedString(string: "Filters", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 24), NSParagraphStyleAttributeName: paragraphStyle])
+        
+        //Bill
+        let billTextField = UITextField.init(frame: CGRect(x: 10, y: 10, width: 230, height: 35))
+        billTextField.borderStyle = UITextBorderStyle.roundedRect
+        billTextField.placeholder = "Bill"
+        
+        //Date
+        let dateTextField = UITextField.init(frame: CGRect(x: 10, y: 10, width: 230, height: 35))
+        dateTextField.borderStyle = UITextBorderStyle.roundedRect
+        dateTextField.placeholder = dat
+        dateTextField.text = dat
+        
+        //IEC
+        let iecTextField = UITextField.init(frame: CGRect(x: 10, y: 10, width: 230, height: 35))
+        iecTextField.borderStyle = UITextBorderStyle.roundedRect
+        iecTextField.placeholder = "IEC"
+        
+        //Port
+        let portTextField = UITextField.init(frame: CGRect(x: 10, y: 10, width: 230, height: 35))
+        portTextField.borderStyle = UITextBorderStyle.roundedRect
+        portTextField.placeholder = "Port"
+        
+        
+        let titleLabel = UILabel()
+        titleLabel.numberOfLines = 0;
+        titleLabel.attributedText = title
+        
+        let button = CNPPopupButton.init(frame: CGRect(x: 0, y: 0, width: 200, height: 60))
+        button.setTitleColor(UIColor.white, for: UIControlState())
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.setTitle("Search", for: UIControlState())
+        
+        button.backgroundColor = UIColor.init(red: 0.46, green: 0.8, blue: 1.0, alpha: 1.0)
+        
+        button.layer.cornerRadius = 4;
+        button.selectionHandler = { (button) -> Void in
+            self.popupController?.dismiss(animated: true)
+            //  print("Block for button: \(button.titleLabel?.text)")
+            self.search(billTextField.text!, iecTextField.text!, portTextField.text!, dateTextField.text!)
+        }
+        
+        //   showActivityView(view)
+        let popupController = CNPPopupController(contents:[titleLabel, billTextField, iecTextField, portTextField, dateTextField, button])
+        popupController.theme = CNPPopupTheme.default()
+        popupController.theme.popupStyle = .centered
+        // LFL added settings for custom color and blur
+        popupController.theme.maskType = .custom
+        popupController.theme.customMaskColor = UIColor.blue
+        popupController.theme.blurEffectAlpha = 1.0
+        popupController.delegate = self
+        self.popupController = popupController
+        popupController.present(animated: true)
+    }
    
+}
+
+extension SearchViewController : CNPPopupControllerDelegate {
+    
+    func popupControllerWillDismiss(_ controller: CNPPopupController) {
+        print("Popup controller will be dismissed")
+    }
+    
+    func popupControllerDidPresent(_ controller: CNPPopupController) {
+        print("Popup controller presented")
+    }
+    
 }
 
 
@@ -168,16 +263,23 @@ extension SearchViewController : XMLParserDelegate {
         else if elementName == "S12" { reportdat.S12 = captureString }
         else if elementName == "S13" { reportdat.S13 = captureString }
             
-        else if elementName == "ReportData" { reportDatas.append(reportdat) }
+        else if elementName == "ReportData" { reportDatas.append(reportdat) } //else { parser.abortParsing() }
         
         //print("End -> ",elementName)
     }
     
     func parserDidEndDocument(_ parser: XMLParser) {
         
-        if reportDatas.isEmpty { print("Error, No Data Found") } else {
+        hideActivityView()
+        if reportDatas.isEmpty { print("Error, No Data Found")
+          //  self.showPopupWithStyle(CNPPopupStyle.centered, "cancel", found: "Data Not Found!")
+            scan.showPopup(withTagStatus: "cancel", found: "Data Not Found!")
+            parser.abortParsing()
+            dataTask.cancel()
+            
+        } else {
             print(reportDatas.count)
-            hideActivityView()
+         //   hideActivityView()
             scan.showPopup(withTagStatus: "complete", found: "Updated")
             //   print("Data is", reportDatas[2].S5)
             //   print("S1 ->", reportdat.S1)
@@ -190,6 +292,7 @@ extension SearchViewController : XMLParserDelegate {
         
         if reportDatas.isEmpty { print("Error !")
             scan.showPopup(withTagStatus: "cancel", found: "Data Not Found")
+            parser.abortParsing()
         }
     }
 }
@@ -198,7 +301,16 @@ extension SearchViewController : XMLParserDelegate {
 extension SearchViewController : UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return reportDatas.count
+      //  return reportDatas.count
+        
+        let count = reportDatas.count
+        
+        // if there's no data yet, return enough rows to fill the screen
+        if (count == 0)
+        {
+            return 2
+        }
+        return count;
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -209,7 +321,23 @@ extension SearchViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: contentCellIdentifier, for: indexPath) as! ContentCollectionViewCell
+       
+        var cell:ContentCollectionViewCell
+        
+        let nodeCount = reportDatas.count
+        
+        if (nodeCount == 1 && indexPath.row == 1)
+        {
+            cell = (collectionView.dequeueReusableCell(withReuseIdentifier: "Hold", for: indexPath) as! ContentCollectionViewCell)
+            
+        }
+        else {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: contentCellIdentifier, for: indexPath) as! ContentCollectionViewCell
+            
+            if (nodeCount > 1)
+            {
+        
+     //   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: contentCellIdentifier, for: indexPath) as! ContentCollectionViewCell
         
         //        if indexPath.section == 0 {
         //            cell.backgroundColor = UIColor.gray
@@ -222,9 +350,9 @@ extension SearchViewController : UICollectionViewDataSource {
         }
         
         if reportDatas[indexPath.section].S12 == "Yes" {
-            cell.backgroundColor = UIColor.green
+            cell.backgroundColor = UIColor.init(red: 0.0, green: 1.0, blue: 0.0, alpha: 0.8)
         } else {
-            cell.backgroundColor = UIColor.red
+            cell.backgroundColor = UIColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.8)
         }
         
         //    let fon:UIFont = .boldSystemFont(ofSize: 20)
@@ -286,11 +414,9 @@ extension SearchViewController : UICollectionViewDataSource {
             case 8:
                 cell.contentLabel.text = reportDatas[indexPath.section].S9
             case 9:
-                cell.contentLabel.text = reportDatas[indexPath.section].S10
+                cell.contentLabel.text = reportDatas[indexPath.section].S10  ?? "N/A"  //lat
             case 10:
-                cell.contentLabel.text = reportDatas[indexPath.section].S11
-//            case 11:
-//                cell.contentLabel.text = "Mumbai, IN"
+                cell.contentLabel.text = reportDatas[indexPath.section].S11  ?? "N/A" //Long
             case 11:
                 cell.contentLabel.text = reportDatas[indexPath.section].S12
             default:
@@ -299,7 +425,8 @@ extension SearchViewController : UICollectionViewDataSource {
             
             //END.....Mian
         }
-        
+                } //node
+            } //else
         return cell
     }
     

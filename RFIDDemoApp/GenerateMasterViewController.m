@@ -8,55 +8,213 @@
 
 #import "GenerateMasterViewController.h"
 #import "AlertView.h"
+#import "RFIDController.h"
+#import "CNPPopupController.h"
 
-@interface GenerateMasterViewController ()
+@interface GenerateMasterViewController () <NSXMLParserDelegate, TagSearchDelegate, CNPPopupControllerDelegate>
 
-@property (nonatomic,copy) NSString* bill;
-@property (nonatomic,copy) NSString* date;
-@property (nonatomic,copy) NSString* timee;
-@property (nonatomic,copy) NSString* container;
-@property (nonatomic,copy) NSString* truck;
-@property (nonatomic,copy) NSString* lat ;
-@property (nonatomic,copy) NSString* longi;
-@property (nonatomic,copy) NSString* entryBy;
-@property (nonatomic,copy) NSString* port;
-@property (nonatomic,copy) NSString* eseal;
+@property (nonatomic, strong) CNPPopupController *popupController;
 
-@property(nonatomic) IBOutlet UITextField *dateTf;
-@property(nonatomic) UITextField *entryTf;
-@property(nonatomic) UITextField *billTf;
-@property(nonatomic) UITextField *truckTf;
-@property(nonatomic) UITextField *portTf;
-@property(nonatomic) UITextField *esealTf;
-@property(nonatomic) UITextField *containerTf;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
-@property(nonatomic) CLLocationManager *locationManager;
 
+@property (nonatomic, strong) NSURLSessionDataTask *dataTask;
+@property (nonatomic, strong) NSMutableURLRequest *theRequest;
+@property (nonatomic, strong) NSXMLParser *xmlParser;
+@property (nonatomic,copy) NSString *soapMessage;
 
 @end
 
 @implementation GenerateMasterViewController
 
+
++ (NSString *)stringFromDate {
+    
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM-dd-yyyy"];
+    // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
+    NSString *da = [dateFormatter stringFromDate:[NSDate date]];
+    return da;
+}
+
++ (NSString *)stringFromTime {
+    
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+  //  [dateFormatter setDateFormat:@"hh:mm:ss"];
+    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    NSString *tim = [dateFormatter stringFromDate:[NSDate date]];
+    return tim;
+}
+
+
+-(void)showActivityView:(UIView *)view {
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] init];
+    self.containerVu = [[UIView alloc] init];
+    self.loadingView = [[UIView alloc] init];
+    
+    [self.containerVu setFrame:view.frame];
+    [self.containerVu setCenter:view.center];
+    [self.containerVu setBackgroundColor:[UIColor clearColor]];
+    
+    self.loadingView.frame = CGRectMake(0, 0, 80.0, 80.0);
+    [self.loadingView setCenter:view.center];
+    [self.loadingView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.7]];
+    self.loadingView.clipsToBounds = true;
+    self.loadingView.layer.cornerRadius = 10;
+    
+    self.activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.activityIndicatorView.hidesWhenStopped = true;
+    self.activityIndicatorView.frame = CGRectMake(UIScreen.mainScreen.bounds.size.width / 2, UIScreen.mainScreen.bounds.size.height / 2, 80.0, 80.0);
+    self.activityIndicatorView.center = self.view.center;
+    
+    [self.loadingView addSubview:self.activityIndicatorView];
+    [self.containerVu addSubview:self.loadingView];
+    [view addSubview:self.containerVu];
+    [view addSubview:self.activityIndicatorView];
+    [self.activityIndicatorView bringSubviewToFront:view];
+    [self.activityIndicatorView startAnimating];
+    
+}
+
+-(void)hideActivityView{
+    [self.activityIndicatorView stopAnimating];
+    [self.containerVu removeFromSuperview];
+}
+
+#pragma mark - TickerSearch delegate
+
+-(void) retrievedTagsFromSearch:(NSString *)tags :(NSError*) error {
+    if(error) {
+        NSLog(@"Error %@", error);
+//        NSString *reason = [error localizedDescription];
+//        
+//        UIAlertView  *alert = [[UIAlertView alloc] initWithTitle:reason
+//                                                        message:nil
+//                                                       delegate:nil
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//        [alert show];
+    } else {
+      //  [array removeAllObjects];
+       
+       NSString *fetchTag = [[NSString alloc] initWithString:tags];
+       self.tagIdStr = fetchTag;
+        NSLog(@"%@", @"Scanned Tag!");
+        //  [self.tableView reloadData];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-//        UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
-//        self.navigationItem.rightBarButtonItem = barButtonScan;
-    
-    [self hideKeyboardWhenTappedAround];
-    
+
     [self locationSet];
-    
-//    CLLocationCoordinate2D coordinate = [self getLocation];
-//    _lat = [NSString stringWithFormat:@"%f", coordinate.latitude];
-//    _longi = [NSString stringWithFormat:@"%f", coordinate.longitude];
-    
-    NSLog(@"*dLatitude : %@", _lat);
-    NSLog(@"*dLongitude : %@", _longi);
-    
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
+    [self hideKeyboardWhenTappedAround];
+    [self initDatePicker];
+    
+    UIBarButtonItem *save = [[UIBarButtonItem alloc]initWithTitle:@"Save"
+                                                            style:UIBarButtonItemStylePlain
+                                                           target:self
+                                                           action:@selector(saveData:)];
+                                                         //  action:@selector(retrievedTagsFromSearch::)];
+    self.navigationItem.rightBarButtonItem = save;
+    
+}
+
+-(IBAction)saveData:(id)sender {
+    
+ //   [self showActivityView:self.view];
+    self.soapMessage = [NSString stringWithFormat:@"<?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                                                                  <soap:Body>                                                                                                                                                                                                        <InsertEntryMaster xmlns='http://tempuri.org/'>                                                                                                                                                                                                     <billno>%@</billno>                                                                                                                                                                                                                          <date>%@</date>                                                                                                                                                                                                                                                  <time>%@</time>                                                                                                                                                                                                                                         <container>%@</container>                                                                                                                                                                                                                     <truck>%@</truck>                                                                                                                                                                                                                                                  <latitude>%@</latitude>                                                                                                                                                                                                                                            <longitude>%@</longitude>                                                                                                                                                                                                                                         <eseal>%@</eseal>                                                                                                                                                                                                                                                                             <entryby>%@</entryby>                                                                                                                                                                                                                                                  <port>%@</port>                                                                                                                                                                                                                                                   </InsertEntryMaster>                                                                                                                                                                                                                           </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>",self.bill,self.date,self.timee,self.container,self.truck,self,_lat,self.longi,self.eseal,self.entryBy]; // self.port
+    
+//    NSLog(@"%@ tag n %@ port",tag,port);
+    
+    //Now create a request to the URL
+    NSURL *url = [NSURL URLWithString:@"http://atm-india.in/RFIDDemoservice.asmx"];
+  //  NSURL *url = [NSURL URLWithString:@"http://atm-india.in/EnopeckService.asmx"];
+    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
+    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[_soapMessage length]];
+    
+    //ad required headers to the request
+    [theRequest initWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:60];
+    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
+    [theRequest setHTTPMethod:@"POST"];
+    [theRequest setHTTPBody: [_soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    _dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:theRequest
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    [[NSOperationQueue mainQueue] addOperationWithBlock: ^{
+                                                        if (error != nil && response == nil) {
+                                                            if (error.code == NSURLErrorAppTransportSecurityRequiresSecureConnection) {
+                                                                
+                                                                NSAssert(NO, @"NSURLErrorAppTransportSecurityRequiresSecureConnection");
+                                                            }
+                                                            else {
+                                                                // use KVO to notify our client of this error
+                                                            }
+                                                        }
+                                                        if (response != nil) {
+                                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+                                                            if (((httpResponse.statusCode/100) == 2) && [response.MIMEType isEqual:@"text/xml"]) {
+                                                                NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+                                                                parser.delegate = self;
+                                                                [parser parse];
+                                                           //   [self hideActivityView];
+                                                            } else {
+                                                                NSString *errorString =
+                                                                NSLocalizedString(@"HTTP Error", @"Error message displayed when receiving an error from the server.");
+                                                                //  NSDictionary *userInfo = @{NSLocalizedDescriptionKey : errorString};
+                                                                [self showPopupWithTagStatus:@"cancel" found:errorString];
+                                                                //  abort();
+                                                            } //else ...
+                                                        }
+                                                    }];
+                                                }];
+    NSLog(@"Loading... %@",theRequest);
+    [self.dataTask resume];
+}
+
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+{
+    if ([string isEqualToString:@"true"]) {
+        NSLog(@"Saved");
+         [self showPopupWithTagStatus:@"complete" found:@"Success"];
+        
+    } else {
+        NSLog(@"Not Saved");
+         [self showPopupWithTagStatus:@"cancel" found:@"Failed!"];
+    }
+}
+
+- (void)showPopupWithTagStatus:(NSString *)imageName found:(NSString *)string {
+    
+    NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    
+    NSAttributedString *title = [[NSAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName : [UIFont boldSystemFontOfSize:24], NSParagraphStyleAttributeName : paragraphStyle}];
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.numberOfLines = 0;
+    titleLabel.attributedText = title;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    
+    self.popupController = [[CNPPopupController alloc] initWithContents:@[titleLabel,imageView]];
+    self.popupController.theme = [CNPPopupTheme defaultTheme];
+    self.popupController.theme.popupStyle = CNPPopupStyleCentered;
+    self.popupController.delegate = self;
+    [self.popupController presentPopupControllerAnimated:YES];
+}
+
+-(IBAction)scanTag:(id)sender {
+    
+    RFIDController *rf = [[RFIDController alloc] init];
+    
+    [rf searchForTags:_tagIdStr :sender];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,7 +245,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-     return NSLocalizedString(@"Information", @"Information");
+     return NSLocalizedString(@"            ", @"Information");
     
 //    switch (section) {
 //        case 0: {
@@ -100,24 +258,6 @@
 //            return NSLocalizedString(@"Tracking Data", @"Tracking Data");
 //        } break;
 //    }
-}
-
--(UITextField*) makeTextField: (NSString*)text placeholder: (NSString*)placeholder  {
-    UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(110, 10, 185, 30)];
-    tf.placeholder = placeholder ;
-    tf.text = text ;
-    tf.returnKeyType = UIReturnKeyNext;
-   // tf.tag = 1;
-   // tf.borderStyle = UITextBorderStyleRoundedRect;
-    tf.delegate = self;
- //   [cell.contentView addSubview:tf];
-    tf.autocorrectionType = UITextAutocorrectionTypeNo ;
-    tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    tf.adjustsFontSizeToFitWidth = YES;
-    tf.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
-    
-    [tf addTarget:self action:@selector(textFieldFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
-    return tf ;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -134,7 +274,7 @@
         switch (indexPath.row) {
             case 0: {
                 cell.textLabel.text = NSLocalizedString(@"E-Seal :", @"e-Seal :");
-                cell.detailTextLabel.text =  @"E-Seal";
+                cell.detailTextLabel.text =  self.tagIdStr;
             } break;
             case 1: {
                 cell.textLabel.text = NSLocalizedString(@"Bill No.:", @"Bill No.");
@@ -161,7 +301,8 @@
             }break;
             default: {
                 cell.textLabel.text = NSLocalizedString(@"Date :", @"Date");
-                tf = _dateTf = [self makeTextField:self.date placeholder:@"02/15/2018"];
+            //    cell.detailTextLabel.text = _dateTf.text;
+                tf = _dateTf = [self makeTextField:self.date placeholder:[GenerateMasterViewController stringFromDate]];
                 [cell addSubview:_dateTf];
             } break;
         }
@@ -169,27 +310,69 @@
         switch (indexPath.row) {
             case 0: {
                 cell.textLabel.text = NSLocalizedString(@"Time :", @"Time:");
-                cell.detailTextLabel.text =  @"12:12:00";
+                cell.detailTextLabel.text = [GenerateMasterViewController stringFromTime];
             } break;
             case 1: {
                 cell.textLabel.text = NSLocalizedString(@"Latitude :", @"Latitude");
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%f", self.locationManager.location.coordinate.latitude];//  self.lat;
+                cell.detailTextLabel.text = self.lat;
             } break;
             case 2: {
                 cell.textLabel.text = NSLocalizedString(@"Longitude :", @"Longitude");
-                cell.detailTextLabel.text =  [NSString stringWithFormat:@"%f", self.locationManager.location.coordinate.longitude];
+                cell.detailTextLabel.text = self.longi;
             }break;
             default: {
                 cell.textLabel.text = NSLocalizedString(@"Area :",@"Area");
-                cell.detailTextLabel.text = @"Area";
+                cell.detailTextLabel.text = self.placemark;
             } break;
         }
     }
     return cell;
 }
 
+//MARK: - Init UI Elements
+-(UITextField*) makeTextField: (NSString*)text placeholder: (NSString*)placeholder  {
+    UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(110, 10, 185, 30)];
+    tf.placeholder = placeholder ;
+    tf.text = text ;
+    tf.returnKeyType = UIReturnKeyNext;
+    tf.clearsOnBeginEditing = YES;
+    // tf.tag = 1;
+    // tf.borderStyle = UITextBorderStyleRoundedRect;
+    tf.delegate = self;
+    //   [cell.contentView addSubview:tf];
+    tf.autocorrectionType = UITextAutocorrectionTypeNo;
+    tf.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    tf.adjustsFontSizeToFitWidth = YES;
+    tf.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
+    
+    [tf addTarget:self action:@selector(textFieldFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    return tf ;
+}
+
+-(void)initDatePicker {
+    
+    UIDatePicker *pic = [UIDatePicker new];
+    pic.datePickerMode = UIDatePickerModeDate;
+    _dateTf.inputView = pic;
+    [pic addTarget:self action:@selector(dateValueChaned:) forControlEvents:UIControlEventValueChanged];
+}
+
+-(void)dateValueChaned:(UIDatePicker *)picker {
+    
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM-dd-yyyy"];
+    _dateTf.text = [dateFormatter stringFromDate:picker.date];
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    if ( textField == _billTf ) {
+   
+    if ( textField == _dateTf ) {
+        UIDatePicker *pic = [UIDatePicker new];
+        pic.datePickerMode = UIDatePickerModeDate;
+        _dateTf.inputView = pic;
+        [pic addTarget:self action:@selector(dateValueChaned:) forControlEvents:UIControlEventValueChanged];
+        self.date = textField.text ;
+    } else if ( textField == _billTf ) {
         self.bill = textField.text ;
     } else if ( textField == _portTf ) {
         self.port = textField.text ;
@@ -197,14 +380,13 @@
         self.eseal = textField.text ;
     } else if ( textField == _truckTf ) {
         self.truck = textField.text ;
-    }
-    else if ( textField == _containerTf ) {
+    } else if ( textField == _containerTf ) {
         self.container = textField.text ;
-    }
-    else if ( textField == _entryTf ) {
+    } else if ( textField == _entryTf ) {
         self.entryBy = textField.text ;
     }
 }
+
 -(void)hideKeyboardWhenTappedAround {
     
     UITapGestureRecognizer *tap = [UITapGestureRecognizer new];
@@ -219,27 +401,47 @@
 }
 
 - (IBAction)textFieldFinished:(id)sender {
-    // [sender resignFirstResponder];
+     [sender resignFirstResponder];
 }
-
 
 -(void)locationSet {
     
+    CLLocationManager *locationManager = [CLLocationManager new];
+    locationManager.allowsBackgroundLocationUpdates = false; /// for continues update
+    [locationManager.delegate  self];
+    [locationManager requestWhenInUseAuthorization];
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
+    [locationManager startMonitoringSignificantLocationChanges];
+
     // Here you can check whether you have allowed the permission or not.
     if (CLLocationManager.locationServicesEnabled)
     {
         switch([CLLocationManager authorizationStatus])
         {
-           
+            case kCLAuthorizationStatusAuthorizedAlways:
+                [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Authorized" withDuration:1];
+              //  break;
             case kCLAuthorizationStatusAuthorizedWhenInUse:
                 [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Accessing Location.." withDuration:3];
-                
-                _locationManager.allowsBackgroundLocationUpdates = false; /// for continues update
-                _locationManager.delegate = self;
-                [_locationManager requestWhenInUseAuthorization];
-                _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-                [_locationManager startUpdatingLocation];
-                [_locationManager startMonitoringSignificantLocationChanges];
+                 _laD = locationManager.location.coordinate.latitude;
+                 _loD = locationManager.location.coordinate.longitude;
+                CLLocation *loc  = [[CLLocation alloc] initWithLatitude:_laD longitude:_loD];
+                self.lat = [NSString stringWithFormat:@"%f",loc.coordinate.latitude];
+                self.longi = [NSString stringWithFormat:@"%f",loc.coordinate.longitude];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                CLGeocoder *geo = [[CLGeocoder alloc] init];
+                [geo reverseGeocodeLocation:loc completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+                    if(error){
+                        [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION Error" withDetails:@"Location Not Determined.." withDuration:3];
+                    } else {
+                  //  NSString *country = placemarks.firstObject.country;
+                    NSString *city = placemarks.firstObject.locality;
+                 // NSString *postal = placemarks.firstObject.postalCode;
+                        self.placemark = city; //[city stringByAppendingString:country];
+                    }
+                }];
+                      });
                 break;
             case kCLAuthorizationStatusNotDetermined:
                 NSLog(@"Not Determined");
@@ -247,134 +449,14 @@
                 break;
             case kCLAuthorizationStatusRestricted:
                  NSLog(@"Restricted");
-                   [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Restricted" withDuration:3];
+                [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Restricted" withDuration:3];
                 break;
             case kCLAuthorizationStatusDenied:
                  NSLog(@"Denied");
                  [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Location Service is Denied!" withDuration:3];
                 break;
-            case kCLAuthorizationStatusAuthorizedAlways:
-                 [zt_AlertView showInfoMessage:self.view withHeader:@"LOCATION" withDetails:@"Authorized" withDuration:3];
-                break;
-           
-                
-             //   CLGeocoder().
-                
-          //       CLLocationDegrees  *clldeg = (locationManager.location?.coordinate.latitude)!
-          //      let longitude: CLLocationDegrees = (locationManager.location?.coordinate.longitude)!
-        //        let location = CLLocation(latitude: latitude, longitude: longitude) //changed!!!
-         //       latitudelbl.text  = latitude.description
-          //      longitudelbl.text = longitude.description
-                // print("Lat : %f  Long : %f",latitude as Any,longitude as Any) 8650232078 vodone 100
-                
-//                CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) -> Void in
-//                    if error != nil {
-//                        return
-//                    }else if let country = placemarks?.first?.country,
-//                        let city = placemarks?.first?.locality,
-//                        let pot = placemarks?.first?.postalCode {
-//                            print(city + ",",country)
-//                            self.locationlbl.text = pot + ", " + city + ", " + country
-//                        }
-//                    else {
-//                    }
-//                })
-               // break;
         }
     }
-}
-
- /*
--(void)showAlertMessage:(NSString *)messageTitle withMessage:(NSString *)message  {
-    UIAlertController *alertController = [UIAlertController new];
-    alertController.title = messageTitle;
-    alertController.message = message;
-    [alertController preferredStyle];
-    
-    UIAlertAction *alertAct = [UIAlertAction new];
-  //  alertAct.title = @"Cancel";
-    [alertAct style];
-    [alertController setPreferredAction:alertAct];
-    
-    UIAlertAction *action = [UIAlertAction actionWithTitle:Cancel style:UIAlertActionStyleDefault handler:^(UIAlertAction *act) {
-        //..
-    }];
-    [alertController addAction:alertAct];
-    
-    
-//    UIAlertAction *OKAction = UIAlertAction(title: "Settings", style: .default) { (action:UIAlertAction!) in
-//        if let url = URL(string: "App-Prefs:root=Privacy&path=LOCATION/com.company.AppName") {
-//            if #available(iOS 10.0, *) {
-//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//            } else {
-//                // Fallback on earlier versions
-//            }
-//        }
-//    }
-//    alertController.addAction(OKAction)
-//    self.present(alertController, animated: true, completion:nil)
-//
-    UIAlertAction *OkAaction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *act) {
-        //..
-        NSURL *url = [[NSURL init] initWithString:@"App-Prefs:root=Privacy&path=LOCATION/com.company.AppName"];
-     //   [UIApplication sharedApplication.open(<#const char *#>, <#int, ...#>)]
-    }];
-    [alert addAction:OkAaction];
-    
-    if (self.presentedViewController == nil) {
-        [self presentViewController:self.alert animated:YES completion:^ {
-            //..
-        }];
-    }
-}
-*/
-
-
--(CLLocationCoordinate2D) getLocation{
-    CLLocationManager *locationManager = [[[CLLocationManager alloc] init] autorelease];
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    [locationManager startUpdatingLocation];
-    CLLocation *location = [locationManager location];
-    CLLocationCoordinate2D coordinate = [location coordinate];
-    
-    return coordinate;
-}
-
-+(void)showPopUpWithMessage:(NSString *)message inController:(UIViewController *)controller
-{
-    
-    CGFloat width =  [message sizeWithFont:[UIFont systemFontOfSize:20.0f ]].width;
-    
-    UIView *alertView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, width+10, 40)];
-    [alertView setBackgroundColor:[UIColor redColor]];
-    
-    [alertView setCenter:CGPointMake( controller.view.bounds.size.width / 2, (controller.view.bounds.size.height-40) / 2)];
-    
-    [alertView.layer setCornerRadius:  5.0f];
-    [alertView.layer setBorderWidth: 2.0f];
-    [alertView.layer setMasksToBounds: YES];
-    
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, width, 20)];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [label setBaselineAdjustment:UIBaselineAdjustmentAlignCenters];
-    [label setFont:[UIFont systemFontOfSize:20.0f]];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setTextColor:[UIColor whiteColor]];
-    
-    [label setText:message];
-    
-    [alertView addSubview:label];
-    
-    [controller.view addSubview:alertView];
-    
-    [UIView animateWithDuration:5.0
-                     animations:^  {alertView.alpha = 0; }
-                     completion:^ (BOOL finished) { [alertView removeFromSuperview]; }];
-    
-    
 }
 
 

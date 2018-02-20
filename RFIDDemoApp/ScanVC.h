@@ -23,7 +23,7 @@
     
      UITableView *tableView;
      UITableView *m_tblTags;
-     zt_RFIDTagCellView *m_OffscreenTagCell;
+ //    zt_RFIDTagCellView *m_OffscreenTagCell;
      zt_EnumMapper *m_Mapper;
     
      SRFID_MEMORYBANK m_SelectedInventoryOption;
@@ -42,5 +42,42 @@
 -(IBAction)resetData:(id)sender;
 
 - (void)showPopupWithTagStatus:(NSString *)imageName found:(NSString *)string;
+
+
+//MARK: - Properties
+
+@property (nonatomic,copy) NSString *serialLbl;
+@property (nonatomic,copy) NSString *iecLbl;
+@property (nonatomic,copy) NSString *billLbl;
+@property (nonatomic,copy) NSString *truckLbl;
+@property (nonatomic,copy) NSString *codebl;
+@property (nonatomic,copy) NSString *portLbl;
+@property (nonatomic,copy) NSString *dateLbl;
+@property (nonatomic,copy) NSString *timeLbl;
+@property (nonatomic,copy) NSString *enteryByLbl;
+@property (nonatomic,copy) NSString *esealLbl;
+@property (retain, nonatomic) IBOutlet UITableViewCell *serialCellView;
+
+@property (nonatomic, assign) NSString *tagIdStr;
+
+@property (retain, nonatomic) IBOutlet UILabel *Serial;
+@property (retain, nonatomic) IBOutlet UILabel *iec;
+@property (retain, nonatomic) IBOutlet UILabel *eseal;
+@property (retain, nonatomic) IBOutlet UILabel *truck;
+@property (retain, nonatomic) IBOutlet UILabel *date;
+@property (retain, nonatomic) IBOutlet UILabel *port;
+@property (retain, nonatomic) IBOutlet UILabel *time;
+@property (retain, nonatomic) IBOutlet UILabel *bill;
+@property (retain, nonatomic) IBOutlet UILabel *shipDate;
+@property (retain, nonatomic) IBOutlet UILabel *container;
+
+@property(nonatomic, retain) UILabel *tag;
+
+@property (nonatomic,copy) NSString *currentElement;
+@property (nonatomic,copy) NSString *ele1;
+@property (nonatomic,copy) NSMutableData *webResponseData;
+
+
+
 
 @end

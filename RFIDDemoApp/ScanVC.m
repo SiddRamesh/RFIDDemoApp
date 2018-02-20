@@ -10,9 +10,9 @@
 #import "config.h"
 #import "ui_config.h"
 
-#import "StockDataSource.h"
-#import "StockData.h"
-#import "StockCellTableViewCell.h"
+//#import "StockDataSource.h"
+//#import "StockData.h"
+//#import "StockCellTableViewCell.h"
 
 #import "ReportData.h"
 
@@ -33,11 +33,12 @@
 
 @interface ScanVC () <CNPPopupControllerDelegate>
 
+@property (nonatomic, strong) CNPPopupController *popupController;
+
 @property (nonatomic, assign) PulsingHaloLayer *halo;
 @property (nonatomic, assign)  UIImageView *beaconView;
 @property (nonatomic, assign)  UIView *uiView;
 
-@property (nonatomic, strong) CNPPopupController *popupController;
 
 @property (nonatomic, strong) ReportData *reportdat;
 @property (nonatomic, strong) NSMutableArray *reportDatas;
@@ -46,51 +47,10 @@
 @property (nonatomic, strong) NSURLSessionDataTask *dataTask;
 @property (nonatomic, strong) NSMutableURLRequest *theRequest;
 @property (nonatomic, strong) NSXMLParser *xmlParser;
+@property (nonatomic,copy) NSString *soapMessage;
+
 @property (nonatomic, strong) NSString *captureString;
 @property (nonatomic, assign) BOOL *flag;
-
-
-@property (nonatomic, strong) StockDataSource *stockDataSource;
-@property (assign) id localChangedObserver;
-@property (nonatomic, strong) UIAlertController *alert;
-
-@property (nonatomic,copy) NSString *serialLbl;
-@property (nonatomic,copy) NSString *iecLbl;
-@property (nonatomic,copy) NSString *billLbl;
-@property (nonatomic,copy) NSString *truckLbl;
-@property (nonatomic,copy) NSString *codebl;
-@property (nonatomic,copy) NSString *portLbl;
-@property (nonatomic,copy) NSString *dateLbl;
-@property (nonatomic,copy) NSString *timeLbl;
-@property (nonatomic,copy) NSString *enteryByLbl;
-@property (nonatomic,copy) NSString *esealLbl;
-@property (retain, nonatomic) IBOutlet UITableViewCell *serialCellView;
-
-@property (nonatomic, assign) NSString *tagIdStr;
-
-//@property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (retain, nonatomic) IBOutlet UILabel *Serial;
-@property (retain, nonatomic) IBOutlet UILabel *iec;
-@property (retain, nonatomic) IBOutlet UILabel *eseal;
-@property (retain, nonatomic) IBOutlet UILabel *truck;
-@property (retain, nonatomic) IBOutlet UILabel *date;
-@property (retain, nonatomic) IBOutlet UILabel *port;
-@property (retain, nonatomic) IBOutlet UILabel *time;
-@property (retain, nonatomic) IBOutlet UILabel *bill;
-@property (retain, nonatomic) IBOutlet UILabel *shipDate;
-@property (retain, nonatomic) IBOutlet UILabel *container;
-
-@property(nonatomic, retain) UILabel *tag;
-//@property(nonatomic, retain) UILabel *port;
-
-    @property NSString *soapMessage;
-    @property NSString *currentElement;
-    @property NSString *ele1;
-    @property NSMutableData *webResponseData;
-
-   // @property UILabel *tag;
-  //  @property UILabel *port;
-    @property UILabel *resultLbl;
 
 @end
 
@@ -107,7 +67,6 @@
     {
          _flag = false;
         _reportdat = [ReportData new];
-      //  _reportDatas = [[NSArray alloc] initWithObjects:_reportdat, nil];
         _reportDatas =  [NSMutableArray array]; //[[NSMutableArray alloc] arrayByAddingObject:_reportdat];
         
         m_Mapper = [[zt_EnumMapper alloc] initWithMEMORYBANKMapperForInventory];
@@ -119,36 +78,20 @@
 
 -(void)dealloc{
     
-    [_Serial release];
-    [_iec release];
-    [_eseal release];
-    [_truck release];
-    [_date release];
- //   [_port release];
-    [_time release];
-  //  [_code release];
-    [_bill release];
-    [_serialCellView release];
+    [self reset];
     [m_tblTags release];
-    [_tagIdStr release];
+    [m_Tags removeAllObjects];
     [super dealloc];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Setup the Scan button
- //   UIBarButtonItem *barButtonScan = [[UIBarButtonItem alloc]initWithTitle:@"Scan" style:UIBarButtonItemStylePlain target:self action:@selector(scanDataWithTag:nPort:)];
-//    self.navigationItem.rightBarButtonItem = barButtonScan;
     
     [m_tblTags setDelegate:self];
     [m_tblTags setDataSource:self];
     [m_tblTags registerClass:[zt_RFIDTagCellView class] forCellReuseIdentifier:ZT_CELL_ID_TAG_DATA];
-    
-    [self showPopupWithStyle:CNPPopupStyleActionSheet];
-    
-    flag = false;
-    
-     [self scanDataWithTag:@"862425120607AAA000000021" nPort:@"INNSA1"]; // New
+     flag = false;
+ //   [self showPopupWithStyle:CNPPopupStyleActionSheet];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -159,10 +102,10 @@
     [super viewWillDisappear:YES];
 }
 
+//MARK: - SDK
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [[[zt_RfidAppEngine sharedAppEngine] operationEngine] addOperationListener:self];
     [[zt_RfidAppEngine sharedAppEngine] addTriggerEventDelegate:self];
     
@@ -200,10 +143,17 @@
     [super viewWillDisappear:animated];
     [[[zt_RfidAppEngine sharedAppEngine] operationEngine] removeOperationListener:self];
     [[zt_RfidAppEngine sharedAppEngine] removeTriggerEventDelegate:self];
-    
+    [self reset];
+    [m_Tags removeAllObjects];
     [m_tblTags release];
     [_tagIdStr release];
     
+    /* stop timer */ //new
+    if (m_ViewUpdateTimer != nil)
+    {
+        [m_ViewUpdateTimer invalidate];
+        m_ViewUpdateTimer = nil;
+    }
 }
 
 - (BOOL)onNewTriggerEvent:(BOOL)pressed
@@ -241,24 +191,13 @@
             {
                 dispatch_async(dispatch_get_main_queue(),
                                ^{
-                                 //  [__weak_self scanData:nil];
+                    
                                    [__weak_self btnStartStopPressed:nil];
                                });
             }
         }
     }
     return YES;
-}
-
-- (void)configureTagCell:(zt_RFIDTagCellView*)tag_cell forRow:(int)row isExpanded:(BOOL)expanded
-{
-    /* TBD */
-    zt_InventoryItem *tag_data = (zt_InventoryItem *)[m_Tags objectAtIndex:row];
-    _tagIdStr = tag_data.getTagId;
-    
-    [tag_cell setTagData:tag_data.getTagId];
- //   [tag_cell setTagCount:[NSString stringWithFormat:@"%d", tag_data.getCount]];
-
 }
 
 //MARK: - Radio Operation
@@ -279,7 +218,7 @@
         [m_btnOptions setEnabled:NO];
         
         /* clear selection information */
-        //   m_ExpandedCellIdx = -1;
+        //m_ExpandedCellIdx = -1;
         [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearTagIdAccessGracefully];
         [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearTagIdLocationingGracefully];
         [[[zt_RfidAppEngine sharedAppEngine] appConfiguration] clearSelectedItem];
@@ -302,7 +241,6 @@
         }];
         
         [m_btnOptions setEnabled:YES];
-        
         if(!batchModeLabel.hidden)
         {
             NSString *statusMsg;
@@ -375,7 +313,6 @@
             NSLog(@"%@ btn Tag is",m_Tags);
             [m_Tags removeAllObjects];
             [m_tblTags reloadData];
-            //    NSLog(@"%@ btn table",tableView);
         }
     }
     else
@@ -389,14 +326,6 @@
     /* unique tags */
     
     NSArray *_tags = [[[[zt_RfidAppEngine sharedAppEngine] operationEngine] inventoryData] getInventoryList:NO];
-    
-    int tag_count = (int)[zt_InventoryData getUniqueCount:_tags];
-  //  [self setLabelTextToFit:[NSString stringWithFormat:@"%d", tag_count] forLabel:m_lblUniqueTagsData withMaxFontSize:19.0];
-    
-    /* total tags */
-    int totalTagCount = [zt_InventoryData getTotalCount:_tags];
- //   [self setLabelTextToFit:[NSString stringWithFormat:@"%d", totalTagCount] forLabel:m_lblTotalTagsData withMaxFontSize:19.0];
-    
     
     if (0 < [[[[zt_RfidAppEngine sharedAppEngine] appConfiguration] getTagSearchCriteria] length])
     {
@@ -421,7 +350,7 @@
     }
 }
 
--(void)scanDataWithTag:(NSString *)tag nPort:(NSString *)port {
+-(void)scanDataWithTag:(NSString *)tag nPort:(NSString *)port { //atIndex:(int)index
     
     //first create the soap envelope
     self.soapMessage = [NSString stringWithFormat:@"<?xml version='1.0' encoding='utf-8'?>                                                                                                                                           <soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>                           <soap:Body>                                                                                                                                                                                                  <GetAssignTag1 xmlns='http://tempuri.org/'>                                                                                                                                                                                                  <Tag>%@</Tag>                                                                                                                                                                                                                            <port>%@</port>                                                                                                                                                                                                                                     </GetAssignTag1>                                                                                                                                                                                                                             </soap:Body>                                                                                                                                                                                                                                                                                                                                                                                                                           </soap:Envelope>", tag, port];
@@ -503,26 +432,21 @@
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    
     //FIXME: - Handle Parsed Object
         // Run the parser
         @try{
              if (flag) {_captureString = [_captureString stringByAppendingString:string]; }
             NSLog(@"Nil Data");
+          //  [self showPopupWithTagStatus:@"cancel" found:@"Tampered"];
         }
         @catch (NSException* exception)
         {
-            [self showPopupWithTagStatus:@"cancel" found:[exception reason]];
+           // [self showPopupWithTagStatus:@"cancel" found:[exception reason]];
             NSLog(@"%@",exception.reason);
             return;
         }
-    
-    //Ok..
- //   if (flag) {_captureString = [_captureString stringByAppendingString:string]; }
 
     [self.popupController dismissPopupControllerAnimated:YES];///working..
-    
-  //  NSLog(@"%@ PData ->: ",string);
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -542,19 +466,18 @@
     else if ([elementName isEqualToString:@"ReportData"]) { [_reportDatas addObject:_reportdat];}
  
     //NSLog(@"Parsed Element : %@", currentElement);
-    if (flag == false) {
-        
-      //  [self showPopupWithTagStatus:@"cancel" found:@"Tampered"];
-    }
 }
 
 -(void)parserDidEndDocument:(NSXMLParser *)parser {
 
-    NSLog(@"%lu",(unsigned long)_reportDatas.count);
-    
+    NSLog(@"%lu <- Total Tag",(unsigned long)_reportDatas.count);
+  //  [parser abortParsing];
+   // [_dataTask cancel];
     if (_reportDatas == nil) {
         NSLog(@"No Data Found");
         [self showPopupWithTagStatus:@"cancel" found:@"Tampered"];
+        [parser abortParsing];
+        [_dataTask cancel];
     }
 }
 
@@ -567,10 +490,12 @@
 }
 
 
--(void)setData {
+-(void)setData  { //AtIndexPath:(int)indexPath
     
-   // ReportData *repo = (_reportDatas)[indexPath.row];
-    
+    assert([NSThread isMainThread]);
+    [[NSOperationQueue mainQueue] addOperationWithBlock: ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+    @try{
     [self showPopupWithTagStatus:@"complete" found:@"Not Tampered"];
     self.Serial.text = [@" Serial No. : " stringByAppendingString:_reportdat.S1];
     self.iec.text = [@" IEC No. : " stringByAppendingString:_reportdat.S2];
@@ -582,35 +507,19 @@
     self.time.text = [@" Sealing Time : " stringByAppendingString:_reportdat.S8];
     self.date.text = [@" Bill date : " stringByAppendingString:_reportdat.S9];
     self.container.text = [@" Container No. : " stringByAppendingString:_reportdat.S10];
-    
-    //     self.iec.text = [@" Lat. : " stringByAppendingString:repo.S11];
-    //    self.iec.text = [@" Long. : " stringByAppendingString:repo.S12];
-    //    self.iec.text = [@" Verified. : " stringByAppendingString:repo.S13];
+  
+    } @catch (NSException* exception)
+    {
+        [self showPopupWithTagStatus:@"cancel" found:@"Tampered"];
+        NSLog(@"%@",exception.reason);
+        return;
+    }
+        });
+    }];
 }
 
-- (void)showPopupWithTagStatus:(NSString *)imageName found:(NSString *)string {
-    
-    NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    NSAttributedString *title = [[NSAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName : [UIFont boldSystemFontOfSize:24], NSParagraphStyleAttributeName : paragraphStyle}];
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.numberOfLines = 0;
-    titleLabel.attributedText = title;
-    
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-    
-    self.popupController = [[CNPPopupController alloc] initWithContents:@[titleLabel,imageView]];
-    self.popupController.theme = [CNPPopupTheme defaultTheme];
-    self.popupController.theme.popupStyle = CNPPopupStyleCentered;
-    self.popupController.delegate = self;
-    [self.popupController presentPopupControllerAnimated:YES];
-}
 
 //MARK: - Table view methods
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)table {
     return 1;
 }
@@ -623,17 +532,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      static NSString *kAttributeCellID = ZT_CELL_ID_TAG_DATA;
     
+    zt_InventoryItem *tag_data = (zt_InventoryItem *)[m_Tags objectAtIndex:indexPath.row];
+    _tagIdStr = tag_data.getTagId;
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kAttributeCellID];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:kAttributeCellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    zt_InventoryItem *tag_data = (zt_InventoryItem *)[m_Tags objectAtIndex:[indexPath row]];
-    _tagIdStr = tag_data.getTagId;
-    NSLog(@"%@ This TID isto be Scan..",_tagIdStr);
-    cell.textLabel.text =  [@"TID : " stringByAppendingString:_tagIdStr];
- //   [self scanDataWithTag:_tagIdStr nPort:@"INNSA1"]; // All working...
-   
+    cell.textLabel.text =  _tagIdStr;
+    [self scanDataWithTag:self.tagIdStr nPort:@"INNSA1"];
     return cell;
 }
 
@@ -655,7 +563,7 @@
 
 
 //MARK: - PopUp Controller
-#pragma mark - CNPPopupController Delegate
+#pragma mark CNPPopupController Delegate
 
 - (void)popupController:(CNPPopupController *)controller didDismissWithButtonTitle:(NSString *)title {
     NSLog(@"Dismissed with button title: %@", title);
@@ -672,6 +580,26 @@
     self.halo.position = self.beaconView.center;
 }
 
+- (void)showPopupWithTagStatus:(NSString *)imageName found:(NSString *)string {
+    
+    NSMutableParagraphStyle *paragraphStyle = NSMutableParagraphStyle.new;
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    
+    NSAttributedString *title = [[NSAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName : [UIFont boldSystemFontOfSize:24], NSParagraphStyleAttributeName : paragraphStyle}];
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.numberOfLines = 0;
+    titleLabel.attributedText = title;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    
+    self.popupController = [[CNPPopupController alloc] initWithContents:@[titleLabel,imageView]];
+    self.popupController.theme = [CNPPopupTheme defaultTheme];
+    self.popupController.theme.popupStyle = CNPPopupStyleCentered;
+    self.popupController.delegate = self;
+    [self.popupController presentPopupControllerAnimated:YES];
+}
+
 
 - (void)showPopupWithStyle:(CNPPopupStyle)popupStyle {
     
@@ -686,7 +614,7 @@
     CNPPopupButton *button = [[CNPPopupButton alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [button setTitle:@"Close Me" forState:UIControlStateNormal];
+    [button setTitle:@"Close" forState:UIControlStateNormal];
     button.backgroundColor = [UIColor colorWithRed:0.46 green:0.8 blue:1.0 alpha:1.0];
     button.layer.cornerRadius = 4;
     button.selectionHandler = ^(CNPPopupButton *button){
@@ -701,7 +629,7 @@
     UIImageView *pulseImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50.0, 100.0)];
     //   self.beaconView.contentMode = UIViewContentModeScaleAspectFit;
     pulseImg.center = CGPointMake(150, 150);
-    pulseImg.image = [UIImage imageNamed:@"IPhone_5s"];
+    pulseImg.image = [UIImage imageNamed:@"IPhone_5s"]; 
     [vu addSubview:pulseImg];
     
     PulsingHaloLayer *layer = [PulsingHaloLayer layer];
@@ -744,6 +672,12 @@
     [self.popupController presentPopupControllerAnimated:YES];
 }
 
+-(void)reset{
+    _tagIdStr = @" ";
+    
+    [m_Tags removeAllObjects];
+    [m_tblTags reloadData];
+}
 
 -(IBAction)resetData:(id)sender {
     
@@ -759,9 +693,7 @@
     self.eseal.text = @" E-Seal :  ";
     self.shipDate.text = @" Shipping Date :  ";
     [m_Tags removeAllObjects];
- //   [m_tblTags reloadData];
-    
-    //   [self showPopupWithStyle:CNPPopupStyleCentered];
+ // [m_tblTags reloadData];
     [self showPopupWithStyle:CNPPopupStyleActionSheet];
 }
 
